@@ -7,5 +7,12 @@ cache:
 script:
   - npm test
   - npm run build
+deploy:
+  provider: heroku
+  api_key:
+    secure: <your-api-key>
+  app: cd-showcase
+  on:
+    repo: OrencioRodolfo/cd-showcase
 on:
   branch: master
