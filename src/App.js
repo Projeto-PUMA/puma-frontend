@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
 import ReactDOM from 'react-dom'
-import Login from './login/index';
+import Login from '../src/components/login/index';
+
+const styles = {
+  navbar: {
+    backgroundColor: '#222',
+  },
+  title: {
+    color: '#fff',
+  }
+};
 
 class App extends Component {
 
@@ -15,13 +22,12 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
+      <div style={{height: '100%'}}>
+        <div style={styles.navbar}>
+          <span style={styles.title}>PUMA</span>
+        </div>
         <div id="center">
-          <p className="App-intro">
+          <p>
             <a href="#" onClick={() => {this.login()}}>LOGIN</a>
           </p>
         </div>
