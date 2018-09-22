@@ -28,8 +28,15 @@ class Home extends Component {
     }
   }
 
+  signup() {
+    ReactDOM.render(
+      <Signup />,
+      document.getElementById('center')
+    );
+  }
+
   render() {
-    const login = <a href="#" onClick={() => {this.login()}}>LOGIN</a>;
+    const login = <a href="#" onClick={() => {this.login()}}>Login</a>;
 
     var logged = false;
 
@@ -39,13 +46,16 @@ class Home extends Component {
       logged = true;
     }
 
-    const logout = <a href="#" onClick={() => {this.logout()}}>LOGOUT</a>;
+    const logout = <a href="#" onClick={() => {this.logout()}}>Sair</a>;
 
     return (
       <div id="center">
         <h1>BEM VINDO AO PUMA</h1>
         <p>
           {logged ? logout : login}       
+        </p>
+        <p>
+          <a href="#" onClick={() => {this.signup()}}>Registro</a>;
         </p>
       </div>
     );

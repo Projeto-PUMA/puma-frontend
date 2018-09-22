@@ -5,12 +5,6 @@ import ReactDOM from 'react-dom';
 import Home from '../home/index';
 import * as Store from '../../store';
 
-const styles = {
-  form: {
-    height: '100%',
-  },
-};
-
 class Login extends Component {
   
   constructor(props) {
@@ -26,7 +20,7 @@ class Login extends Component {
       data[field] = this.refs[field].value;
     }
 
-    const path = Store['backend'].path;
+    const path = Store['backend'].path; // This is backend path
     axios.post(path + '/auth', {
       username: data['username'],
       password: data['password'],
@@ -106,7 +100,7 @@ class Login extends Component {
   render() {
     return (
         <div /*style={{height: "100vh"}}*/>
-          <form onSubmit={this.handleLogin} style={styles.form}>
+          <form onSubmit={this.handleLogin}>
             <label>
               CPF:
               <input ref="username" className="username" type='text' name="username"/>
