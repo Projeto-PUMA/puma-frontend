@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import Home from '../src/components/home/index';
-import Navbar from '../src/components/navbar/index';
+import Index from '../src/components/sidebar/index';
 
 class App extends Component {
   render() {
     return (
       <div>
-        <Navbar />
-        <Home />
+        <Index />
       </div>
     );
   }
