@@ -36,7 +36,7 @@ class Home extends Component {
   }
 
   render() {
-    const login = <a href="#" onClick={() => {this.login()}}>Login</a>;
+    const login = <a href="#" onClick={() => {this.login()}}>Entrar</a>;
 
     var logged = false;
 
@@ -55,7 +55,7 @@ class Home extends Component {
           {logged ? logout : login}       
         </p>
         <p>
-          <a href="#" onClick={() => {this.signup()}}>Registro</a>;
+          <a href="#" onClick={() => {this.signup()}}>Cadastrar</a>;
         </p>
       </div>
     );
