@@ -29,18 +29,16 @@ class Login extends Component {
       username: data['username'],
       password: data['password'],
     })
-    .then(response => {
-      if(response.status===200) {
-        localStorage.setItem('currentUser', JSON.stringify({token: response.data.token }));
-      }
-    })
+    .then(response => { this.setLogin(response) })
     .catch(function (error) {
       console.log(error);
     });
+  }
 
-    if(localStorage.getItem('currentUser')) {
+  setLogin(response) {
+    if(response.status===200) {
+      localStorage.setItem('currentUser', JSON.stringify({token: response.data.token }));
       let tokenInfo = this.getDecodedAccessToken(this.getToken());
-      console.log(tokenInfo);
       localStorage.setItem('authorities', JSON.stringify(tokenInfo.authorities));
       ReactDOM.render(
         <Home />,
