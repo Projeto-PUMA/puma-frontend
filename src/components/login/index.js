@@ -3,6 +3,7 @@ import axios from 'axios';
 import * as jwt_decode from "jwt-decode";
 import ReactDOM from 'react-dom';
 import Home from '../home/index';
+import * as Store from '../../store';
 
 const styles = {
   form: {
@@ -25,18 +26,21 @@ class Login extends Component {
       data[field] = this.refs[field].value;
     }
 
-    axios.post('http://localhost:8080/auth', {
+    const path = Store['backend'].path;
+    axios.post(path + '/auth', {
       username: data['username'],
       password: data['password'],
     })
     .then(response => { this.setLogin(response) })
     .catch(function (error) {
-      console.log(error);
+      if (error) {
+        alert('Usuário não cadastrado!');
+      }
     });
   }
 
   setLogin(response) {
-    if(response.status===200) {
+    if (response.status===200) {
       localStorage.setItem('currentUser', JSON.stringify({token: response.data.token }));
       let tokenInfo = this.getDecodedAccessToken(this.getToken());
       localStorage.setItem('authorities', JSON.stringify(tokenInfo.authorities));
@@ -101,7 +105,7 @@ class Login extends Component {
 
   render() {
     return (
-        <div style={{height: "100vh"}}>
+        <div /*style={{height: "100vh"}}*/>
           <form onSubmit={this.handleLogin} style={styles.form}>
             <label>
               CPF:
