@@ -9,35 +9,67 @@ class Projects extends Component {
   
   constructor(props) {
     super(props);
+    this.state = {
+      project: new Array()
+    };
+  }
+    
+  componentWillMount(){
+    const data = {};
+    for(const field in this.refs){
+      data[field] = this.refs[field].value;
+    }
+    var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    var token = currentUser && currentUser.token;
+    axios.defaults.headers.common['Authorization'] = "Bearer " + token;
+    axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
+    const path = Store['backend'].path;
+    axios.get(path + '/sec/project/listAll')
+                      .then(response => {
+                        this.setProjects(response)
+                      })
+                      .catch(() => {alert('Não foi possível processar os projetos')});
   }
 
-// AQUI TU MUDA PRA SER UM GET
-//   handleProjects(e) {
-//     e.preventDefault();
+  setProjects(response){
+    for(var i=0; i<response.data.length; i++){
+      this.setState({
+        project:
+        this.state.project.concat(response.data[i])
+      })
+    }
+  }
 
-//     const data = {};
-//     for (const field in this.refs) {
-//       data[field] = this.refs[field].value;
-//     }
-
-//     const path = Store['backend'].path; // This is backend path
-//     axios.post(path + '/auth', {
-//       username: data['username'],
-//       password: data['password'],
-//     })
-//     .then(response => { alert('aconteceu com sucesso') })
-//     .catch(function (error) {
-//       if (error) {
-//         alert('Erro ao processar os projetos!');
-//       }
-//     });
-//   }
+  getDecodedAccessToken(token){
+    try{
+      return jwt_decode(token);
+    }
+    catch(Error){
+      return null;
+    }
+  }
 
   render() {
+    const data = this.state.project;
     return (
 			<div /*style={{height: "100vh"}}*/>
-				<h1>to amando</h1>
-			</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Title</th>
+
+              <th>Description</th>
+
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map(function(d, idx){
+        			return (<tr key={idx}><td>{d.title}</td><td>{d.body}</td><td><i className="fas fa-trash" onClick={() => {console.log("clicked")}}></i></td></tr>)
+       			})}
+          </tbody>
+        </table>
+    	</div>
     );
   }
 }

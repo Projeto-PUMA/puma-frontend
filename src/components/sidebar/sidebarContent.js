@@ -6,6 +6,7 @@ import MaterialTitlePanel from "./materialTitlePanel";
 import Login from '../login/index';
 import ProjectSubmission from '../projectSubmission/index';
 import Projects from '../projects/index';
+import News from '../news/index';
 
 const styles = {
   sidebar: {
@@ -52,6 +53,13 @@ const SidebarContent = props => {
   function projects() {
     ReactDOM.render(
       <Projects />,
+      document.getElementById('center')
+    );
+  }
+  
+  function news() {
+    ReactDOM.render(
+      <News />,
       document.getElementById('center')
     );
   }
@@ -104,7 +112,7 @@ const SidebarContent = props => {
   userLinks.push(<a href="#" onClick={projectSubmission} style={styles.sidebarLink}>Submeter Projeto</a>);
   admLinks.push(<a href="#" onClick={projects} style={styles.sidebarLink}>Gerenciar Projetos</a>);
   admLinks.push(<a href="#" onClick={() => {}} style={styles.sidebarLink}>Submeter Notícia</a>);
-  admLinks.push(<a href="#" onClick={() => {}} style={styles.sidebarLink}>Gerenciar Notícias</a>);
+  admLinks.push(<a href="#" onClick={news} style={styles.sidebarLink}>Gerenciar Notícias</a>);
 
   return (
     <MaterialTitlePanel title="Menu" style={style}>
