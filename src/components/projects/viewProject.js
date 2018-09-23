@@ -32,11 +32,16 @@ class ViewProject extends Component {
     }
 
     setProjects(response) {
+        var projeto;
         for (var i = 0; i < response.data.length; i++) {
             this.setState({
                 project:
-                    this.state.project.concat(response.data[i])
+                this.state.project.concat(response.data[i])
             })
+            if((this.state.project[i].id-1) == i){
+                console.log("Entrou aqui! id = ", this.state.project[i].id-1);
+                    projeto = this.state.project.concat(response.data[i])
+            }
         }
     }
 
@@ -59,52 +64,33 @@ class ViewProject extends Component {
                 {/* <thead> */}
                 <div>
                     <h1>Titulo</h1>
-                    <tbody>
-                        {data.map(function (d, idx) {
-                            return (<div key={idx}><p>{d.title}</p>
+                        {data.map(function (d,idx) {
+                            return (<div key={idx}><p>{d.title}</p><p></p>
+                            {console.log("idx = ",idx)}
                             </div>)
                         })}
-                    </tbody>
                     <h2>Resumo</h2>
-                    <tbody>
                         {data.map(function (d, idx) {
                             return (<div key={idx}><p>{d.summary}</p>
                             </div>)
                         })}
-                    </tbody>
                     <h2>Problemática</h2>
-                    <tbody>
                         {data.map(function (d, idx) {
                             return (<div key={idx}><p>{d.body}</p>
                             </div>)
                         })}
-                    </tbody>
                     <h2>Área do Projeto</h2>
-                    <tbody>
                         {data.map(function (d, idx) {
                             return (<div key={idx}><p>{d.projectArea}</p>
                             </div>)
                         })}
-                    </tbody>
                     <h2>Subárea do Projeto</h2>
-                    <tbody>
                         {data.map(function (d, idx) {
                             return (<div key={idx}><p>{d.projectSubArea}</p>
                             </div>)
                         })}
-                    </tbody>
                     <h2>Tipo Pessoa</h2>
-
-                    {/* <th></th> */}
                 </div>
-                {/* </thead> */}
-                {/* <tbody>
-            {data.map(function(d, idx){
-        			return (<div key={idx}><p>{d.title}</p><p>{d.summary}</p><p>{d.body}</p><p>{d.projectArea}</p><p>{d.projectSubArea}</p><p>{d.projectAuthorCategory}</p>
-                        </div>)
-       			})}
-          </tbody> */}
-                {/* </table> */}
             </div>
         );
     }
