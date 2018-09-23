@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import MaterialTitlePanel from "./materialTitlePanel";
 
 import Login from '../login/index';
+import ProjectSubmission from '../projectSubmission/index';
 
 const styles = {
   sidebar: {
@@ -40,6 +41,13 @@ const SidebarContent = props => {
     );
   }
 
+  function projectSubmission() {
+    ReactDOM.render(
+      <ProjectSubmission />,
+      document.getElementById('center')
+    );
+  }
+
   function logout() {
     try{
       if(localStorage.getItem('currentUser')){
@@ -60,6 +68,20 @@ const SidebarContent = props => {
   const logIn = <a href="#" onClick={login} style={styles.sidebarLink}>Entrar</a>;
 
   var logged = false;
+  var adm = false;
+  var user = false;
+
+  var role = JSON.parse(localStorage.getItem('authorities'));
+  if(role) {
+    for(var i=0; i<role.length; i++) {
+      if(role[i].authority.includes("ADMIN")) {
+        adm = true;
+      }
+      if(role[i].authority.includes("USER")) {
+        user = true;
+      }
+    }
+  }
 
   var currentUser = JSON.parse(localStorage.getItem('currentUser'));
   var token = currentUser && currentUser.token;
@@ -69,19 +91,20 @@ const SidebarContent = props => {
 
   const logOut = <a href="#" onClick={logout} style={styles.sidebarLink}>Sair</a>;
 
-  const links = [];
-
-  links.push(<a href="#" onClick={() => {}} style={styles.sidebarLink}>Submeter Projeto</a>);
-  links.push(<a href="#" onClick={() => {}} style={styles.sidebarLink}>Gerenciar Projetos</a>);
-  links.push(<a href="#" onClick={() => {}} style={styles.sidebarLink}>Submeter Notícia</a>);
-  links.push(<a href="#" onClick={() => {}} style={styles.sidebarLink}>Gerenciar Notícias</a>);
+  const admLinks = [];
+  const userLinks = [];
+  userLinks.push(<a href="#" onClick={projectSubmission} style={styles.sidebarLink}>Submeter Projeto</a>);
+  admLinks.push(<a href="#" onClick={() => {}} style={styles.sidebarLink}>Gerenciar Projetos</a>);
+  admLinks.push(<a href="#" onClick={() => {}} style={styles.sidebarLink}>Submeter Notícia</a>);
+  admLinks.push(<a href="#" onClick={() => {}} style={styles.sidebarLink}>Gerenciar Notícias</a>);
 
   return (
     <MaterialTitlePanel title="Menu" style={style}>
       <div style={styles.content}>
         { logged ? logOut : logIn }
         <div style={styles.divider} />
-        { logged ? links : null }
+        { user ? userLinks : null }
+        { adm ? [userLinks, admLinks] : null }
       </div>
     </MaterialTitlePanel>
   );
