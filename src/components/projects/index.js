@@ -4,6 +4,14 @@ import * as jwt_decode from "jwt-decode";
 import ReactDOM from 'react-dom';
 import Home from '../home/index';
 import * as Store from '../../store';
+import ViewProject from './viewProject';
+
+ function viewProject() {
+   ReactDOM.render(
+     <ViewProject />,
+     document.getElementById('center')
+   );
+ }
 
 class Projects extends Component {
   
@@ -13,7 +21,7 @@ class Projects extends Component {
       project: new Array()
     };
   }
-    
+
   componentWillMount(){
     const data = {};
     for(const field in this.refs){
@@ -40,6 +48,8 @@ class Projects extends Component {
     }
   }
 
+  
+
   getDecodedAccessToken(token){
     try{
       return jwt_decode(token);
@@ -56,16 +66,19 @@ class Projects extends Component {
         <table>
           <thead>
             <tr>
-              <th>Title</th>
+              <th>Titulo</th>
 
-              <th>Description</th>
+              <th>Área do Projeto</th>
 
+              <th>Subárea do Projeto</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
             {data.map(function(d, idx){
-        			return (<tr key={idx}><td>{d.title}</td><td>{d.body}</td><td><i className="fas fa-trash" onClick={() => {console.log("clicked")}}></i></td></tr>)
+        			return (<tr key={idx}><td>{d.title}</td><td>{d.projectArea}</td><td>{d.projectSubArea}</td>
+              <td><i className="fas fa-edit" onClick={() => {viewProject()}}></i></td>
+              <td><i className="fas fa-trash" onClick={() => {console.log("clicked")}}></i></td></tr>)
        			})}
           </tbody>
         </table>
