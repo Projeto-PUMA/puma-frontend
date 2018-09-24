@@ -50,14 +50,14 @@ class MyProjects extends Component {
 		if (statusCode===1) {
 			return <td bgcolor="#FAFAE6">Pendente</td>;
 		} else if (statusCode===2) {
-			return <td bgcolor="#90EE90">Aceito</td>;
-		} else if (statusCode===3) {
 			return <td bgcolor="#FF6961">Rejeitado</td>;
+		} else if (statusCode===3) {
+			return <td bgcolor="#90EE90">Aceito</td>;
 		}
 	}
 
 	renderTableLine(d, idx) {
-		return (<tr key={idx}><td>{d.title}</td><td>{d.body}</td>{this.renderStatus(d.projectStatus)}</tr>);
+		return (<tr key={idx}><td>{d.title}</td><td>{d.body}</td>{this.renderStatus(d.projectStatus.id)}</tr>);
 	}
 
   render() {

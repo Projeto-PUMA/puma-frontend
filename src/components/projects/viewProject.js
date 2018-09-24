@@ -39,11 +39,57 @@ class ViewProject extends Component {
 	setProject(response) {
 		let project = Object.assign({}, this.state.project);
 		let author = Object.assign({}, this.state.author);
+		project.id = response.data.id;
 		project.title = response.data.title;
 		project.body = response.data.body;
 		project.summary = response.data.summary;
+		project.projectStatus = response.data.projectStatus.id;
 		author.name = response.data.author.name;
 		this.setState({project, author});
+	}
+
+	renderStatus(status) {
+		if (status === 1) {
+			return <h1>Status: Pendente</h1>;
+		} else if (status === 2) {
+			return <h1>Status: Rejeitado</h1>;
+		} else if (status === 3) {
+			return <h1>Status: Aceito</h1>;
+		}
+	}
+
+	acceptProject(id) {
+		var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    var token = currentUser && currentUser.token;
+    axios.defaults.headers.common['Authorization'] = "Bearer " + token;
+    axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
+
+    const path = Store['backend'].path; // This is backend path
+    axios.put(path + '/sec/project/update/' + id, {
+      projectStatus: {id: 3},
+    })
+			.then(() => {
+				document.getElementById("status").innerHTML = "<h1>Status: Aceito</h1>";
+				alert('Projeto aceito com sucesso!');
+			})
+			.catch(() => { alert('Erro ao aceitar o Projeto!') });
+	}
+
+	rejectProject(id) {
+		var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    var token = currentUser && currentUser.token;
+    axios.defaults.headers.common['Authorization'] = "Bearer " + token;
+    axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
+
+    const path = Store['backend'].path; // This is backend path
+    axios.put(path + '/sec/project/update/' + id, {
+      projectStatus: {id: 2},
+    })
+			.then(() => {
+				document.getElementById("status").innerHTML = "<h1>Status: Rejeitado</h1>";
+				alert('Projeto rejeitado com sucesso!');
+			})
+			.catch(() => { alert('Erro ao rejeitar o Projeto!') });
 	}
 
 	render() {
@@ -53,6 +99,9 @@ class ViewProject extends Component {
 				<h3>Body: {this.state.project.body}</h3>
 				<h3>Summary: {this.state.project.summary}</h3>
 				<h3>Author: {this.state.author.name}</h3>
+				<div id="status">{this.renderStatus(this.state.project.projectStatus)}</div>
+				<button onClick={() => this.acceptProject(this.state.project.id)}>Aceitar</button>
+				<button onClick={() => this.rejectProject(this.state.project.id)}>Rejeitar</button>
 			</div>
 		);
 	}

@@ -71,7 +71,7 @@ class Projects extends Component {
 	}
 
 	renderTableLine(d, idx) {
-		return (<tr key={idx} onClick={() => this.viewProject(d.id)}><td>{d.title}</td><td>{d.body}</td><td><i className="fas fa-trash" onClick={() => {this.deleteProject(d.id, idx)}}></i></td></tr>);
+		return (<tr key={idx}><td onClick={() => this.viewProject(d.id)}>{d.title}</td><td>{d.body}</td><td><i className="fas fa-trash" onClick={() => {this.deleteProject(d.id, idx)}}></i></td></tr>);
 	}
 
   render() {
