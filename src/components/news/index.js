@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import * as jwt_decode from "jwt-decode";
 import * as Store from '../../store';
-import style from './style.css';
+import './style.css';
 
 class News extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {news: new Array()};
+		this.state = {news: []};
 	}
 
 	componentWillMount() {
@@ -45,22 +45,39 @@ class News extends Component {
     }
 	}
 
+	deleteNews(id, idx) {
+		var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    var token = currentUser && currentUser.token;
+    axios.defaults.headers.common['Authorization'] = "Bearer " + token;
+    axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
+
+    const path = Store['backend'].path; // This is backend path
+    axios.delete(path + '/sec/post/delete/' + id)
+			.then(() => {
+				document.getElementById("newsTable").deleteRow(idx);
+				alert('Notícia deletada com sucesso!');
+			})
+			.catch(() => { alert('Erro ao deletar notícia!') });
+	}
+
+	renderTableLine(d, idx) {
+		return (<tr key={idx}><td>{d.title}</td><td>{d.body}</td><td><i className="fas fa-trash" onClick={() => {this.deleteNews(d.id, idx)}}></i></td></tr>);
+	}
+
   render() {
 		const data = this.state.news;
     return (
 			<div>
-				<table>
+				<table id="newsTable">
 					<thead>
 						<tr>
-							<th>Title</th>
-							<th>Description</th>
+							<th>Título</th>
+							<th>Descrição</th>
 							<th></th>
 						</tr>
 					</thead>
 					<tbody>
-						{data.map(function(d, idx){
-        			return (<tr key={idx}><td>{d.title}</td><td>{d.body}</td><td><i className="fas fa-trash" onClick={() => {console.log("clicked")}}></i></td></tr>)
-       			})}
+						{data.map((d, idx) => this.renderTableLine(d, idx))}
 					</tbody>
 				</table>
 			</div>

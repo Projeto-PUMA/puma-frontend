@@ -10,6 +10,10 @@ td, th {
 	padding: 8px;
 }
 
-button:active {
-	border-style: outset;
+th {
+	background-color: #D3D3D3;
+}
+
+tr:hover {
+	background-color: #f2f2f2;
 }
