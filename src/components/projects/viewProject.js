@@ -102,10 +102,21 @@ class ViewProject extends Component {
 	}
 
 	judgeable(statusCode) {
-		if(statusCode===1) {
-			return true;
-		} else {
-			return false;
+		var admin = false;
+		var role = JSON.parse(localStorage.getItem('authorities'));
+		if(role) {
+			for(var i=0; i<role.length; i++) {
+				if(role[i].authority.includes("ADMIN")) {
+					admin = true;
+				}
+			}
+		}
+		if(admin) {
+			if(statusCode===1) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 	}
 
