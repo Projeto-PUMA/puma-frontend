@@ -45,7 +45,7 @@ class News extends Component {
     }
 	}
 
-	deleteNews(id) {
+	deleteNews(id, idx) {
 		var currentUser = JSON.parse(localStorage.getItem('currentUser'));
     var token = currentUser && currentUser.token;
     axios.defaults.headers.common['Authorization'] = "Bearer " + token;
@@ -53,19 +53,22 @@ class News extends Component {
 
     const path = Store['backend'].path; // This is backend path
     axios.delete(path + '/sec/post/delete/' + id)
-			.then(() => { alert('Notícia deletada com sucesso!') })
+			.then(() => {
+				document.getElementById("newsTable").deleteRow(idx);
+				alert('Notícia deletada com sucesso!');
+			})
 			.catch(() => { alert('Erro ao deletar notícia!') });
 	}
 
 	renderTableLine(d, idx) {
-		return (<tr key={idx}><td>{d.title}</td><td>{d.body}</td><td><i className="fas fa-trash" onClick={() => {this.deleteNews(d.id)}}></i></td></tr>);
+		return (<tr key={idx}><td>{d.title}</td><td>{d.body}</td><td><i className="fas fa-trash" onClick={() => {this.deleteNews(d.id, idx)}}></i></td></tr>);
 	}
-	
+
   render() {
 		const data = this.state.news;
     return (
 			<div>
-				<table>
+				<table id="newsTable">
 					<thead>
 						<tr>
 							<th>Título</th>
