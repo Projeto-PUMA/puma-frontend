@@ -10,15 +10,6 @@ class MyProjects extends Component {
 		super(props);
 		this.state = {news: new Array()};
 	}
-		
-	getDecodedAccessToken(token) {
-		try {
-			return jwt_decode(token);
-		}
-		catch(Error){
-			return null;
-		}
-	}
 
 	componentWillMount() {
 		const data = {};
@@ -55,8 +46,18 @@ class MyProjects extends Component {
     }
 	}
 
+	renderStatus(statusCode) {
+		if (statusCode==1) {
+			return <td bgcolor="#FAFAE6">Pendente</td>;
+		} else if (statusCode==2) {
+			return <td bgcolor="#90EE90">Aceito</td>;
+		} else if (statusCode==3) {
+			return <td bgcolor="#FF6961">Rejeitado</td>;
+		}
+	}
+
 	renderTableLine(d, idx) {
-		return (<tr key={idx}><td>{d.title}</td><td>{d.body}</td></tr>);
+		return (<tr key={idx}><td>{d.title}</td><td>{d.body}</td>{this.renderStatus(d.projectStatus)}</tr>);
 	}
 
   render() {
@@ -68,6 +69,7 @@ class MyProjects extends Component {
 						<tr>
 							<th>Título</th>
 							<th>Descrição</th>
+							<th>Status</th>
 						</tr>
 					</thead>
 					<tbody>
