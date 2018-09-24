@@ -5,6 +5,7 @@ import MaterialTitlePanel from "./materialTitlePanel";
 
 import Login from '../login/index';
 import ProjectSubmission from '../projectSubmission/index';
+import Projects from '../projects/index';
 import News from '../news/index';
 import NewsSubmission from '../newsSubmission/index';
 import MyProjects from '../myProjects/index';
@@ -61,6 +62,13 @@ const SidebarContent = props => {
   }
 
 
+  function projects() {
+    ReactDOM.render(
+      <Projects />,
+      document.getElementById('center')
+    );
+  }
+  
   function news() {
     ReactDOM.render(
       <News />,
