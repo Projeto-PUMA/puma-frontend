@@ -8,7 +8,7 @@ class News extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {news: new Array()};
+		this.state = {news: []};
 	}
 
 	componentWillMount() {

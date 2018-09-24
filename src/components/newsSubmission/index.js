@@ -29,8 +29,8 @@ class NewsSubmission extends Component {
 
 		var currentUser = JSON.parse(localStorage.getItem('currentUser'));
     var token = currentUser && currentUser.token;
-    axios.defaults.headers.common['Authorization'] = "Bearer " + token,
-    axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8'
+    axios.defaults.headers.common['Authorization'] = "Bearer " + token;
+    axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
     let tokenInfo = this.getDecodedAccessToken(token);
 
     const path = Store['backend'].path; // This is backend path

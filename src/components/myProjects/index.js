@@ -8,7 +8,7 @@ class MyProjects extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {news: new Array()};
+		this.state = {news: []};
 	}
 
 	componentWillMount() {
@@ -47,11 +47,11 @@ class MyProjects extends Component {
 	}
 
 	renderStatus(statusCode) {
-		if (statusCode==1) {
+		if (statusCode===1) {
 			return <td bgcolor="#FAFAE6">Pendente</td>;
-		} else if (statusCode==2) {
+		} else if (statusCode===2) {
 			return <td bgcolor="#90EE90">Aceito</td>;
-		} else if (statusCode==3) {
+		} else if (statusCode===3) {
 			return <td bgcolor="#FF6961">Rejeitado</td>;
 		}
 	}

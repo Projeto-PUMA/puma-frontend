@@ -18,7 +18,9 @@ const styles = {
     display: "block",
     padding: "16px 0px",
     color: "#757575",
-    textDecoration: "none"
+    fontSize: 16,
+    backgroundColor: 'transparent',
+    border: 'none',
   },
   divider: {
     margin: "8px 0",
@@ -90,7 +92,7 @@ const SidebarContent = props => {
     }
   }
 
-  const logIn = <a href="#" key="6" onClick={login} style={styles.sidebarLink}>Entrar</a>;
+  const logIn = <button key="6" onClick={login} style={styles.sidebarLink}>Entrar</button>;
 
   var logged = false;
   var adm = false;
@@ -114,15 +116,15 @@ const SidebarContent = props => {
     logged = true;
   }
 
-  const logOut = <a href="#" key="7" onClick={logout} style={styles.sidebarLink}>Sair</a>;
+  const logOut = <button key="7" onClick={logout} style={styles.sidebarLink}>Sair</button>;
 
   const admLinks = [];
   const userLinks = [];
-  userLinks.push(<a href="#" key="1" onClick={projectSubmission} style={styles.sidebarLink}>Submeter Projeto</a>);
-  userLinks.push(<a href="#" key="2" onClick={myProjects} style={styles.sidebarLink}>Meus Projetos</a>);
-  admLinks.push(<a href="#" key="3" onClick={() => {}} style={styles.sidebarLink}>Gerenciar Projetos</a>);
-  admLinks.push(<a href="#" key="4" onClick={newsSubmission} style={styles.sidebarLink}>Submeter Notícia</a>);
-  admLinks.push(<a href="#" key="5" onClick={news} style={styles.sidebarLink}>Gerenciar Notícias</a>);
+  userLinks.push(<button key="1" onClick={projectSubmission} style={styles.sidebarLink}>Submeter Projeto</button>);
+  userLinks.push(<button key="2" onClick={myProjects} style={styles.sidebarLink}>Meus Projetos</button>);
+  admLinks.push(<button key="3" onClick={() => {}} style={styles.sidebarLink}>Gerenciar Projetos</button>);
+  admLinks.push(<button key="4" onClick={newsSubmission} style={styles.sidebarLink}>Submeter Notícia</button>);
+  admLinks.push(<button key="5" onClick={news} style={styles.sidebarLink}>Gerenciar Notícias</button>);
 
   return (
     <MaterialTitlePanel title="Menu" style={style}>

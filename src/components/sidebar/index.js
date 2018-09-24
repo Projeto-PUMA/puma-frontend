@@ -8,9 +8,10 @@ import Home from '../home/index';
 
 const styles = {
   contentHeaderMenuLink: {
-    textDecoration: "none",
+    fontSize: 20,
     color: "white",
-    padding: 8
+    backgroundColor: 'transparent',
+    border: 'none',
   },
   content: {
     padding: "16px"
@@ -51,13 +52,13 @@ export default class Index extends React.Component {
     const contentHeader = (
       <span>
         {!this.state.docked && (
-          <a
+          <button
             onClick={this.menuButtonClick}
             href="#"
             style={styles.contentHeaderMenuLink}
           >
             =
-          </a>
+          </button>
         )}
         <span> PUMA</span>
       </span>
