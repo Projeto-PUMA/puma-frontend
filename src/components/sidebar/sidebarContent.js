@@ -130,7 +130,7 @@ const SidebarContent = props => {
   const userLinks = [];
   userLinks.push(<button key="1" onClick={projectSubmission} style={styles.sidebarLink}>Submeter Projeto</button>);
   userLinks.push(<button key="2" onClick={myProjects} style={styles.sidebarLink}>Meus Projetos</button>);
-  admLinks.push(<button key="3" onClick={() => {}} style={styles.sidebarLink}>Gerenciar Projetos</button>);
+  admLinks.push(<button key="3" onClick={projects} style={styles.sidebarLink}>Gerenciar Projetos</button>);
   admLinks.push(<button key="4" onClick={newsSubmission} style={styles.sidebarLink}>Submeter Notícia</button>);
   admLinks.push(<button key="5" onClick={news} style={styles.sidebarLink}>Gerenciar Notícias</button>);
 

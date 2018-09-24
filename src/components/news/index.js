@@ -54,7 +54,7 @@ class News extends Component {
     const path = Store['backend'].path; // This is backend path
     axios.delete(path + '/sec/post/delete/' + id)
 			.then(() => {
-				document.getElementById("newsTable").deleteRow(idx);
+				document.getElementById("newsTable").deleteRow(idx+1);
 				alert('Notícia deletada com sucesso!');
 			})
 			.catch(() => { alert('Erro ao deletar notícia!') });
