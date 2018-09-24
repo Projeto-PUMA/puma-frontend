@@ -44,6 +44,7 @@ class ViewProject extends Component {
 		project.body = response.data.body;
 		project.summary = response.data.summary;
 		project.projectStatus = response.data.projectStatus.id;
+		project.answer = response.data.answer;
 		author.name = response.data.author.name;
 		this.setState({project, author});
 	}
@@ -59,6 +60,8 @@ class ViewProject extends Component {
 	}
 
 	acceptProject(id) {
+		const answer = document.getElementById("answer").value;
+
 		var currentUser = JSON.parse(localStorage.getItem('currentUser'));
     var token = currentUser && currentUser.token;
     axios.defaults.headers.common['Authorization'] = "Bearer " + token;
@@ -66,16 +69,20 @@ class ViewProject extends Component {
 
     const path = Store['backend'].path; // This is backend path
     axios.put(path + '/sec/project/update/' + id, {
+			answer: answer,
       projectStatus: {id: 3},
     })
 			.then(() => {
 				document.getElementById("status").innerHTML = "<h1>Status: Aceito</h1>";
+				document.getElementById("answerShow").innerHTML = "Answer: " + answer;
 				alert('Projeto aceito com sucesso!');
 			})
 			.catch(() => { alert('Erro ao aceitar o Projeto!') });
 	}
 
 	rejectProject(id) {
+		const answer = document.getElementById("answer").value;
+
 		var currentUser = JSON.parse(localStorage.getItem('currentUser'));
     var token = currentUser && currentUser.token;
     axios.defaults.headers.common['Authorization'] = "Bearer " + token;
@@ -83,10 +90,12 @@ class ViewProject extends Component {
 
     const path = Store['backend'].path; // This is backend path
     axios.put(path + '/sec/project/update/' + id, {
+			answer: answer,
       projectStatus: {id: 2},
     })
 			.then(() => {
 				document.getElementById("status").innerHTML = "<h1>Status: Rejeitado</h1>";
+				document.getElementById("answerShow").innerHTML = "Answer: " + answer;
 				alert('Projeto rejeitado com sucesso!');
 			})
 			.catch(() => { alert('Erro ao rejeitar o Projeto!') });
@@ -105,6 +114,10 @@ class ViewProject extends Component {
 			<div>
 				<button onClick={() => this.acceptProject(id)}>Aceitar</button>
 				<button onClick={() => this.rejectProject(id)}>Rejeitar</button>
+				<label>
+					Resposta:
+					<input type='text' id="answer"/>
+				</label>
 			</div>
 		);
 	}
@@ -116,6 +129,7 @@ class ViewProject extends Component {
 				<h3>Body: {this.state.project.body}</h3>
 				<h3>Summary: {this.state.project.summary}</h3>
 				<h3>Author: {this.state.author.name}</h3>
+				<h3 id="answerShow">Answer: {this.state.project.answer}</h3>
 				<div id="status">{this.renderStatus(this.state.project.projectStatus)}</div>
 				{this.judgeable(this.state.project.projectStatus) ? this.renderJudge(this.state.project.id) : null}
 			</div>
