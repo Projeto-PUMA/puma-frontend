@@ -56,11 +56,11 @@ class Projects extends Component {
 	}
 
 	renderStatus(statusCode) {
-		if (statusCode==1) {
+		if (statusCode===1) {
 			return <i style={{color: 'black'}} class="fas fa-ellipsis-h"></i>;
-		} else if (statusCode==2) {
+		} else if (statusCode===2) {
 			return <i style={{color: 'red'}} class="fas fa-ban"></i>;
-		} else if (statusCode==3) {
+		} else if (statusCode===3) {
 			return <i style={{color: 'green'}} class="fas fa-check"></i>;
 		}
 	}
