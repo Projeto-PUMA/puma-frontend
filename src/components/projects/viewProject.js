@@ -92,6 +92,23 @@ class ViewProject extends Component {
 			.catch(() => { alert('Erro ao rejeitar o Projeto!') });
 	}
 
+	judgeable(statusCode) {
+		if(statusCode===1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	renderJudge(id) {
+		return (
+			<div>
+				<button onClick={() => this.acceptProject(id)}>Aceitar</button>
+				<button onClick={() => this.rejectProject(id)}>Rejeitar</button>
+			</div>
+		);
+	}
+
 	render() {
 		return (
 			<div>
@@ -100,8 +117,7 @@ class ViewProject extends Component {
 				<h3>Summary: {this.state.project.summary}</h3>
 				<h3>Author: {this.state.author.name}</h3>
 				<div id="status">{this.renderStatus(this.state.project.projectStatus)}</div>
-				<button onClick={() => this.acceptProject(this.state.project.id)}>Aceitar</button>
-				<button onClick={() => this.rejectProject(this.state.project.id)}>Rejeitar</button>
+				{this.judgeable(this.state.project.projectStatus) ? this.renderJudge(this.state.project.id) : null}
 			</div>
 		);
 	}
