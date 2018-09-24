@@ -9,6 +9,7 @@ import Projects from '../projects/index';
 import News from '../news/index';
 import NewsSubmission from '../newsSubmission/index';
 import MyProjects from '../myProjects/index';
+import Register from '../register/index';
 
 const styles = {
   sidebar: {
@@ -83,6 +84,13 @@ const SidebarContent = props => {
     );
   }
 
+  function signup() {
+    ReactDOM.render(
+      <Register />,
+      document.getElementById('center')
+    );
+  }
+
   function logout() {
     try{
       if(localStorage.getItem('currentUser')){
@@ -100,7 +108,9 @@ const SidebarContent = props => {
     }
   }
 
-  const logIn = <button key="6" onClick={login} style={styles.sidebarLink}>Entrar</button>;
+  const unloggedLinks = [];
+  unloggedLinks.push(<button key="6" onClick={login} style={styles.sidebarLink}>Entrar</button>);
+  unloggedLinks.push(<button key="8" onClick={signup} style={styles.sidebarLink}>Registrar-se</button>);
 
   var logged = false;
   var adm = false;
@@ -137,7 +147,7 @@ const SidebarContent = props => {
   return (
     <MaterialTitlePanel title="Menu" style={style}>
       <div style={styles.content}>
-        { logged ? logOut : logIn }
+        { logged ? logOut : unloggedLinks }
         <div style={styles.divider} />
         { user ? userLinks : null }
         { adm ? [userLinks, admLinks] : null }
