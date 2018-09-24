@@ -7,6 +7,7 @@ import Login from '../login/index';
 import ProjectSubmission from '../projectSubmission/index';
 import News from '../news/index';
 import NewsSubmission from '../newsSubmission/index';
+import MyProjects from '../myProjects/index';
 
 const styles = {
   sidebar: {
@@ -50,6 +51,13 @@ const SidebarContent = props => {
     );
   }
 
+  function myProjects() {
+    ReactDOM.render(
+      <MyProjects />,
+      document.getElementById('center')
+    );
+  }
+
 
   function news() {
     ReactDOM.render(
@@ -82,7 +90,7 @@ const SidebarContent = props => {
     }
   }
 
-  const logIn = <a href="#" onClick={login} style={styles.sidebarLink}>Entrar</a>;
+  const logIn = <a href="#" key="6" onClick={login} style={styles.sidebarLink}>Entrar</a>;
 
   var logged = false;
   var adm = false;
@@ -106,14 +114,15 @@ const SidebarContent = props => {
     logged = true;
   }
 
-  const logOut = <a href="#" onClick={logout} style={styles.sidebarLink}>Sair</a>;
+  const logOut = <a href="#" key="7" onClick={logout} style={styles.sidebarLink}>Sair</a>;
 
   const admLinks = [];
   const userLinks = [];
-  userLinks.push(<a href="#" onClick={projectSubmission} style={styles.sidebarLink}>Submeter Projeto</a>);
-  admLinks.push(<a href="#" onClick={() => {}} style={styles.sidebarLink}>Gerenciar Projetos</a>);
-  admLinks.push(<a href="#" onClick={newsSubmission} style={styles.sidebarLink}>Submeter Notícia</a>);
-  admLinks.push(<a href="#" onClick={news} style={styles.sidebarLink}>Gerenciar Notícias</a>);
+  userLinks.push(<a href="#" key="1" onClick={projectSubmission} style={styles.sidebarLink}>Submeter Projeto</a>);
+  userLinks.push(<a href="#" key="2" onClick={myProjects} style={styles.sidebarLink}>Meus Projetos</a>);
+  admLinks.push(<a href="#" key="3" onClick={() => {}} style={styles.sidebarLink}>Gerenciar Projetos</a>);
+  admLinks.push(<a href="#" key="4" onClick={newsSubmission} style={styles.sidebarLink}>Submeter Notícia</a>);
+  admLinks.push(<a href="#" key="5" onClick={news} style={styles.sidebarLink}>Gerenciar Notícias</a>);
 
   return (
     <MaterialTitlePanel title="Menu" style={style}>
