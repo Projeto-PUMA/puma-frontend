@@ -11,5 +11,8 @@ td, th {
 }
 
 button:active {
-	border-style: outset;
+	outline: none;
+	border: none;
 }
+	
+button:focus {outline:0;}
