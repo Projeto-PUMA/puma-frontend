@@ -1,0 +1,26 @@
+table {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+td, th {
+	border: 1px solid #dddddd;
+	text-align: center;
+	padding: 8px;
+}
+
+th {
+	background-color: #D3D3D3;
+}
+
+tr:hover {
+	background-color: #f2f2f2;
+}
+
+button:active {
+	outline: none;
+	border: none;
+}
+	
+button:focus {outline:0;}
