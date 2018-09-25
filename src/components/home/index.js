@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Carousel from '../carousel/index.js'
 import CarouselApp from '../carousel/index.js';
+// eslint-disable-next-line
 import { Card, CardImg, CardText, CardBody, CardLink,
   CardTitle, CardSubtitle, Row, Col } from 'reactstrap';
 
