@@ -11,8 +11,7 @@ import {
   Label,
   Input,
   Card,
-  CardBody,
-  FormFeedback
+  CardBody
 } from "reactstrap";
 
 class Register extends Component {
