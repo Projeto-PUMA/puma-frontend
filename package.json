@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "availity-reactstrap-validation": "^2.1.2",
     "axios": "^0.18.0",
     "bootstrap": "^4.1.3",
     "jwt-decode": "^2.2.0",
