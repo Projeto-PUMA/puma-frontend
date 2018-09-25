@@ -10,7 +10,7 @@ class MyProjects extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {news: []};
+		this.state = {projects: []};
 	}
 
 	componentWillMount() {
@@ -27,14 +27,14 @@ class MyProjects extends Component {
 
 		const path = Store['backend'].path; // This is backend path
 		axios.get(path + '/sec/project/listByAuthorId/' + tokenInfo.id)
-						.then(response => { this.setNews(response) })
+						.then(response => { this.setProjects(response) })
 						.catch(() => { alert('Erro ao processar projetos!') });
 	}
 
-	setNews(response) {
+	setProjects(response) {
 		for(var i=0; i<response.data.length; i++) {
 			this.setState({ 
-				news: this.state.news.concat(response.data[i])
+				projects: this.state.projects.concat(response.data[i])
 			})
 		}
 	}
@@ -72,7 +72,7 @@ class MyProjects extends Component {
 	}
 
   render() {
-		const data = this.state.news;
+		const data = this.state.projects;
     return (
 			<div>
 				<table>
