@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { AvForm, AvField } from "availity-reactstrap-validation";
 import axios from "axios";
 import * as Store from "../../store";
 
@@ -9,42 +11,44 @@ import {
   Label,
   Input,
   Card,
-  CardBody
+  CardBody,
+  FormFeedback
 } from "reactstrap";
 
 class Register extends Component {
   constructor(props) {
     super(props);
-    this.handleSubmission = this.handleSubmission.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmission(event) {
+  handleSubmit(event) {
     event.preventDefault();
     const data = new FormData(event.target);
 
-    console.log(data.get("nome"));
-    // const path = Store["backend"].path; // This is backend path
-    // axios
-    //   .post(path + "/register", {
-    //     name: event.target.nome.value,
-    //     username: event.target.cpf.value,
-    //     cep: event.target.cep.value,
-    //     fullAddress: event.target.endereco.value,
-    //     phonePrincipal: event.target.telefoneCel.value,
-    //     phoneAlternative: event.target.telefoneFix.value,
-    //     education: event.target.escolaridade.value,
-    //     profession: event.target.profissao.value,
-    //     password: event.target.password.value,
-    //     email: event.target.email.value
-    //   })
-    //   .then(() => {
-    //     alert("Usuário cadastrado com sucesso!");
-    //   })
-    //   .catch(function(error) {
-    //     if (error) {
-    //       alert("Erro ao cadastrar!");
-    //     }
-    //   });
+    const path = Store["backend"].path; // This is backend path
+    axios
+      .post(path + "/register", {
+        name: data.get("nome"),
+        username: data.get("cpf"),
+        cep: data.get("cep"),
+        fullAddress: data.get("endereco"),
+        phonePrincipal: data.get("telefoneCel"),
+        phoneAlternative: data.get("telefoneFix"),
+        education: data.get("escolaridade"),
+        profession: data.get("profissao"),
+        password: document.getElementById("senha").value,
+        email: data.get("email")
+      })
+      .then(() => {
+        alert("Usuário cadastrado com sucesso!");
+      })
+      .catch(function(error) {
+        if (error) {
+          console.log(data.get(["formSenha"]["senha"]));
+          alert("Erro ao cadastrar!");
+        }
+      });
+    // } else return alert("Erro ao cadastrar!");
   }
 
   render() {
@@ -56,7 +60,7 @@ class Register extends Component {
               id="formSubmissao"
               name="formSubmissao"
               className="container"
-              onSubmit={this.handleSubmission}
+              onSubmit={this.handleSubmit}
             >
               <FormGroup>
                 <Label className="label">Nome</Label>
@@ -99,7 +103,7 @@ class Register extends Component {
                 />
               </FormGroup>
               <FormGroup>
-                <Label className="label">Telefone Celular</Label>
+                <Label className="label">Telefone Principal</Label>
                 <Input
                   ref="title"
                   type="text"
@@ -109,7 +113,7 @@ class Register extends Component {
                 />
               </FormGroup>
               <FormGroup>
-                <Label className="label">Telefone Fixo</Label>
+                <Label className="label">Telefone Alternativo</Label>
                 <Input
                   ref="title"
                   type="text"
@@ -157,38 +161,42 @@ class Register extends Component {
                   <option value="Mestrando(a)">Mestrando(a)</option>
                   <option value="Mestre(a)">Mestre(a)</option>
                   <option value="Doutorando(a)">Doutorando(a)</option>
-                  <option value="Doutor(a)  ">Doutor(a)</option>
+                  <option value="Doutor(a)">Doutor(a)</option>
                 </Input>
               </FormGroup>
               <FormGroup>
                 <Label className="label">Profissão</Label>
                 <Input
-                  ref="title"
                   name="profissao"
                   id="profissao"
                   type="text"
                   className="input"
                 />
               </FormGroup>
-              <FormGroup>
+              {/* <FormGroup>
                 <Label className="label">Senha</Label>
-                <Input
-                  ref="title"
-                  type="password"
-                  name="password"
-                  type="text"
-                  className="input"
-                />
+                <Input type="password" name="senha" />
               </FormGroup>
               <FormGroup>
                 <Label className="label">Confirme sua senha</Label>
-                <Input
-                  ref="title"
-                  type="passwordConf"
-                  name="passwordConf"
-                  type="text"
-                  className="input"
-                />
+                <Input type="password" name="senhaConf" />
+              </FormGroup> */}
+              <FormGroup>
+                <AvForm name="formSenha">
+                  <AvField
+                    name="senha"
+                    label="senha"
+                    type="password"
+                    id="senha"
+                  />
+                  <AvField
+                    name="senhaConf"
+                    label="senha"
+                    type="password"
+                    errorMessage="Suas senhas não conferem!"
+                    validate={{ match: { value: "senha" } }}
+                  />
+                </AvForm>
               </FormGroup>
               <FormGroup>
                 <Button
