@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+// eslint-disable-next-line
 import axios from "axios";
+// eslint-disable-next-line
 import * as Store from "../../store";
 
 import {
@@ -176,6 +178,7 @@ class Register extends Component {
                   ref="title"
                   type="password"
                   name="password"
+                  // eslint-disable-next-line
                   type="text"
                   className="input"
                 />
@@ -186,6 +189,7 @@ class Register extends Component {
                   ref="title"
                   type="passwordConf"
                   name="passwordConf"
+                  // eslint-disable-next-line
                   type="text"
                   className="input"
                 />
