@@ -4,7 +4,7 @@ import * as jwt_decode from "jwt-decode";
 import ReactDOM from "react-dom";
 import Home from "../home/index";
 import * as Store from "../../store";
-import {Button,Col,Row,Card,CardBody,FormGroup,Form,Label,Input} from "reactstrap";
+import {Button,Col,Row,Card,CardBody,Form,Label,Input} from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 
@@ -17,16 +17,13 @@ class Login extends Component {
   handleLogin(e) {
     e.preventDefault();
 
-    const data = {};
-    for (const field in this.refs) {
-      data[field] = this.refs[field].value;
-    }
+    var data = new FormData(e.target);
 
     const path = Store["backend"].path; // This is backend path
     axios
       .post(path + "/auth", {
-        username: data["username"],
-        password: data["password"]
+        username: data.get("username"),
+        password: data.get("password")
       })
       .then(response => {
         this.setLogin(response);
@@ -105,41 +102,38 @@ class Login extends Component {
     return (
       <div /*style={{height: "100vh"}}*/>
         <Row>
-          <Col sm='5'/>
-          <Col sm='2'><h2>Acesse sua Conta</h2></Col>
+          <Col sm='2' md='3' lg='4' xs='1'/>
+          <Col sm='7' md='7' lg='7' xs='10'><h2 style={{display:'inline-block',}}>Acesse sua Conta</h2></Col>
         </Row>
         <Row>
-        <Col sm='4'/>
-        <Col sm='4'>
+        <Col sm='2' md='3' lg='4' xs='1'/>
+        <Col sm='6' md='5' lg='4' xs='10'>
         <Card>
         <CardBody>
           <Form
           id='loginForm'
           name='loginForm'
+          onSubmit={this.handleLogin}
           >
-          <FormGroup>
             <Label>CPF</Label>
             <Input
-            ref="cpf"
+            ref="username"
             type="text"
-            name='cpf'
-            id='cpf'
-            className='input'/>
-          </FormGroup>
+            name='username'
+            id='username'
+            />
 
-          <FormGroup>
             <Label>Senha</Label>
             <Input
             ref="password"
-            type="text"
+            type="password"
             name='password'
             id='password'
-            className='input'/>
-          </FormGroup>
-          </Form> 
-          <Button type="submit" value ="Submit" color="primary" onClick={this.handleLogin} style={{ display: "block",margin: "0 auto"}}>
+            />
+          <Button type="submit" value ="submit" color="primary" style={{ display: "block",margin: "0 auto"}}>
           Entrar
           </Button>
+          </Form> 
         </CardBody>
       </Card>
       </Col>

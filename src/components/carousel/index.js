@@ -16,7 +16,7 @@ const items = [
     header: 'Slide 1 Header'
   },
   {
-    src: 'https://i.imgur.com/wE4yvG3.jpg',
+    src: '',
     altText: 'Kek',
     caption: 'Slide 2',
     header: 'Slide 2 Header'
