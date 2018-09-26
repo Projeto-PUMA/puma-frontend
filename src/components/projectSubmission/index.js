@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import * as Store from '../../store';
 import * as jwt_decode from "jwt-decode";
 import {Card, CardBody, Form, Label, Input,Row,Col,Button, FormGroup} from 'reactstrap';
@@ -41,7 +43,7 @@ class ProjectSubmission extends Component {
     axios.post(path + '/sec/project/new', {
       title: data.get('title'),
 			summary: data.get('summary'),
-			body: data.get('body'),
+			body: data.get('body'),//document.getElementById('body'),
 			author: { id: tokenInfo.id },
 			projectAuthorCategory: {id:1},//document.getElementById('type').value,  //// 1 to PF, 2 to PJ
 			cnpj: null, // have a PJ?
@@ -98,13 +100,23 @@ class ProjectSubmission extends Component {
               </FormGroup>
               <FormGroup>
                  <Label>Problemática</Label>
-                 <Input
+                 <Editor
                  ref='body'
                  type='textarea'
                  name='body'
                  id='body'
                  required
                  />
+                {/* <Editor
+                  ref='body'
+                  name='body'
+                  id='body'
+                  // editorState={editorState}
+                  toolbarClassName="toolbarClassName"
+                  wrapperClassName="wrapperClassName"
+                  editorClassName="editorClassName"
+                  // onEditorStateChange={this.onEditorStateChange}
+                /> */}
               </FormGroup>
               <FormGroup>
                  <Label for='area'>Área de Aplicação</Label>
@@ -131,12 +143,12 @@ class ProjectSubmission extends Component {
                 <legend>Tipo de Submissão</legend>
                 <FormGroup check>
                   <Label check for='type'>
-                    <Input type="radio" name="type" name='type' id='type' value='pf'/>{'Pessoa Física'}
+                    <Input type="radio"  name='type' id='type' value='pf'/>{'Pessoa Física'}
                   </Label>
                 </FormGroup>
                 <FormGroup check>
                   <Label check>
-                    <Input type="radio" name="type" name='type' id='type' value='pj'/>{'Pessoa Jurídica'}
+                    <Input type="radio"  name='type' id='type' value='pj'/>{'Pessoa Jurídica'}
                   </Label>
                 </FormGroup>
               </FormGroup>
@@ -145,9 +157,11 @@ class ProjectSubmission extends Component {
                  Enviar Projeto
                 </Button>
               </Form>
+
             </CardBody>
           </Card>
           </Col>
+
         </Row>
 
       </div>
