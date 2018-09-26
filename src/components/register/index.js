@@ -53,7 +53,7 @@ class Register extends Component {
 
   render() {
     return (
-      <div className="container">
+       <div className="container">
         <Card>
           <CardBody>
             <Form
@@ -175,27 +175,6 @@ class Register extends Component {
               </FormGroup>
               {/* <FormGroup>
                 <Label className="label">Senha</Label>
-<<<<<<< HEAD
-                <Input
-                  ref="title"
-                  type="password"
-                  name="password"
-                  // eslint-disable-next-line
-                  type="text"
-                  className="input"
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label className="label">Confirme sua senha</Label>
-                <Input
-                  ref="title"
-                  type="passwordConf"
-                  name="passwordConf"
-                  // eslint-disable-next-line
-                  type="text"
-                  className="input"
-                />
-=======
                 <Input type="password" name="senha" />
               </FormGroup>
               <FormGroup>
@@ -218,7 +197,6 @@ class Register extends Component {
                     validate={{ match: { value: "senha" } }}
                   />
                 </AvForm>
->>>>>>> e0178ce596203de9f9c3b98bca4bfcfda4f012c6
               </FormGroup>
               <FormGroup>
                 <Button
@@ -239,7 +217,7 @@ class Register extends Component {
             </Form>
           </CardBody>
         </Card>
-      </div>
+       </div>
     );
   }
 }

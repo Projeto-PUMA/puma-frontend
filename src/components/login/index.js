@@ -4,7 +4,9 @@ import * as jwt_decode from "jwt-decode";
 import ReactDOM from "react-dom";
 import Home from "../home/index";
 import * as Store from "../../store";
-import { Button } from "reactstrap";
+import {Button,Col,Row,Card,CardBody,FormGroup,Form,Label,Input} from "reactstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 
 class Login extends Component {
   constructor(props) {
@@ -102,20 +104,48 @@ class Login extends Component {
   render() {
     return (
       <div /*style={{height: "100vh"}}*/>
-        <form>
-          <label>
-            CPF:
-            <input ref="username" type="text" name="username" />
-          </label>
-          <label>
-            Senha:
-            <input ref="password" type="password" name="password" />
-          </label>
-        </form>
-        <Button type="submit" color="primary" onClick={this.handleLogin}>
+        <Row>
+          <Col sm='5'/>
+          <Col sm='2'><h2>Acesse sua Conta</h2></Col>
+        </Row>
+        <Row>
+        <Col sm='4'/>
+        <Col sm='4'>
+        <Card>
+        <CardBody>
+          <Form
+          id='loginForm'
+          name='loginForm'
+          >
+          <FormGroup>
+            <Label>CPF</Label>
+            <Input
+            ref="cpf"
+            type="text"
+            name='cpf'
+            id='cpf'
+            className='input'/>
+          </FormGroup>
+
+          <FormGroup>
+            <Label>Senha</Label>
+            <Input
+            ref="password"
+            type="text"
+            name='password'
+            id='password'
+            className='input'/>
+          </FormGroup>
+          </Form> 
+          <Button type="submit" value ="Submit" color="primary" onClick={this.handleLogin} style={{ display: "block",margin: "0 auto"}}>
           Entrar
-        </Button>
+          </Button>
+        </CardBody>
+      </Card>
+      </Col>
+      </Row>
       </div>
+      
     );
   }
 }
