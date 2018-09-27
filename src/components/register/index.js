@@ -37,11 +37,11 @@ class Register extends Component {
     axios
       .post(path + "/register", {
         name: data.get("nome"),
-        username: data.get("cpf"),
-        cep: data.get("cep"),
+        username: data.get("cpf").replace(/\D+/g, ''),
+        cep: data.get("cep").replace(/\D+/g, ''),
         fullAddress: data.get("endereco"),
-        phonePrincipal: data.get("telefoneCel"),
-        phoneAlternative: data.get("telefoneFix"),
+        phonePrincipal: data.get("telefoneCel").replace(/\D+/g, ''),
+        phoneAlternative: data.get("telefoneFix").replace(/\D+/g, ''),
         education: data.get("escolaridade"),
         profession: data.get("profissao"),
         password: document.getElementById("senha").value,
