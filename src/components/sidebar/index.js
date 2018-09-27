@@ -1,4 +1,5 @@
 import React from "react";
+import {BrowserRouter as Router, Link, Route} from 'react-router-dom'
 
 import Sidebar from "./sidebar";
 import MaterialTitlePanel from "./materialTitlePanel";
@@ -80,13 +81,13 @@ export default class Index extends React.Component {
     };
 
     return (
-      <div>
-        <Sidebar {...sidebarProps}>
-          <MaterialTitlePanel title={contentHeader}>
-            <Home />
-          </MaterialTitlePanel>
-        </Sidebar>
-      </div>
+        <div>
+          <Sidebar {...sidebarProps}>
+            <MaterialTitlePanel title={contentHeader}>
+              <Home/>
+            </MaterialTitlePanel>
+          </Sidebar>
+        </div>
     );
   }
 }

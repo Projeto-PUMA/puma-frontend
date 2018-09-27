@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import ReactDOM from 'react-dom';
 import MaterialTitlePanel from "./materialTitlePanel";
+import {BrowserRouter as Router, Link, Route, Switch} from 'react-router-dom'
 
 import Login from '../login/index';
 import ProjectSubmission from '../projectSubmission/index';
@@ -109,7 +110,7 @@ const SidebarContent = props => {
   }
 
   const unloggedLinks = [];
-  unloggedLinks.push(<button key="6" onClick={login} style={styles.sidebarLink}>Entrar</button>);
+  unloggedLinks.push(<a href="/login"><button key="6" onClick={login} style={styles.sidebarLink}>Entrar</button></a>);
   unloggedLinks.push(<button key="8" onClick={signup} style={styles.sidebarLink}>Registrar-se</button>);
 
   var logged = false;
@@ -145,14 +146,14 @@ const SidebarContent = props => {
   admLinks.push(<button key="5" onClick={news} style={styles.sidebarLink}>Gerenciar Notícias</button>);
 
   return (
-    <MaterialTitlePanel title="Menu" style={style}>
-      <div style={styles.content}>
-        { logged ? logOut : unloggedLinks }
-        <div style={styles.divider} />
-        { user ? userLinks : null }
-        { adm ? [userLinks, admLinks] : null }
-      </div>
-    </MaterialTitlePanel>
+      <MaterialTitlePanel title="Menu" style={style}>
+        <div style={styles.content}>
+          { logged ? logOut : unloggedLinks }
+          <div style={styles.divider} />
+          { user ? userLinks : null }
+          { adm ? [userLinks, admLinks] : null }
+        </div>
+      </MaterialTitlePanel>
   );
 };
 
