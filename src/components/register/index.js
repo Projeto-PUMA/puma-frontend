@@ -4,6 +4,8 @@ import { AvForm, AvField } from "availity-reactstrap-validation";
 import axios from "axios";
 // eslint-disable-next-line
 import * as Store from "../../store";
+import MaskedInput from 'react-text-mask'
+
 
 import {
   Button,
@@ -21,6 +23,12 @@ class Register extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  cpfmask = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-' , /\d/, /\d/];
+  cellphonemask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+  phonemask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+  cepmask  = [/\d/, /\d/, /\d/, /\d/, /\d/, '-' , /\d/, /\d/, /\d/];
+
+
   handleSubmit(event) {
     event.preventDefault();
     const data = new FormData(event.target);
@@ -29,11 +37,11 @@ class Register extends Component {
     axios
       .post(path + "/register", {
         name: data.get("nome"),
-        username: data.get("cpf"),
-        cep: data.get("cep"),
+        username: data.get("cpf").replace(/\D+/g, ''),
+        cep: data.get("cep").replace(/\D+/g, ''),
         fullAddress: data.get("endereco"),
-        phonePrincipal: data.get("telefoneCel"),
-        phoneAlternative: data.get("telefoneFix"),
+        phonePrincipal: data.get("telefoneCel").replace(/\D+/g, ''),
+        phoneAlternative: data.get("telefoneFix").replace(/\D+/g, ''),
         education: data.get("escolaridade"),
         profession: data.get("profissao"),
         password: document.getElementById("senha").value,
@@ -80,6 +88,8 @@ class Register extends Component {
                   name="cpf"
                   id="cpf"
                   className="input"
+                  mask={this.cpfmask}
+                  tag={MaskedInput}
                 />
               </FormGroup>
               <FormGroup>
@@ -90,6 +100,8 @@ class Register extends Component {
                   name="cep"
                   id="cep"
                   className="input"
+                  mask={this.cepmask}
+                  tag={MaskedInput}
                 />
               </FormGroup>
               <FormGroup>
@@ -103,23 +115,27 @@ class Register extends Component {
                 />
               </FormGroup>
               <FormGroup>
-                <Label className="label">Telefone Principal</Label>
+                <Label className="label">Telefone Celular</Label>
                 <Input
                   ref="title"
                   type="text"
                   name="telefoneCel"
                   id="telefoneCel"
                   className="input"
+                  mask={this.cellphonemask}
+                  tag={MaskedInput}
                 />
               </FormGroup>
               <FormGroup>
-                <Label className="label">Telefone Alternativo</Label>
+                <Label className="label">Telefone Fixo</Label>
                 <Input
                   ref="title"
                   type="text"
                   name="telefoneFix"
                   id="telefoneFix"
                   className="input"
+                  mask={this.phonemask}
+                  tag={MaskedInput}
                 />
               </FormGroup>
               <FormGroup>
