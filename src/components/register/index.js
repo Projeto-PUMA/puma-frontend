@@ -71,7 +71,7 @@ class Register extends Component {
               onSubmit={this.handleSubmit}
             >
               <FormGroup>
-                <Label className="label">Nome</Label>
+                <Label className="label">Nome *</Label>
                 <Input
                   ref="title"
                   type="text"
@@ -82,7 +82,7 @@ class Register extends Component {
                 />
               </FormGroup>
               <FormGroup>
-                <Label className="label">CPF</Label>
+                <Label className="label">CPF *</Label>
                 <Input
                   ref="title"
                   type="text"
@@ -95,7 +95,7 @@ class Register extends Component {
                 />
               </FormGroup>
               <FormGroup>
-                <Label className="label">CEP </Label>
+                <Label className="label">CEP *</Label>
                 <Input
                   ref="body"
                   type="text"
@@ -108,7 +108,7 @@ class Register extends Component {
                 />
               </FormGroup>
               <FormGroup>
-                <Label className="label">Endereço</Label>
+                <Label className="label">Endereço *</Label>
                 <Input
                   ref="title"
                   type="text"
@@ -119,7 +119,7 @@ class Register extends Component {
                 />
               </FormGroup>
               <FormGroup>
-                <Label className="label">Telefone Celular</Label>
+                <Label className="label">Telefone Principal * </Label>
                 <Input
                   ref="title"
                   type="text"
@@ -132,7 +132,7 @@ class Register extends Component {
                 />
               </FormGroup>
               <FormGroup>
-                <Label className="label">Telefone Fixo</Label>
+                <Label className="label">Telefone Alternativo</Label>
                 <Input
                   ref="title"
                   type="text"
@@ -141,11 +141,10 @@ class Register extends Component {
                   className="input"
                   mask={this.phonemask}
                   tag={MaskedInput}
-                  required={true}
                 />
               </FormGroup>
               <FormGroup>
-                <Label className="label">E-mail</Label>
+                <Label className="label">E-mail *</Label>
                 <Input
                   ref="title"
                   type="email"
@@ -156,7 +155,7 @@ class Register extends Component {
                 />
               </FormGroup>
               <FormGroup>
-                <Label className="label">Nível de Escolaridade</Label>
+                <Label className="label">Nível de Escolaridade *</Label>
                 <Input
                   type="select"
                   name="escolaridade"
@@ -189,7 +188,7 @@ class Register extends Component {
                 </Input>
               </FormGroup>
               <FormGroup>
-                <Label className="label">Profissão</Label>
+                <Label className="label">Profissão *</Label>
                 <Input
                   name="profissao"
                   id="profissao"
@@ -210,13 +209,13 @@ class Register extends Component {
                 <AvForm name="formSenha">
                   <AvField
                     name="senha"
-                    label="senha"
+                    label="Senha *"
                     type="password"
                     id="senha"
                   />
                   <AvField
                     name="senhaConf"
-                    label="senha"
+                    label="Confirme sua senha *"
                     type="password"
                     errorMessage="Suas senhas não conferem!"
                     validate={{ match: { value: "senha" } }}

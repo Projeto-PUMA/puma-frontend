@@ -79,7 +79,7 @@ class ProjectSubmission extends Component {
               onSubmit={this.handleProject}
               >
               <FormGroup>
-                 <Label>Título do Projeto</Label>
+                 <Label>Título do Projeto *</Label>
                  <Input
                  ref='title'
                  type='text'
@@ -89,7 +89,7 @@ class ProjectSubmission extends Component {
                  />
               </FormGroup>
               <FormGroup>
-                 <Label>Resumo</Label>
+                 <Label>Resumo *</Label>
                  <Input 
                  ref='summary'
                  type='textarea'
@@ -99,7 +99,7 @@ class ProjectSubmission extends Component {
                  />
               </FormGroup>
               <FormGroup>
-                 <Label>Problemática</Label>
+                 <Label>Problemática *</Label>
                  <Editor
                  ref='body'
                  type='textarea'
@@ -119,7 +119,7 @@ class ProjectSubmission extends Component {
                 /> */}
               </FormGroup>
               <FormGroup>
-                 <Label for='area'>Área de Aplicação</Label>
+                 <Label for='area'>Área de Aplicação *</Label>
                  <Input
                  ref='area'
                  type='select'
@@ -140,7 +140,7 @@ class ProjectSubmission extends Component {
                  </Input>
               </FormGroup>
               <FormGroup tag="fieldset" required>
-                <legend>Tipo de Submissão</legend>
+                <legend>Tipo de Submissão *</legend>
                 <FormGroup check>
                   <Label check for='type'>
                     <Input type="radio"  name='type' id='type' value='pf'/>{'Pessoa Física'}

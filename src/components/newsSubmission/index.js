@@ -50,7 +50,7 @@ class NewsSubmission extends Component {
 			<div>
         <Row>
           <Col sm='2' md='3' lg='4' xs='1'/>
-          <Col sm='6' md='5' lg='4' xs='10' style={{textAlign:'center'}}><h2>Submissão de Projeto</h2></Col>
+          <Col sm='6' md='5' lg='4' xs='10' style={{textAlign:'center'}}><h2>Submissão de Notícia</h2></Col>
           </Row>
         <Row>
           <Col sm='1' md='2' lg='3' xs='1'/>
@@ -63,7 +63,7 @@ class NewsSubmission extends Component {
             onSubmit={this.handleNews}
           >
             <FormGroup>
-              <Label >Título da Notícia</Label>
+              <Label >Título da Notícia *</Label>
               <Input
                 ref='title'
                 type='text'
@@ -72,12 +72,13 @@ class NewsSubmission extends Component {
                 required/>
             </FormGroup>
             <FormGroup>
-              <Label>Conteúdo/Corpo</Label>
+              <Label>Conteúdo/Corpo *</Label>
               <Input
                  ref='body'
                  type='textarea'
                  name='body'
-                 id='body'/>
+                 id='body'
+                 required/>
             </FormGroup>
             <Button type="submit" value ="submit" color="primary" style={{ display: "block",margin: "0 auto"}}>
               Enviar Projeto
