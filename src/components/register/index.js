@@ -78,6 +78,7 @@ class Register extends Component {
                   name="nome"
                   id="nome"
                   className="input"
+                  required={true}
                 />
               </FormGroup>
               <FormGroup>
@@ -90,6 +91,7 @@ class Register extends Component {
                   className="input"
                   mask={this.cpfmask}
                   tag={MaskedInput}
+                  required={true}
                 />
               </FormGroup>
               <FormGroup>
@@ -102,6 +104,7 @@ class Register extends Component {
                   className="input"
                   mask={this.cepmask}
                   tag={MaskedInput}
+                  required={true}
                 />
               </FormGroup>
               <FormGroup>
@@ -112,6 +115,7 @@ class Register extends Component {
                   name="endereco"
                   id="endereco"
                   className="input"
+                  required={true}
                 />
               </FormGroup>
               <FormGroup>
@@ -124,6 +128,7 @@ class Register extends Component {
                   className="input"
                   mask={this.cellphonemask}
                   tag={MaskedInput}
+                  required={true}
                 />
               </FormGroup>
               <FormGroup>
@@ -136,16 +141,18 @@ class Register extends Component {
                   className="input"
                   mask={this.phonemask}
                   tag={MaskedInput}
+                  required={true}
                 />
               </FormGroup>
               <FormGroup>
                 <Label className="label">E-mail</Label>
                 <Input
                   ref="title"
-                  type="text"
+                  type="email"
                   name="email"
                   id="email"
                   className="input"
+                  required email = {true}
                 />
               </FormGroup>
               <FormGroup>
@@ -155,6 +162,7 @@ class Register extends Component {
                   name="escolaridade"
                   id="escolaridade"
                   className="escolaridade"
+                  required={true}
                 >
                   <option value="Ensino Fundamental Incompleto">
                     Ensino Fundamental Incompleto
@@ -187,6 +195,7 @@ class Register extends Component {
                   id="profissao"
                   type="text"
                   className="input"
+                  required={true}
                 />
               </FormGroup>
               {/* <FormGroup>
