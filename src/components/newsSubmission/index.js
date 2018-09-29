@@ -3,6 +3,7 @@ import axios from 'axios';
 import * as jwt_decode from "jwt-decode";
 import * as Store from '../../store';
 import {Col,Row,Input,Label,Button,FormGroup,Card,CardBody,Form} from 'reactstrap';
+import { Editor } from 'react-draft-wysiwyg';
 
 class NewsSubmission extends Component {
 
@@ -73,18 +74,22 @@ class NewsSubmission extends Component {
             </FormGroup>
             <FormGroup>
               <Label>Conteúdo/Corpo *</Label>
-              <Input
+              <Editor
                  ref='body'
                  type='textarea'
                  name='body'
                  id='body'
                  required/>
             </FormGroup>
+            <br></br>
             <Button type="submit" value ="submit" color="primary" style={{ display: "block",margin: "0 auto"}}>
               Enviar Projeto
             </Button>
           </Form>
           </CardBody>
+          <footer>
+            <p>* Campo Obrigatório</p>
+          </footer>
           </Card>
           </Col>
         </Row>

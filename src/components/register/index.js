@@ -5,17 +5,8 @@ import axios from "axios";
 // eslint-disable-next-line
 import * as Store from "../../store";
 import MaskedInput from 'react-text-mask'
+import {Card, CardBody, Form, Label, Input,Row,Col,Button, FormGroup} from 'reactstrap';
 
-
-import {
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Card,
-  CardBody
-} from "reactstrap";
 
 class Register extends Component {
   constructor(props) {
@@ -62,6 +53,13 @@ class Register extends Component {
   render() {
     return (
        <div className="container">
+        <Row>
+          <Col sm='2' md='3' lg='4' xs='1'/>
+          <Col sm='6' md='5' lg='4' xs='10' style={{textAlign:'center'}}><h2>Cadastre-se</h2></Col>
+        </Row>
+        <Row>
+          <Col sm='1' md='2' lg='3' xs='1'/>
+          <Col sm='8' md='7' lg='6' xs='10'>
         <Card>
           <CardBody>
             <Form
@@ -78,7 +76,7 @@ class Register extends Component {
                   name="nome"
                   id="nome"
                   className="input"
-                  required={true}
+                  required
                 />
               </FormGroup>
               <FormGroup>
@@ -91,7 +89,7 @@ class Register extends Component {
                   className="input"
                   mask={this.cpfmask}
                   tag={MaskedInput}
-                  required={true}
+                  required
                 />
               </FormGroup>
               <FormGroup>
@@ -104,7 +102,7 @@ class Register extends Component {
                   className="input"
                   mask={this.cepmask}
                   tag={MaskedInput}
-                  required={true}
+                  required
                 />
               </FormGroup>
               <FormGroup>
@@ -115,7 +113,7 @@ class Register extends Component {
                   name="endereco"
                   id="endereco"
                   className="input"
-                  required={true}
+                  required
                 />
               </FormGroup>
               <FormGroup>
@@ -128,7 +126,7 @@ class Register extends Component {
                   className="input"
                   mask={this.cellphonemask}
                   tag={MaskedInput}
-                  required={true}
+                  required
                 />
               </FormGroup>
               <FormGroup>
@@ -151,7 +149,7 @@ class Register extends Component {
                   name="email"
                   id="email"
                   className="input"
-                  required email = {true}
+                  required email
                 />
               </FormGroup>
               <FormGroup>
@@ -161,7 +159,7 @@ class Register extends Component {
                   name="escolaridade"
                   id="escolaridade"
                   className="escolaridade"
-                  required={true}
+                  required
                 >
                   <option value="Ensino Fundamental Incompleto">
                     Ensino Fundamental Incompleto
@@ -194,7 +192,7 @@ class Register extends Component {
                   id="profissao"
                   type="text"
                   className="input"
-                  required={true}
+                  required
                 />
               </FormGroup>
               {/* <FormGroup>
@@ -240,7 +238,12 @@ class Register extends Component {
               </FormGroup>
             </Form>
           </CardBody>
+          <footer>
+            <p>* Campo Obrigatório</p>
+          </footer>
         </Card>
+        </Col>
+        </Row>
        </div>
     );
   }

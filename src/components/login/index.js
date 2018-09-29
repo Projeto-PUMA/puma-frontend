@@ -121,7 +121,8 @@ class Login extends Component {
             type="text"
             name='username'
             id='username'
-            required={true}
+            maxLength="11"
+            required
             />
 
             <Label>Senha *</Label>
@@ -130,13 +131,16 @@ class Login extends Component {
             type="password"
             name='password'
             id='password'
-            required={true}
+            required
             />
           <Button type="submit" value ="submit" color="primary" style={{ display: "block",margin: "0 auto"}}>
           Entrar
           </Button>
           </Form> 
         </CardBody>
+        <footer>
+            <p>* Campo Obrigatório</p>
+          </footer>
       </Card>
       </Col>
       </Row>
