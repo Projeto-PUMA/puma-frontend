@@ -55,23 +55,18 @@ class Projects extends Component {
     }
 	}
 
-	deleteProject(id, idx) {
-		var currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    var token = currentUser && currentUser.token;
-    axios.defaults.headers.common['Authorization'] = "Bearer " + token;
-    axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
-
-    const path = Store['backend'].path; // This is backend path
-    axios.delete(path + '/sec/project/delete/' + id)
-			.then(() => {
-				document.getElementById("projectsTable").deleteRow(idx+1);
-				alert('Projeto deletado com sucesso!');
-			})
-			.catch(() => { alert('Erro ao deletar Projeto!') });
+	renderStatus(statusCode) {
+		if (statusCode===1) {
+			return <i style={{color: 'black'}} className="fas fa-ellipsis-h"></i>;
+		} else if (statusCode===2) {
+			return <i style={{color: 'red'}} className="fas fa-ban"></i>;
+		} else if (statusCode===3) {
+			return <i style={{color: 'green'}} className="fas fa-check"></i>;
+		}
 	}
 
 	renderTableLine(d, idx) {
-		return (<tr key={idx}><td onClick={() => this.viewProject(d.id)}>{d.title}</td><td>{d.body}</td><td><i className="fas fa-trash" onClick={() => {this.deleteProject(d.id, idx)}}></i></td></tr>);
+		return (<tr key={idx}><td>{d.title}</td><td>{d.body}</td><td>{this.renderStatus(d.projectStatus.id)}</td><td><i className="fas fa-eye" onClick={() => this.viewProject(d.id)}></i></td></tr>);
 	}
 
   render() {
@@ -83,6 +78,7 @@ class Projects extends Component {
 						<tr>
 							<th>Título</th>
 							<th>Descrição</th>
+							<th>Status</th>
 							<th></th>
 						</tr>
 					</thead>

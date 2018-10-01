@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as jwt_decode from "jwt-decode";
+import ReactDOM from 'react-dom';
 import * as Store from '../../store';
 import './style.css';
+import ViewProject from '../projects/viewProject';
 
 class MyProjects extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {news: []};
+		this.state = {projects: []};
 	}
 
 	componentWillMount() {
@@ -25,14 +27,14 @@ class MyProjects extends Component {
 
 		const path = Store['backend'].path; // This is backend path
 		axios.get(path + '/sec/project/listByAuthorId/' + tokenInfo.id)
-						.then(response => { this.setNews(response) })
+						.then(response => { this.setProjects(response) })
 						.catch(() => { alert('Erro ao processar projetos!') });
 	}
 
-	setNews(response) {
+	setProjects(response) {
 		for(var i=0; i<response.data.length; i++) {
 			this.setState({ 
-				news: this.state.news.concat(response.data[i])
+				projects: this.state.projects.concat(response.data[i])
 			})
 		}
 	}
@@ -46,6 +48,15 @@ class MyProjects extends Component {
     }
 	}
 
+	viewProject(id) {
+    ReactDOM.render(
+      <ViewProject
+        id={id}
+      />,
+      document.getElementById('center')
+    );
+  }
+
 	renderStatus(statusCode) {
 		if (statusCode===1) {
 			return <td bgcolor="#FAFAE6">Pendente</td>;
@@ -57,11 +68,11 @@ class MyProjects extends Component {
 	}
 
 	renderTableLine(d, idx) {
-		return (<tr key={idx}><td>{d.title}</td><td>{d.body}</td>{this.renderStatus(d.projectStatus.id)}</tr>);
+		return (<tr key={idx}><td>{d.title}</td><td>{d.body}</td>{this.renderStatus(d.projectStatus.id)}<td><i className="fas fa-eye" onClick={() => this.viewProject(d.id)}></i></td></tr>);
 	}
 
   render() {
-		const data = this.state.news;
+		const data = this.state.projects;
     return (
 			<div>
 				<table>
@@ -70,6 +81,7 @@ class MyProjects extends Component {
 							<th>Título</th>
 							<th>Descrição</th>
 							<th>Status</th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
