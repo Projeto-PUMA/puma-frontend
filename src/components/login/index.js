@@ -115,26 +115,32 @@ class Login extends Component {
           name='loginForm'
           onSubmit={this.handleLogin}
           >
-            <Label>CPF</Label>
+            <Label>CPF *</Label>
             <Input
             ref="username"
             type="text"
             name='username'
             id='username'
+            maxLength="11"
+            required
             />
 
-            <Label>Senha</Label>
+            <Label>Senha *</Label>
             <Input
             ref="password"
             type="password"
             name='password'
             id='password'
+            required
             />
           <Button type="submit" value ="submit" color="primary" style={{ display: "block",margin: "0 auto"}}>
           Entrar
           </Button>
           </Form> 
         </CardBody>
+        <footer>
+            <p>* Campo Obrigatório</p>
+          </footer>
       </Card>
       </Col>
       </Row>

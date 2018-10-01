@@ -5,17 +5,8 @@ import axios from "axios";
 // eslint-disable-next-line
 import * as Store from "../../store";
 import MaskedInput from 'react-text-mask'
+import {Card, CardBody, Form, Label, Input,Row,Col,Button, FormGroup} from 'reactstrap';
 
-
-import {
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Card,
-  CardBody
-} from "reactstrap";
 
 class Register extends Component {
   constructor(props) {
@@ -62,6 +53,13 @@ class Register extends Component {
   render() {
     return (
        <div className="container">
+        <Row>
+          <Col sm='2' md='3' lg='4' xs='1'/>
+          <Col sm='6' md='5' lg='4' xs='10' style={{textAlign:'center'}}><h2>Cadastre-se</h2></Col>
+        </Row>
+        <Row>
+          <Col sm='1' md='2' lg='3' xs='1'/>
+          <Col sm='8' md='7' lg='6' xs='10'>
         <Card>
           <CardBody>
             <Form
@@ -71,17 +69,18 @@ class Register extends Component {
               onSubmit={this.handleSubmit}
             >
               <FormGroup>
-                <Label className="label">Nome</Label>
+                <Label className="label">Nome *</Label>
                 <Input
                   ref="title"
                   type="text"
                   name="nome"
                   id="nome"
                   className="input"
+                  required
                 />
               </FormGroup>
               <FormGroup>
-                <Label className="label">CPF</Label>
+                <Label className="label">CPF *</Label>
                 <Input
                   ref="title"
                   type="text"
@@ -90,10 +89,11 @@ class Register extends Component {
                   className="input"
                   mask={this.cpfmask}
                   tag={MaskedInput}
+                  required
                 />
               </FormGroup>
               <FormGroup>
-                <Label className="label">CEP </Label>
+                <Label className="label">CEP *</Label>
                 <Input
                   ref="body"
                   type="text"
@@ -102,20 +102,22 @@ class Register extends Component {
                   className="input"
                   mask={this.cepmask}
                   tag={MaskedInput}
+                  required
                 />
               </FormGroup>
               <FormGroup>
-                <Label className="label">Endereço</Label>
+                <Label className="label">Endereço *</Label>
                 <Input
                   ref="title"
                   type="text"
                   name="endereco"
                   id="endereco"
                   className="input"
+                  required
                 />
               </FormGroup>
               <FormGroup>
-                <Label className="label">Telefone Celular</Label>
+                <Label className="label">Telefone Principal * </Label>
                 <Input
                   ref="title"
                   type="text"
@@ -124,10 +126,11 @@ class Register extends Component {
                   className="input"
                   mask={this.cellphonemask}
                   tag={MaskedInput}
+                  required
                 />
               </FormGroup>
               <FormGroup>
-                <Label className="label">Telefone Fixo</Label>
+                <Label className="label">Telefone Alternativo</Label>
                 <Input
                   ref="title"
                   type="text"
@@ -139,22 +142,24 @@ class Register extends Component {
                 />
               </FormGroup>
               <FormGroup>
-                <Label className="label">E-mail</Label>
+                <Label className="label">E-mail *</Label>
                 <Input
                   ref="title"
-                  type="text"
+                  type="email"
                   name="email"
                   id="email"
                   className="input"
+                  required email
                 />
               </FormGroup>
               <FormGroup>
-                <Label className="label">Nível de Escolaridade</Label>
+                <Label className="label">Nível de Escolaridade *</Label>
                 <Input
                   type="select"
                   name="escolaridade"
                   id="escolaridade"
                   className="escolaridade"
+                  required
                 >
                   <option value="Ensino Fundamental Incompleto">
                     Ensino Fundamental Incompleto
@@ -181,12 +186,13 @@ class Register extends Component {
                 </Input>
               </FormGroup>
               <FormGroup>
-                <Label className="label">Profissão</Label>
+                <Label className="label">Profissão *</Label>
                 <Input
                   name="profissao"
                   id="profissao"
                   type="text"
                   className="input"
+                  required
                 />
               </FormGroup>
               {/* <FormGroup>
@@ -201,13 +207,13 @@ class Register extends Component {
                 <AvForm name="formSenha">
                   <AvField
                     name="senha"
-                    label="senha"
+                    label="Senha *"
                     type="password"
                     id="senha"
                   />
                   <AvField
                     name="senhaConf"
-                    label="senha"
+                    label="Confirme sua senha *"
                     type="password"
                     errorMessage="Suas senhas não conferem!"
                     validate={{ match: { value: "senha" } }}
@@ -232,7 +238,12 @@ class Register extends Component {
               </FormGroup>
             </Form>
           </CardBody>
+          <footer>
+            <p>* Campo Obrigatório</p>
+          </footer>
         </Card>
+        </Col>
+        </Row>
        </div>
     );
   }
