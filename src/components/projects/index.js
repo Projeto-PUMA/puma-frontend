@@ -72,7 +72,7 @@ class Projects extends Component {
   render() {
 		const data = this.state.projects;
     return (
-			<div>
+			<div style={{margin:50}}>
 				<table id="projectsTable">
 					<thead>
 						<tr>

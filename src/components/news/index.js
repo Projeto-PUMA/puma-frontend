@@ -70,7 +70,7 @@ class News extends Component {
     return (
 			<div style={{margin:50}}>
 				<Table id="newsTable" hover responsive>
-					<thead className='tablestyle'>
+					<thead >
 						<tr>
 							<th>Título</th>
 							<th>Descrição</th>

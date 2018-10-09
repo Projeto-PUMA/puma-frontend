@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 import * as Store from '../../store';
 import './style.css';
 import ViewProject from '../projects/viewProject';
+import {Table} from 'reactstrap';
 
 class MyProjects extends Component {
 
@@ -75,7 +76,7 @@ class MyProjects extends Component {
 		const data = this.state.projects;
     return (
 			<div>
-				<table>
+				<Table responsive hover>
 					<thead>
 						<tr>
 							<th>Título</th>
@@ -87,7 +88,7 @@ class MyProjects extends Component {
 					<tbody>
 						{data.map((d, idx) => this.renderTableLine(d, idx))}
 					</tbody>
-				</table>
+				</Table>
 			</div>
     );
   }
