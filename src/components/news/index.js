@@ -3,6 +3,7 @@ import axios from 'axios';
 import * as jwt_decode from "jwt-decode";
 import * as Store from '../../store';
 import './style.css';
+import { Table } from 'reactstrap';
 
 class News extends Component {
 
@@ -67,9 +68,9 @@ class News extends Component {
   render() {
 		const data = this.state.news;
     return (
-			<div>
-				<table id="newsTable">
-					<thead>
+			<div style={{margin:50}}>
+				<Table id="newsTable" hover responsive>
+					<thead className='tablestyle'>
 						<tr>
 							<th>Título</th>
 							<th>Descrição</th>
@@ -79,8 +80,10 @@ class News extends Component {
 					<tbody>
 						{data.map((d, idx) => this.renderTableLine(d, idx))}
 					</tbody>
-				</table>
+				</Table>
+
 			</div>
+
     );
   }
 }
