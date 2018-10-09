@@ -135,7 +135,7 @@ class ViewProject extends Component {
 
 	render() {
 		return (
-			<div>
+			<div style={{margin:50}}>
 				<h3>Title: {this.state.project.title}</h3>
 				<h3>Body: {this.state.project.body}</h3>
 				<h3>Summary: {this.state.project.summary}</h3>
