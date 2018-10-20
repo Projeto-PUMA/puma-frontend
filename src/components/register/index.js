@@ -183,6 +183,7 @@ class Register extends Component {
                   <option value="Mestre(a)">Mestre(a)</option>
                   <option value="Doutorando(a)">Doutorando(a)</option>
                   <option value="Doutor(a)">Doutor(a)</option>
+                  <option value="PhD">PhD</option>
                 </Input>
               </FormGroup>
               <FormGroup>
@@ -210,13 +211,19 @@ class Register extends Component {
                     label="Senha *"
                     type="password"
                     id="senha"
+                    errorMessage="Digite uma senha entre 6 e 16 digitos !"
+                    validate={{
+                      required: {value: true}, minLength: {value: 6},
+                      maxLength: {value: 16}}}
                   />
                   <AvField
                     name="senhaConf"
                     label="Confirme sua senha *"
                     type="password"
+                    required
                     errorMessage="Suas senhas não conferem!"
-                    validate={{ match: { value: "senha" } }}
+                    validate={{ match: { value: "senha" }, required: {value: true}, minLength: {value: 6},
+                    maxLength: {value: 16}}}
                   />
                 </AvForm>
               </FormGroup>
