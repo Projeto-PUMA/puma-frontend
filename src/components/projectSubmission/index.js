@@ -84,7 +84,8 @@ class ProjectSubmission extends Component {
                  ref='title'
                  type='text'
                  name='title'
-                 id='title'  
+                 id='title'
+                 maxLength="100"  
                  required              
                  />
               </FormGroup>
@@ -155,7 +156,6 @@ class ProjectSubmission extends Component {
                    <option ref="7.1"value={"PSP7-DOE"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Definição de Objetivos Estratégicos</option>
                    <option ref="7.2"value={"PSP7-VBE"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Viabilidade Econômica</option>
                    <option ref="7.3"value={"PSP7-DDM"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Desdobramento de Metas</option>
-
                  <option ref="8"value={"UNDEF"} className="optionGroup">Não sei em qual categoria meu projeto se encaixa</option>
                  </Input>
               </FormGroup>
