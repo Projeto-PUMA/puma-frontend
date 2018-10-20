@@ -193,6 +193,7 @@ class Register extends Component {
                   id="profissao"
                   type="text"
                   className="input"
+                  maxLength="35"
                   required
                 />
               </FormGroup>
@@ -211,7 +212,7 @@ class Register extends Component {
                     label="Senha *"
                     type="password"
                     id="senha"
-                    errorMessage="Digite uma senha entre 6 e 16 digitos !"
+                    errorMessage="Digite uma senha entre 6 e 16 digitos!"
                     validate={{
                       required: {value: true}, minLength: {value: 6},
                       maxLength: {value: 16}}}
