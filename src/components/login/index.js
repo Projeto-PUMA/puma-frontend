@@ -30,7 +30,7 @@ class Login extends Component {
       })
       .catch(function(error) {
         if (error) {
-          alert("Usuário não cadastrado!");
+          alert("Usuário ou senha incorreto!");
         }
       });
   }
