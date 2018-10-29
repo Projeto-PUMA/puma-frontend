@@ -1,9 +1,9 @@
 import React from "react";
+import { Link } from "react-router";
 import PropTypes from "prop-types";
 import ReactDOM from 'react-dom';
 import MaterialTitlePanel from "./materialTitlePanel";
 
-import Login from '../login/index';
 import ProjectSubmission from '../projectSubmission/index';
 import Projects from '../projects/index';
 import News from '../news/index';
@@ -40,13 +40,6 @@ const SidebarContent = props => {
   const style = props.style
     ? { ...styles.sidebar, ...props.style }
     : styles.sidebar;
-
-  function login() {
-    ReactDOM.render(
-      <Login />,
-      document.getElementById('center')
-    );
-  }
 
   function projectSubmission() {
     ReactDOM.render(
@@ -109,7 +102,10 @@ const SidebarContent = props => {
   }
 
   const unloggedLinks = [];
-  unloggedLinks.push(<button key="6" onClick={login} style={styles.sidebarLink}>Entrar</button>);
+  // <Link to='/login' key="6" style={styles.sidebarLink}>Entrar</Link>
+  // no lugar de
+  // <button key="6" onClick={login} style={styles.sidebarLink}>Entrar</button>
+  unloggedLinks.push(<Link to='/login' key="6" style={styles.sidebarLink}>Entrar</Link>);
   unloggedLinks.push(<button key="8" onClick={signup} style={styles.sidebarLink}>Registrar-se</button>);
 
   var logged = false;

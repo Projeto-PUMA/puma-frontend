@@ -4,8 +4,6 @@ import Sidebar from "./sidebar";
 import MaterialTitlePanel from "./materialTitlePanel";
 import SidebarContent from "./sidebarContent";
 
-import Home from '../home/index';
-
 const styles = {
   contentHeaderMenuLink: {
     fontSize: 20,
@@ -82,9 +80,7 @@ export default class Index extends React.Component {
     return (
       <div>
         <Sidebar {...sidebarProps}>
-          <MaterialTitlePanel title={contentHeader}>
-            <Home />
-          </MaterialTitlePanel>
+          <MaterialTitlePanel title={contentHeader} />
         </Sidebar>
       </div>
     );
