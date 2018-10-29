@@ -1,8 +1,7 @@
 import React, { Component } from "react";
+import {browserHistory} from 'react-router';
 import axios from "axios";
 import * as jwt_decode from "jwt-decode";
-import ReactDOM from "react-dom";
-import Home from "../home/index";
 import * as Store from "../../store";
 import {Button,Col,Row,Card,CardBody,Form,Label,Input} from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -46,7 +45,8 @@ class Login extends Component {
         "authorities",
         JSON.stringify(tokenInfo.authorities)
       );
-      ReactDOM.render(<Home />, document.getElementById("center"));
+      // browserhistory to redirect
+      browserHistory.push('/');
     }
   }
 
