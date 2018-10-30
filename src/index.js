@@ -7,13 +7,23 @@ import Login from '../src/components/login/index';
 import registerServiceWorker from './registerServiceWorker';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import Register from './components/register';
+import MyProjects from './components/myProjects';
+import ProjectSubmission from './components/projectSubmission';
+import Projects from './components/projects';
+import NewsSubmission from './components/newsSubmission';
+import News from './components/news';
 
 ReactDOM.render(
   <Router history={browserHistory}>
       <Route path='/' component={App}>
           <IndexRoute component={Home} />
           <Route path='/login' component={Login} />
-          <Route path='/register' component={Register} />
+          <Route path='/cadastro' component={Register} />
+          <Route path='/meusprojetos' component={MyProjects} />
+          <Route path='/submeterprojeto' component={ProjectSubmission} />
+          <Route path='/gerenciarprojetos' component={Projects} />
+          <Route path='/submeternoticia' component={NewsSubmission} />
+          <Route path='/gerenciarnoticias' component={News} />
       </Route>
   </Router>
   , document.getElementById('root'));

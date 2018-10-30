@@ -40,7 +40,7 @@ class Register extends Component {
       })
       .then(() => {
         alert("Usuário cadastrado com sucesso!");
-        browserHistory.push('/'); //dashboard
+        browserHistory.push('/login'); 
       })
       .catch(function(error) {
         if (error) {
