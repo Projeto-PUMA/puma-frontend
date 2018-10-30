@@ -77,12 +77,12 @@ const SidebarContent = props => {
     );
   }
 
-  function signup() {
-    ReactDOM.render(
-      <Register />,
-      document.getElementById('center')
-    );
-  }
+  // function signup() {
+  //   ReactDOM.render(
+  //     <Register />,
+  //     document.getElementById('center')
+  //   );
+  // }
 
   function logout() {
     try{
@@ -106,7 +106,7 @@ const SidebarContent = props => {
   // no lugar de
   // <button key="6" onClick={login} style={styles.sidebarLink}>Entrar</button>
   unloggedLinks.push(<Link to='/login' key="6" style={styles.sidebarLink}>Entrar</Link>);
-  unloggedLinks.push(<button key="8" onClick={signup} style={styles.sidebarLink}>Registrar-se</button>);
+  unloggedLinks.push(<Link to='/register' key="8" style={styles.sidebarLink}>Registrar-se</Link>);
 
   var logged = false;
   var adm = false;
