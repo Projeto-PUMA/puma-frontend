@@ -8,8 +8,6 @@ class ViewProject extends Component {
 	constructor(props) {
     super(props);
     this.state = {project: {}, author: {}};
-    console.log('props', props);
-    console.log('this', this);
 	}
 
 	getDecodedAccessToken(token) {
@@ -62,7 +60,7 @@ class ViewProject extends Component {
 	}
 
 	acceptProject(id) {
-		const answer = document.getElementById("answer").value;
+    const answer = document.getElementById("answer").value;
 
 		var currentUser = JSON.parse(localStorage.getItem('currentUser'));
     var token = currentUser && currentUser.token;
@@ -76,14 +74,15 @@ class ViewProject extends Component {
     })
 			.then(() => {
 				document.getElementById("status").innerHTML = "<h1>Status: Aceito</h1>";
-				document.getElementById("answerShow").innerHTML = "Answer: " + answer;
+        document.getElementById("answerShow").innerHTML = "Answer: " + answer;
+        document.getElementById("judge").style.display = "none";
 				alert('Projeto aceito com sucesso!');
 			})
 			.catch(() => { alert('Erro ao aceitar o Projeto!') });
 	}
 
 	rejectProject(id) {
-		const answer = document.getElementById("answer").value;
+    const answer = document.getElementById("answer").value;
 
 		var currentUser = JSON.parse(localStorage.getItem('currentUser'));
     var token = currentUser && currentUser.token;
@@ -97,7 +96,8 @@ class ViewProject extends Component {
     })
 			.then(() => {
 				document.getElementById("status").innerHTML = "<h1>Status: Rejeitado</h1>";
-				document.getElementById("answerShow").innerHTML = "Answer: " + answer;
+        document.getElementById("answerShow").innerHTML = "Answer: " + answer;
+        document.getElementById("judge").style.display = "none";
 				alert('Projeto rejeitado com sucesso!');
 			})
 			.catch(() => { alert('Erro ao rejeitar o Projeto!') });
@@ -124,7 +124,7 @@ class ViewProject extends Component {
 
 	renderJudge(id) {
 		return (
-			<div>
+			<div id="judge">
 				<button onClick={() => this.acceptProject(id)}>Aceitar</button>
 				<button onClick={() => this.rejectProject(id)}>Rejeitar</button>
 				<label>
