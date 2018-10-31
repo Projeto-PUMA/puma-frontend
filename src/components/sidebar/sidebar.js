@@ -5,11 +5,9 @@ const CANCEL_DISTANCE_ON_SCROLL = 20;
 
 const defaultStyles = {
   root: {
-    position: "absolute",
     top: 0,
     left: 0,
     right: 0,
-    bottom: 0,
     overflow: "hidden",
   },
   sidebar: {
@@ -27,7 +25,6 @@ const defaultStyles = {
     top: 0,
     left: 0,
     right: 0,
-    bottom: 0,
     overflowY: "auto",
     WebkitOverflowScrolling: "touch",
     transition: "left .3s ease-out, right .3s ease-out"
