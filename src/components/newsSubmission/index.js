@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { EditorState, convertToRaw } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
 import axios from 'axios';
 import * as jwt_decode from "jwt-decode";
 import * as Store from '../../store';
@@ -13,6 +15,16 @@ class NewsSubmission extends Component {
     this.handleNews = this.handleNews.bind(this);
   }
 
+  state = {
+    editorState: EditorState.createEmpty(),
+  }
+
+  onEditorStateChange = (editorState) => {
+    this.setState({
+      editorState,
+    });
+  };
+
 	getDecodedAccessToken(token) {
     try {
       return jwt_decode(token);
@@ -26,6 +38,7 @@ class NewsSubmission extends Component {
     e.preventDefault();
 
     const data = new FormData(e.target);
+    const { editorState } = this.state;
 
 		var currentUser = JSON.parse(localStorage.getItem('currentUser'));
     var token = currentUser && currentUser.token;
@@ -37,7 +50,7 @@ class NewsSubmission extends Component {
     axios.post(path + '/sec/post/new', {
       author: { id: tokenInfo.id },
 			title: data.get('title'),
-			body: data.get('body')
+			body: draftToHtml(convertToRaw(editorState.getCurrentContent())),
     })
     .then(() => 
       { alert('Notícia criada com sucesso!'); 
@@ -50,6 +63,7 @@ class NewsSubmission extends Component {
   }
 
   render() {
+    const { editorState } = this.state;
     return (
 			<div>
         <Row>
@@ -78,15 +92,18 @@ class NewsSubmission extends Component {
             <FormGroup>
               <Label>Conteúdo/Corpo *</Label>
               <Editor
-                 ref='body'
-                 type='textarea'
-                 name='body'
-                 id='body'
-                 required/>
+                editorState={editorState}
+                ref='body'
+                type='textarea'
+                name='body'
+                id='body'
+                onEditorStateChange={this.onEditorStateChange}
+                required
+              />
             </FormGroup>
             <br></br>
             <Button type="submit" value ="submit" color="primary" style={{ display: "block",margin: "0 auto"}}>
-              Enviar Projeto
+              Enviar Notícia
             </Button>
           </Form>
           </CardBody>

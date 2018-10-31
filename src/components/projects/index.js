@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as jwt_decode from "jwt-decode";
-import ReactDOM from 'react-dom';
 import * as Store from '../../store';
-import ViewProject from './viewProject';
+import {browserHistory} from 'react-router';
 
 class Projects extends Component {
 
@@ -13,12 +12,12 @@ class Projects extends Component {
   }
   
   viewProject(id) {
-    ReactDOM.render(
-      <ViewProject
-        id={id}
-      />,
-      document.getElementById('center')
-    );
+    browserHistory.push({
+      pathname: '/projeto',
+      state: {
+        id: id,
+      },
+    });
   }
 
 	componentWillMount() {
