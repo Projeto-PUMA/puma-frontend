@@ -49,8 +49,12 @@ class MyProjects extends Component {
 	}
 
 	viewProject(id) {
-    console.log(id);
-    browserHistory.push({ pathname: '/project', id: id }); 
+    browserHistory.push({
+      pathname: '/projeto',
+      state: {
+        id: id,
+      },
+    }); 
   }
 
 	renderStatus(statusCode) {
@@ -64,7 +68,7 @@ class MyProjects extends Component {
 	}
 
 	renderTableLine(d, idx) {
-		return (<tr key={idx}><td>{d.title}</td><td>{d.body}</td>{this.renderStatus(d.projectStatus.id)}<td><i className="fas fa-eye"></i></td></tr>);
+		return (<tr key={idx}><td>{d.title}</td><td>{d.body}</td>{this.renderStatus(d.projectStatus.id)}<td><i className="fas fa-eye" onClick={() => this.viewProject(d.id)}></i></td></tr>);
 	}
 
   render() {
