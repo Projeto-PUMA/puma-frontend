@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as jwt_decode from "jwt-decode";
-import ReactDOM from 'react-dom';
 import * as Store from '../../store';
 import './style.css';
-import ViewProject from '../projects/viewProject';
 import {Table} from 'reactstrap';
+import {browserHistory} from 'react-router';
 
 class MyProjects extends Component {
 
@@ -50,12 +49,12 @@ class MyProjects extends Component {
 	}
 
 	viewProject(id) {
-    ReactDOM.render(
-      <ViewProject
-        id={id}
-      />,
-      document.getElementById('center')
-    );
+    browserHistory.push({
+      pathname: '/projeto',
+      state: {
+        id: id,
+      },
+    }); 
   }
 
 	renderStatus(statusCode) {
@@ -76,7 +75,7 @@ class MyProjects extends Component {
 		const data = this.state.projects;
     return (
 			<div>
-				<Table responsive hover>
+				<Table>
 					<thead>
 						<tr>
 							<th>Título</th>

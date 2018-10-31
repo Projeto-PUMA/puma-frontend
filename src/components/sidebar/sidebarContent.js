@@ -87,7 +87,7 @@ const SidebarContent = props => {
   userLinks.push(<Link to='/meusprojetos' key="2" style={styles.sidebarLink}>Meus Projetos</Link>);
   admLinks.push(<Link to='/gerenciarprojetos' key="3" style={styles.sidebarLink}>Gerenciar Projetos</Link>);
   admLinks.push(<Link to='/submeternoticia' key="4" style={styles.sidebarLink}>Submeter Notícia</Link>);
-  admLinks.push(<Link to='/gerenciarnoticia' key="5" style={styles.sidebarLink}>Gerenciar Notícias</Link>);
+  admLinks.push(<Link to='/gerenciarnoticias' key="5" style={styles.sidebarLink}>Gerenciar Notícias</Link>);
 
   return (
     <MaterialTitlePanel title="Menu" style={style}>
