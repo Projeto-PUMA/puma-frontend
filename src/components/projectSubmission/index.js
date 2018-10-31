@@ -4,6 +4,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import * as Store from '../../store';
 import * as jwt_decode from "jwt-decode";
 import {Card, CardBody, Form, Label, Input,Row,Col,Button, FormGroup} from 'reactstrap';
+import {browserHistory} from 'react-router';
 
 class ProjectSubmission extends Component {
 
@@ -52,7 +53,10 @@ class ProjectSubmission extends Component {
       projectSubArea: { id: 1 }, // this is a dropdown
 			projectAreaDescription: { id: 1 }, // this is ??
     })
-    .then(() => { alert('Projeto cadastrado com sucesso!') })
+    .then(() => 
+      { alert('Projeto cadastrado com sucesso!') 
+          browserHistory.push('/meusprojetos');
+      })
     .catch(function (error) {
       if (error) {
         alert('Projeto não cadastrado!');

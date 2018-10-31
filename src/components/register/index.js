@@ -6,7 +6,7 @@ import axios from "axios";
 import * as Store from "../../store";
 import MaskedInput from 'react-text-mask'
 import {Card, CardBody, Form, Label, Input,Row,Col,Button, FormGroup} from 'reactstrap';
-
+import {browserHistory} from 'react-router';
 
 class Register extends Component {
   constructor(props) {
@@ -40,6 +40,7 @@ class Register extends Component {
       })
       .then(() => {
         alert("Usuário cadastrado com sucesso!");
+        browserHistory.push('/login'); 
       })
       .catch(function(error) {
         if (error) {
@@ -149,7 +150,7 @@ class Register extends Component {
                   name="email"
                   id="email"
                   className="input"
-                  required email
+                  required
                 />
               </FormGroup>
               <FormGroup>
