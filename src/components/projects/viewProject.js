@@ -6,7 +6,7 @@ import * as Store from '../../store';
 class ViewProject extends Component {
 
 	constructor(props) {
-		super(props);
+    super(props);
 		this.state = {project: {}, author: {}};
 	}
 
@@ -31,7 +31,7 @@ class ViewProject extends Component {
     axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
 
     const path = Store['backend'].path; // This is backend path
-    axios.get(path + '/sec/project/listById/' + this.props.id)
+    axios.get(path + '/sec/project/listById/' + this.props.params.id)
 			.then(response => { this.setProject(response) })
 			.catch(() => { alert('Erro ao processar projeto!') });
 	}

@@ -12,6 +12,7 @@ import ProjectSubmission from './components/projectSubmission';
 import Projects from './components/projects';
 import NewsSubmission from './components/newsSubmission';
 import News from './components/news';
+import ViewProject from './components/projects/viewProject';
 
 ReactDOM.render(
   <Router history={browserHistory}>
@@ -20,6 +21,7 @@ ReactDOM.render(
           <Route path='/login' component={Login} />
           <Route path='/cadastro' component={Register} />
           <Route path='/meusprojetos' component={MyProjects} />
+          <Route path='/projeto/:id' component={ViewProject} />
           <Route path='/submeterprojeto' component={ProjectSubmission} />
           <Route path='/gerenciarprojetos' component={Projects} />
           <Route path='/submeternoticia' component={NewsSubmission} />
