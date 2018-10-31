@@ -1,15 +1,7 @@
 import React from "react";
 import { Link } from "react-router";
 import PropTypes from "prop-types";
-import ReactDOM from 'react-dom';
 import MaterialTitlePanel from "./materialTitlePanel";
-
-import ProjectSubmission from '../projectSubmission/index';
-import Projects from '../projects/index';
-import News from '../news/index';
-import NewsSubmission from '../newsSubmission/index';
-import MyProjects from '../myProjects/index';
-import Register from '../register/index';
 
 const styles = {
   sidebar: {
@@ -41,49 +33,6 @@ const SidebarContent = props => {
     ? { ...styles.sidebar, ...props.style }
     : styles.sidebar;
 
-  function projectSubmission() {
-    ReactDOM.render(
-      <ProjectSubmission />,
-      document.getElementById('center')
-    );
-  }
-
-  function myProjects() {
-    ReactDOM.render(
-      <MyProjects />,
-      document.getElementById('center')
-    );
-  }
-
-
-  function projects() {
-    ReactDOM.render(
-      <Projects />,
-      document.getElementById('center')
-    );
-  }
-  
-  function news() {
-    ReactDOM.render(
-      <News />,
-      document.getElementById('center')
-    );
-  }
-
-  function newsSubmission() {
-    ReactDOM.render(
-      <NewsSubmission />,
-      document.getElementById('center')
-    );
-  }
-
-  function signup() {
-    ReactDOM.render(
-      <Register />,
-      document.getElementById('center')
-    );
-  }
-
   function logout() {
     try{
       if(localStorage.getItem('currentUser')){
@@ -106,7 +55,7 @@ const SidebarContent = props => {
   // no lugar de
   // <button key="6" onClick={login} style={styles.sidebarLink}>Entrar</button>
   unloggedLinks.push(<Link to='/login' key="6" style={styles.sidebarLink}>Entrar</Link>);
-  unloggedLinks.push(<button key="8" onClick={signup} style={styles.sidebarLink}>Registrar-se</button>);
+  unloggedLinks.push(<Link to='/cadastro' key="8" style={styles.sidebarLink}>Registrar-se</Link>);
 
   var logged = false;
   var adm = false;
@@ -130,15 +79,15 @@ const SidebarContent = props => {
     logged = true;
   }
 
-  const logOut = <button key="7" onClick={logout} style={styles.sidebarLink}>Sair</button>;
+  const logOut = <Link to='/' key="7" onClick={logout} style={styles.sidebarLink}>Sair</Link>;
 
   const admLinks = [];
   const userLinks = [];
-  userLinks.push(<button key="1" onClick={projectSubmission} style={styles.sidebarLink}>Submeter Projeto</button>);
-  userLinks.push(<button key="2" onClick={myProjects} style={styles.sidebarLink}>Meus Projetos</button>);
-  admLinks.push(<button key="3" onClick={projects} style={styles.sidebarLink}>Gerenciar Projetos</button>);
-  admLinks.push(<button key="4" onClick={newsSubmission} style={styles.sidebarLink}>Submeter Notícia</button>);
-  admLinks.push(<button key="5" onClick={news} style={styles.sidebarLink}>Gerenciar Notícias</button>);
+  userLinks.push(<Link to='submeterprojeto' key="1" style={styles.sidebarLink}>Submeter Projeto</Link>);
+  userLinks.push(<Link to='/meusprojetos' key="2" style={styles.sidebarLink}>Meus Projetos</Link>);
+  admLinks.push(<Link to='/gerenciarprojetos' key="3" style={styles.sidebarLink}>Gerenciar Projetos</Link>);
+  admLinks.push(<Link to='/submeternoticia' key="4" style={styles.sidebarLink}>Submeter Notícia</Link>);
+  admLinks.push(<Link to='/gerenciarnoticia' key="5" style={styles.sidebarLink}>Gerenciar Notícias</Link>);
 
   return (
     <MaterialTitlePanel title="Menu" style={style}>

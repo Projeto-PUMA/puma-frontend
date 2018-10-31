@@ -4,6 +4,7 @@ import * as jwt_decode from "jwt-decode";
 import * as Store from '../../store';
 import {Col,Row,Input,Label,Button,FormGroup,Card,CardBody,Form} from 'reactstrap';
 import { Editor } from 'react-draft-wysiwyg';
+import {browserHistory} from 'react-router';
 
 class NewsSubmission extends Component {
 
@@ -38,7 +39,9 @@ class NewsSubmission extends Component {
 			title: data.get('title'),
 			body: data.get('body')
     })
-    .then(() => { alert('Notícia criada com sucesso!') })
+    .then(() => 
+      { alert('Notícia criada com sucesso!'); 
+        browserHistory.push('/gerenciarnoticias');})
     .catch(function (error) {
       if (error) {
         alert('Notícia não cadastrada!');
