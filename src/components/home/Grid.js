@@ -1,158 +1,115 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import * as Store from '../../store';
 import CarouselApp from '../carousel/index.js';
-// eslint-disable-next-line
-import { Card, CardImg, CardText, CardBody, CardLink,
-  CardTitle, CardSubtitle, Row, Col } from 'reactstrap';
+import {
+  Card, CardText, CardBody, CardLink,
+  CardTitle,
+} from 'reactstrap';
+import { browserHistory } from 'react-router';
 
 class Grid extends Component {
-  render() {
-    return (
-<div id="center" style={{ marginTop: 30 }}>
-        <div style={{marginLeft:40, marginRight:40, align:'center' }}>
-      {/* Slider Carousel */}
-      <Row >
-      <Col sm="1"/>
-        <Col sm="10">
-      <Card>      
-        <CarouselApp />        
-      </Card>
-      </Col>
-      </Row>
-      <Row>
-        <Col sm="1"/>
-        <Col sm="3">
-        <br/>
-        <h2 style={{textalign: 'center'}}>Últimas Notícias</h2>
-        </Col>
-        <Col sm="4"/>
-        <Col sm="3">
-        <br/>
-        <h2>Melhores Projetos</h2>
-        </Col>
-      </Row>
-      {/* First Row */}
-      <Row>
-        <Col sm="1"/>
-        <Col sm="3">
-          <Card>
-          <CardBody>
-            <CardTitle>Card title</CardTitle>
-            <CardSubtitle>Card subtitle</CardSubtitle>
-          </CardBody>
-          <CardBody>
-            <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-            <CardLink href="#">Card Link</CardLink>
-            <CardLink href="#">Another Link</CardLink>
-          </CardBody>
-        </Card>
-        </Col>
-        <Col sm="4">
-          <Card>
-          <CardBody>
-            <CardTitle>Card title</CardTitle>
-            <CardSubtitle>Card subtitle</CardSubtitle>
-          </CardBody>
-          <CardBody>
-            <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-            <CardLink href="#">Card Link</CardLink>
-            <CardLink href="#">Another Link</CardLink>
-          </CardBody>
-        </Card>
-        </Col>
-        <Col sm="3">
-          <Card>
-          <CardBody>
-            <CardTitle>Card title</CardTitle>
-            <CardSubtitle>Card subtitle</CardSubtitle>
-          </CardBody>
-          <CardBody>
-            <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-            <CardLink href="#">Card Link</CardLink>
-            <CardLink href="#">Another Link</CardLink>
-          </CardBody>
-        </Card>
-        </Col>
-      </Row>
-      {/* Second Row */}
-      <Row>
-        <Col sm="1"/>
-        <Col sm="3">
-          <Card>
-          <CardBody>
-            <CardTitle>Card title</CardTitle>
-            <CardSubtitle>Card subtitle</CardSubtitle>
-          </CardBody>
-          <CardBody>
-            <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-            <CardLink href="#">Card Link</CardLink>
-            <CardLink href="#">Another Link</CardLink>
-          </CardBody>
-        </Card>
-        </Col>
-        <Col sm="4"/>
-        <Col sm="3">
-          <Card>
-          <CardBody>
-            <CardTitle>Card title</CardTitle>
-            <CardSubtitle>Card subtitle</CardSubtitle>
-          </CardBody>
-          <CardBody>
-            <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-            <CardLink href="#">Card Link</CardLink>
-            <CardLink href="#">Another Link</CardLink>
-          </CardBody>
-        </Card>
-        </Col>
-      </Row>
-      {/* Third Row */}
-      <Row>
-        <Col sm="1"/>
-        <Col sm="3">
-          <Card>
-          <CardBody>
-            <CardTitle>Card title</CardTitle>
-            <CardSubtitle>Card subtitle</CardSubtitle>
-          </CardBody>
-          <CardBody>
-            <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-            <CardLink href="#">Card Link</CardLink>
-            <CardLink href="#">Another Link</CardLink>
-          </CardBody>
-        </Card>
-        </Col>
-        <Col sm="4"/>
-        <Col sm="3">
-          <Card>
-          <CardBody>
-            <CardTitle>Card title</CardTitle>
-            <CardSubtitle>Card subtitle</CardSubtitle>
-          </CardBody>
-          <CardBody>
-            <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-            <CardLink href="#">Card Link</CardLink>
-            <CardLink href="#">Another Link</CardLink>
-          </CardBody>
-        </Card>
-        </Col>
-      </Row>     
-    </div>
 
-        {/* Footer */}
-    <div>
-        <Row style={{backgroundColor:'blue',}}>
-        <Col sm="3"/>
-        <Col sm="8">
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <p>Departamento de Engenharia de Produção, Campus Universitário Darcy Ribeiro, Brasília-DF | CEP 70910-900 | Telefones UnB
-        <br/>Copyright © 2019 Universidade de Brasília. Todos os direitos reservados.</p>
-        </Col>
-      </Row>
+  constructor(props) {
+		super(props);
+		this.state = {news: []};
+  }
+
+  componentWillMount() {
+		const data = {};
+    for (const field in this.refs) {
+      data[field] = this.refs[field].value;
+		}
+		
+		var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    var token = currentUser && currentUser.token;
+    axios.defaults.headers.common['Authorization'] = "Bearer " + token;
+    axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
+
+    const path = Store['backend'].path; // This is backend path
+    axios.get(path + '/sec/post/listAll')
+			.then(response => { this.setNews(response) })
+			.catch(() => { alert('Erro ao processar notícias!') });
+  }
+
+  setNews(response) {
+		for(var i=0; i<response.data.length; i++) {
+			this.setState({ 
+				news: this.state.news.concat(response.data[i])
+			})
+		}
+  }
+
+  viewNews(id) {
+    browserHistory.push({
+      pathname: '/noticia',
+      state: {
+        id: id,
+      },
+    });
+  }
+  
+  renderCard(d, idx) {
+    if (idx > 2) return;
+    return (
+      <div key={idx}>
+        <Card onClick={() => this.viewNews(d.id)} style={{ margin: 10, marginBottom: 20 }}>
+          <CardBody>
+            <CardTitle>{d.title}</CardTitle>
+          </CardBody>
+          <CardBody>
+            <CardText>{ /*d.body.substring(0, 40)*/ 'Um sumário da notícia ficará aqui'}</CardText>
+            <CardLink style={{ color: 'blue' }}>Ler mais...</CardLink>
+          </CardBody>
+        </Card>
       </div>
+    );
+  }
+
+  render() {
+    const data = this.state.news;
+    return (
+      <div id='content' style={{ width: '100%', height: '100%' }}>
+        <div style={{ marginTop: 40, width: '100%', align: 'center', marginBottom: 20 }}>
+          <CarouselApp />
+        </div>
+        <div style={{ flexDirection: 'row' }}>
+          <div style={{ minWidth: '30%', maxWidth: '30%', float: 'left' }}>
+            <h2 style={{ marginLeft: 10 }}>Notícias</h2>
+            {data.map((d, idx) => this.renderCard(d, idx))}
+          </div>
+          <div style={{ minWidth: '30%', maxWidth: '30%', float: 'left', right: 0 }}>
+            <h2 style={{ marginLeft: 10 }}>Projetos</h2>
+            <Card style={{ margin: 10, marginBottom: 20 }}>
+              <CardBody>
+                <CardTitle>{'Projeto 1'}</CardTitle>
+              </CardBody>
+              <CardBody>
+                <CardText>{'Descrição do Projeto 1'}</CardText>
+                <CardLink href="#">Ler mais...</CardLink>
+              </CardBody>
+            </Card>
+            <Card style={{ margin: 10, marginBottom: 20 }}>
+              <CardBody>
+                <CardTitle>{'Projeto 2'}</CardTitle>
+              </CardBody>
+              <CardBody>
+                <CardText>{'Descrição do Projeto 2'}</CardText>
+                <CardLink href="#">Ler mais...</CardLink>
+              </CardBody>
+            </Card>
+            <Card style={{ margin: 10, marginBottom: 20 }}>
+              <CardBody>
+                <CardTitle>{'Projeto 3'}</CardTitle>
+              </CardBody>
+              <CardBody>
+                <CardText>{'Descrição do Projeto 3'}</CardText>
+                <CardLink href="#">Ler mais...</CardLink>
+              </CardBody>
+            </Card>
+          </div>
+        </div>
       </div>
-     
     );
   }
 }

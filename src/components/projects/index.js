@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import * as jwt_decode from "jwt-decode";
 import * as Store from '../../store';
-import {browserHistory} from 'react-router';
+import { browserHistory } from 'react-router';
 
 class Projects extends Component {
 
@@ -34,7 +34,7 @@ class Projects extends Component {
     const path = Store['backend'].path; // This is backend path
     axios.get(path + '/sec/project/listAll')
 			.then(response => { this.setProjects(response) })
-			.catch(() => { alert('Erro ao processar notícias!') });
+			.catch(() => { alert('Erro ao processar projetos!') });
 	}
 
 	setProjects(response) {

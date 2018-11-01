@@ -3,6 +3,7 @@ import React from "react";
 import Sidebar from "./sidebar";
 import MaterialTitlePanel from "./materialTitlePanel";
 import SidebarContent from "./sidebarContent";
+import { browserHistory } from 'react-router';
 
 const styles = {
   contentHeaderMenuLink: {
@@ -44,6 +45,10 @@ export default class Index extends React.Component {
     this.onSetOpen(!this.state.open);
   }
 
+  redirectHome() {
+    browserHistory.push('/');
+  }
+
   render() {
     const sidebar = <SidebarContent />;
 
@@ -58,7 +63,7 @@ export default class Index extends React.Component {
             =
           </button>
         )}
-        <span> PUMA</span>
+        <span onClick={() => this.redirectHome()}> PUMA</span>
       </span>
     );
 

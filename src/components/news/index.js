@@ -4,6 +4,7 @@ import * as jwt_decode from "jwt-decode";
 import * as Store from '../../store';
 import './style.css';
 import { Table } from 'reactstrap';
+import { browserHistory } from 'react-router';
 
 class News extends Component {
 
@@ -35,7 +36,16 @@ class News extends Component {
 				news: this.state.news.concat(response.data[i])
 			})
 		}
-	}
+  }
+  
+  viewNews(id) {
+    browserHistory.push({
+      pathname: '/noticia',
+      state: {
+        id: id,
+      },
+    });
+  }
 
 	getDecodedAccessToken(token) {
     try {
@@ -62,7 +72,7 @@ class News extends Component {
 	}
 
 	renderTableLine(d, idx) {
-		return (<tr key={idx}><td>{d.title}</td><td>{d.body}</td><td><i className="fas fa-trash" onClick={() => {this.deleteNews(d.id, idx)}}></i></td></tr>);
+		return (<tr key={idx}><td>{d.title}</td><td>{d.author.name}</td><td><i className="fas fa-trash" onClick={() => {this.deleteNews(d.id, idx)}}></i></td><td><i className="fas fa-eye" onClick={() => this.viewNews(d.id)}></i></td></tr>);
 	}
 
   render() {
@@ -73,8 +83,9 @@ class News extends Component {
 					<thead >
 						<tr>
 							<th>Título</th>
-							<th>Descrição</th>
+							<th>Autor</th>
 							<th></th>
+              <th></th>
 						</tr>
 					</thead>
 					<tbody>
