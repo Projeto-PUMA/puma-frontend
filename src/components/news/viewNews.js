@@ -38,7 +38,7 @@ class ViewNews extends Component {
   
 	render() {
 		return (
-			<div style={{ marginTop: 120 }}>
+			<div style={{ margin: 50, marginTop: 120 }}>
 				<h2>{this.state.news.title}</h2>
         <div style={{ marginTop: 30 }} dangerouslySetInnerHTML={{ __html: this.state.news.body }} />
 			</div>

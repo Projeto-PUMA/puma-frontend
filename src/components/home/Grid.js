@@ -29,7 +29,7 @@ class Grid extends Component {
     const path = Store['backend'].path; // This is backend path
     axios.get(path + '/sec/post/listAll')
       .then(response => { this.setNews(response) })
-      .catch(() => { alert('Erro ao processar notícias!') });
+      .catch((error) => { console.log(error);alert('Erro ao processar notícias!') });
   }
 
   setNews(response) {
