@@ -16,20 +16,20 @@ class Grid extends Component {
   }
 
   componentWillMount() {
-    const data = {};
-    for (const field in this.refs) {
-      data[field] = this.refs[field].value;
-    }
+    // const data = {};
+    // for (const field in this.refs) {
+    //   data[field] = this.refs[field].value;
+    // }
 
-    var currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    var token = currentUser && currentUser.token;
-    axios.defaults.headers.common['Authorization'] = "Bearer " + token;
-    axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
+    // var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    // var token = currentUser && currentUser.token;
+    // axios.defaults.headers.common['Authorization'] = "Bearer " + token;
+    // axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
 
-    const path = Store['backend'].path; // This is backend path
-    axios.get(path + '/sec/post/listAll')
-      .then(response => { this.setNews(response) })
-      .catch((error) => { console.log(error);alert('Erro ao processar notícias!') });
+    // const path = Store['backend'].path; // This is backend path
+    // axios.get(path + '/sec/post/listAll')
+    //   .then(response => { this.setNews(response) })
+    //   .catch((error) => { console.log(error);alert('Erro ao processar notícias!') });
   }
 
   setNews(response) {
@@ -97,7 +97,7 @@ class Grid extends Component {
         <div style={{ flexDirection: 'row', align: 'center', width: '100%' }}>
           <div style={{ minWidth: '30%', maxWidth: '30%', float: 'left', margin: 50, marginTop: 0 }}>
             <h2 style={{ marginLeft: 20 }}>Notícias</h2>
-            {data.map((d, idx) => this.renderCard(d, idx))}
+            {/* {data.map((d, idx) => this.renderCard(d, idx))} */}
           </div>
           <div style={{ minWidth: '30%', maxWidth: '30%', float: 'right', margin: 50, marginTop: 0 }}>
             <h2 style={{ marginLeft: 20 }}>Projetos</h2>
