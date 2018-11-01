@@ -12,20 +12,20 @@ const items = [
   {
     src: 'https://i.imgur.com/vafU6WE.jpg',
     altText: 'img 1',
-    caption: 'Slide 1',
-    header: 'Slide 1 Header'
+    caption: 'Estamos com Edital Aberto',
+    header: 'Edital 02/2018'
   },
   {
     src: 'https://i.imgur.com/GOWr7LT.jpg',
     altText: 'img 2',
-    caption: 'Slide 2',
-    header: 'Slide 2 Header'
+    caption: 'Empresas buscam UnB',
+    header: 'Busca por universitários aumenta gradativamente'
   },
   {
     src: 'https://i.imgur.com/X6VHXgN.jpg',
     altText: 'img 3',
-    caption: 'Slide 3',
-    header: 'Slide 3 Header'
+    caption: 'Sistema PUMA',
+    header: 'O sistema que facilita o trabalho dos professores'
   }
 ];
 

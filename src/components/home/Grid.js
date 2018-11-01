@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import * as Store from '../../store';
+// import axios from 'axios';
+// import * as Store from '../../store';
 import CarouselApp from '../carousel/index.js';
 import {
   Card, CardText, CardBody, CardLink,
-  CardTitle, CardSubtitle
+  CardTitle, CardSubtitle, CardImg
 } from 'reactstrap';
 import { browserHistory } from 'react-router';
 
@@ -54,6 +54,7 @@ class Grid extends Component {
     return (
       <div key={idx}>
         <Card onClick={() => this.viewNews(d.id)} style={{ margin: 10, marginBottom: 20 }}>
+          <CardImg top width="100%" height="240px" src="https://st2.depositphotos.com/6719572/11108/i/950/depositphotos_111080252-stock-photo-yellow-vintage-pattern-background.jpg" alt="Card image cap" />
           <CardBody>
             <CardTitle>{d.title}</CardTitle>
           </CardBody>
@@ -67,7 +68,7 @@ class Grid extends Component {
   }
 
   render() {
-    const data = this.state.news;
+    // const data = this.state.news;
     return (
       <div id='content' style={{ width: '100%', height: '100%' }}>
         <div style={{ marginTop: 40, width: '100%', align: 'center', marginBottom: 20 }}>
@@ -82,6 +83,7 @@ class Grid extends Component {
             Estratégica. Os estudantes trabalham em equipes e participam de todas as etapas dos projetos, desde o planejamento até o encerramento.
             Além de promover a geração de novas soluções, os PSPs proporcionam uma experiência completa de gerenciamento de projetos.
           </p>
+          <img style={{ margin: 30, marginBottom: 0 }} alt="Imagem" src='http://producaounb.com.br/psp/wp-content/uploads/2017/06/new-piktochart_22996966_97374f78a6650361fd0822dc8046ce3c8857fed2-1.png' />
         </div>
         <div style={{ margin: 50, marginTop: 30, marginBottom: 30 }}>
           <Card style={{ margin: 10 }}>
@@ -90,7 +92,7 @@ class Grid extends Component {
               <CardSubtitle>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris</CardSubtitle>
             </CardBody>
             <CardBody>
-              <CardLink href="#">BAIXE AQUI</CardLink>
+              <a onClick={() => { window.open('teste.pdf', '_blank', 'fullscreen=yes'); return false }}>BAIXE AQUI</a>
             </CardBody>
           </Card>
         </div>
@@ -102,6 +104,7 @@ class Grid extends Component {
           <div style={{ minWidth: '30%', maxWidth: '30%', float: 'right', margin: 50, marginTop: 0 }}>
             <h2 style={{ marginLeft: 20 }}>Projetos</h2>
             <Card style={{ margin: 10, marginBottom: 20 }}>
+            <CardImg top width="100%" height="240px" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
               <CardBody>
                 <CardTitle>{'Projeto 1'}</CardTitle>
               </CardBody>
@@ -111,6 +114,7 @@ class Grid extends Component {
               </CardBody>
             </Card>
             <Card style={{ margin: 10, marginBottom: 20 }}>
+            <CardImg top width="100%" height="240px" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
               <CardBody>
                 <CardTitle>{'Projeto 2'}</CardTitle>
               </CardBody>
@@ -120,6 +124,7 @@ class Grid extends Component {
               </CardBody>
             </Card>
             <Card style={{ margin: 10, marginBottom: 20 }}>
+            <CardImg top width="100%" height="240px" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
               <CardBody>
                 <CardTitle>{'Projeto 3'}</CardTitle>
               </CardBody>
