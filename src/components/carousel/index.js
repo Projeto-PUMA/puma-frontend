@@ -75,8 +75,8 @@ class Example extends Component {
           onExited={this.onExited}
           key={item.src}
         >
-        <div className="image-carousel" style={{ height: 400 }}>
-          <img src={item.src} alt={item.altText} style={{ width: '100%', height: 400 }} />
+        <div className="image-carousel" style={{ height: 500 }}>
+          <img src={item.src} alt={item.altText} style={{ width: '100%', height: 500 }} />
         </div>
           <CarouselCaption captionText={item.caption} captionHeader={item.caption} />
         </CarouselItem>

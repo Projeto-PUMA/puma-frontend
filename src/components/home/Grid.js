@@ -4,40 +4,40 @@ import * as Store from '../../store';
 import CarouselApp from '../carousel/index.js';
 import {
   Card, CardText, CardBody, CardLink,
-  CardTitle,
+  CardTitle, CardSubtitle
 } from 'reactstrap';
 import { browserHistory } from 'react-router';
 
 class Grid extends Component {
 
   constructor(props) {
-		super(props);
-		this.state = {news: []};
+    super(props);
+    this.state = { news: [] };
   }
 
   componentWillMount() {
-		const data = {};
+    const data = {};
     for (const field in this.refs) {
       data[field] = this.refs[field].value;
-		}
-		
-		var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    }
+
+    var currentUser = JSON.parse(localStorage.getItem('currentUser'));
     var token = currentUser && currentUser.token;
     axios.defaults.headers.common['Authorization'] = "Bearer " + token;
     axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
 
     const path = Store['backend'].path; // This is backend path
     axios.get(path + '/sec/post/listAll')
-			.then(response => { this.setNews(response) })
-			.catch(() => { alert('Erro ao processar notícias!') });
+      .then(response => { this.setNews(response) })
+      .catch(() => { alert('Erro ao processar notícias!') });
   }
 
   setNews(response) {
-		for(var i=0; i<response.data.length; i++) {
-			this.setState({ 
-				news: this.state.news.concat(response.data[i])
-			})
-		}
+    for (var i = 0; i < response.data.length; i++) {
+      this.setState({
+        news: this.state.news.concat(response.data[i])
+      })
+    }
   }
 
   viewNews(id) {
@@ -48,7 +48,7 @@ class Grid extends Component {
       },
     });
   }
-  
+
   renderCard(d, idx) {
     if (idx > 2) return;
     return (
@@ -73,13 +73,34 @@ class Grid extends Component {
         <div style={{ marginTop: 40, width: '100%', align: 'center', marginBottom: 20 }}>
           <CarouselApp />
         </div>
-        <div style={{ flexDirection: 'row' }}>
-          <div style={{ minWidth: '30%', maxWidth: '30%', float: 'left' }}>
-            <h2 style={{ marginLeft: 10 }}>Notícias</h2>
+        <div style={{ textAlign: 'center', marginTop: 50 }}>
+          <h1>PROJETO DE SISTEMAS DE PRODUÇÃO (PSP)</h1>
+          <p style={{ margin: 60, marginTop: 30, marginBottom: 0, fontWeight: 'bold', color: 'grey' }}>
+            Nos cursos de Projeto de Sistemas de Produção (PSP), o principal objetivo é fazer com que os alunos apliquem os conhecimentos
+            teóricos da engenharia de produção na resolução de problemas reais. Com isso, os PSPs são focados nas áreas de: Probabilidade
+            e Estatística, Sistema de Informação, Planejamento e Controle da Produção, Gestão da Qualidade, Engenharia do Produto e Gestão
+            Estratégica. Os estudantes trabalham em equipes e participam de todas as etapas dos projetos, desde o planejamento até o encerramento.
+            Além de promover a geração de novas soluções, os PSPs proporcionam uma experiência completa de gerenciamento de projetos.
+          </p>
+        </div>
+        <div style={{ margin: 50, marginTop: 30, marginBottom: 30 }}>
+          <Card style={{ margin: 10 }}>
+            <CardBody>
+              <CardTitle>{'Aberto Edital 02/2018'}</CardTitle>
+              <CardSubtitle>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris</CardSubtitle>
+            </CardBody>
+            <CardBody>
+              <CardLink href="#">BAIXE AQUI</CardLink>
+            </CardBody>
+          </Card>
+        </div>
+        <div style={{ flexDirection: 'row', align: 'center', width: '100%' }}>
+          <div style={{ minWidth: '30%', maxWidth: '30%', float: 'left', margin: 50, marginTop: 0 }}>
+            <h2 style={{ marginLeft: 20 }}>Notícias</h2>
             {data.map((d, idx) => this.renderCard(d, idx))}
           </div>
-          <div style={{ minWidth: '30%', maxWidth: '30%', float: 'left', right: 0 }}>
-            <h2 style={{ marginLeft: 10 }}>Projetos</h2>
+          <div style={{ minWidth: '30%', maxWidth: '30%', float: 'right', margin: 50, marginTop: 0 }}>
+            <h2 style={{ marginLeft: 20 }}>Projetos</h2>
             <Card style={{ margin: 10, marginBottom: 20 }}>
               <CardBody>
                 <CardTitle>{'Projeto 1'}</CardTitle>
