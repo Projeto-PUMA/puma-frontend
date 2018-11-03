@@ -1,158 +1,141 @@
 import React, { Component } from 'react';
+// import axios from 'axios';
+// import * as Store from '../../store';
 import CarouselApp from '../carousel/index.js';
-// eslint-disable-next-line
-import { Card, CardImg, CardText, CardBody, CardLink,
-  CardTitle, CardSubtitle, Row, Col } from 'reactstrap';
+import {
+  Card, CardText, CardBody, CardLink,
+  CardTitle, CardSubtitle, CardImg
+} from 'reactstrap';
+import { browserHistory } from 'react-router';
 
 class Grid extends Component {
-  render() {
-    return (
-<div id="center" style={{ marginTop: 30 }}>
-        <div style={{marginLeft:40, marginRight:40, align:'center' }}>
-      {/* Slider Carousel */}
-      <Row >
-      <Col sm="1"/>
-        <Col sm="10">
-      <Card>      
-        <CarouselApp />        
-      </Card>
-      </Col>
-      </Row>
-      <Row>
-        <Col sm="1"/>
-        <Col sm="3">
-        <br/>
-        <h2 style={{textalign: 'center'}}>Últimas Notícias</h2>
-        </Col>
-        <Col sm="4"/>
-        <Col sm="3">
-        <br/>
-        <h2>Melhores Projetos</h2>
-        </Col>
-      </Row>
-      {/* First Row */}
-      <Row>
-        <Col sm="1"/>
-        <Col sm="3">
-          <Card>
-          <CardBody>
-            <CardTitle>Card title</CardTitle>
-            <CardSubtitle>Card subtitle</CardSubtitle>
-          </CardBody>
-          <CardBody>
-            <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-            <CardLink href="#">Card Link</CardLink>
-            <CardLink href="#">Another Link</CardLink>
-          </CardBody>
-        </Card>
-        </Col>
-        <Col sm="4">
-          <Card>
-          <CardBody>
-            <CardTitle>Card title</CardTitle>
-            <CardSubtitle>Card subtitle</CardSubtitle>
-          </CardBody>
-          <CardBody>
-            <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-            <CardLink href="#">Card Link</CardLink>
-            <CardLink href="#">Another Link</CardLink>
-          </CardBody>
-        </Card>
-        </Col>
-        <Col sm="3">
-          <Card>
-          <CardBody>
-            <CardTitle>Card title</CardTitle>
-            <CardSubtitle>Card subtitle</CardSubtitle>
-          </CardBody>
-          <CardBody>
-            <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-            <CardLink href="#">Card Link</CardLink>
-            <CardLink href="#">Another Link</CardLink>
-          </CardBody>
-        </Card>
-        </Col>
-      </Row>
-      {/* Second Row */}
-      <Row>
-        <Col sm="1"/>
-        <Col sm="3">
-          <Card>
-          <CardBody>
-            <CardTitle>Card title</CardTitle>
-            <CardSubtitle>Card subtitle</CardSubtitle>
-          </CardBody>
-          <CardBody>
-            <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-            <CardLink href="#">Card Link</CardLink>
-            <CardLink href="#">Another Link</CardLink>
-          </CardBody>
-        </Card>
-        </Col>
-        <Col sm="4"/>
-        <Col sm="3">
-          <Card>
-          <CardBody>
-            <CardTitle>Card title</CardTitle>
-            <CardSubtitle>Card subtitle</CardSubtitle>
-          </CardBody>
-          <CardBody>
-            <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-            <CardLink href="#">Card Link</CardLink>
-            <CardLink href="#">Another Link</CardLink>
-          </CardBody>
-        </Card>
-        </Col>
-      </Row>
-      {/* Third Row */}
-      <Row>
-        <Col sm="1"/>
-        <Col sm="3">
-          <Card>
-          <CardBody>
-            <CardTitle>Card title</CardTitle>
-            <CardSubtitle>Card subtitle</CardSubtitle>
-          </CardBody>
-          <CardBody>
-            <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-            <CardLink href="#">Card Link</CardLink>
-            <CardLink href="#">Another Link</CardLink>
-          </CardBody>
-        </Card>
-        </Col>
-        <Col sm="4"/>
-        <Col sm="3">
-          <Card>
-          <CardBody>
-            <CardTitle>Card title</CardTitle>
-            <CardSubtitle>Card subtitle</CardSubtitle>
-          </CardBody>
-          <CardBody>
-            <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-            <CardLink href="#">Card Link</CardLink>
-            <CardLink href="#">Another Link</CardLink>
-          </CardBody>
-        </Card>
-        </Col>
-      </Row>     
-    </div>
 
-        {/* Footer */}
-    <div>
-        <Row style={{backgroundColor:'blue',}}>
-        <Col sm="3"/>
-        <Col sm="8">
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <p>Departamento de Engenharia de Produção, Campus Universitário Darcy Ribeiro, Brasília-DF | CEP 70910-900 | Telefones UnB
-        <br/>Copyright © 2019 Universidade de Brasília. Todos os direitos reservados.</p>
-        </Col>
-      </Row>
+  constructor(props) {
+    super(props);
+    this.state = { news: [] };
+  }
+
+  componentWillMount() {
+    // const data = {};
+    // for (const field in this.refs) {
+    //   data[field] = this.refs[field].value;
+    // }
+
+    // var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    // var token = currentUser && currentUser.token;
+    // axios.defaults.headers.common['Authorization'] = "Bearer " + token;
+    // axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
+
+    // const path = Store['backend'].path; // This is backend path
+    // axios.get(path + '/sec/post/listAll')
+    //   .then(response => { this.setNews(response) })
+    //   .catch((error) => { console.log(error);alert('Erro ao processar notícias!') });
+  }
+
+  setNews(response) {
+    for (var i = 0; i < response.data.length; i++) {
+      this.setState({
+        news: this.state.news.concat(response.data[i])
+      })
+    }
+  }
+
+  viewNews(id) {
+    browserHistory.push({
+      pathname: '/noticia',
+      state: {
+        id: id,
+      },
+    });
+  }
+
+  renderCard(d, idx) {
+    if (idx > 2) return;
+    return (
+      <div key={idx}>
+        <Card onClick={() => this.viewNews(d.id)} style={{ margin: 10, marginBottom: 20 }}>
+          <CardImg top width="100%" height="240px" src="https://st2.depositphotos.com/6719572/11108/i/950/depositphotos_111080252-stock-photo-yellow-vintage-pattern-background.jpg" alt="Card image cap" />
+          <CardBody>
+            <CardTitle>{d.title}</CardTitle>
+          </CardBody>
+          <CardBody>
+            <CardText>{ /*d.body.substring(0, 40)*/ 'Um sumário da notícia ficará aqui'}</CardText>
+            <CardLink style={{ color: 'blue' }}>Ler mais...</CardLink>
+          </CardBody>
+        </Card>
       </div>
+    );
+  }
+
+  render() {
+    // const data = this.state.news;
+    return (
+      <div id='content' style={{ width: '100%', height: '100%' }}>
+        <div style={{ marginTop: 40, width: '100%', align: 'center', marginBottom: 20 }}>
+          <CarouselApp />
+        </div>
+        <div style={{ textAlign: 'center', marginTop: 50 }}>
+          <h1>PROJETO DE SISTEMAS DE PRODUÇÃO (PSP)</h1>
+          <p style={{ margin: 60, marginTop: 30, marginBottom: 0, fontWeight: 'bold', color: 'grey' }}>
+            Nos cursos de Projeto de Sistemas de Produção (PSP), o principal objetivo é fazer com que os alunos apliquem os conhecimentos
+            teóricos da engenharia de produção na resolução de problemas reais. Com isso, os PSPs são focados nas áreas de: Probabilidade
+            e Estatística, Sistema de Informação, Planejamento e Controle da Produção, Gestão da Qualidade, Engenharia do Produto e Gestão
+            Estratégica. Os estudantes trabalham em equipes e participam de todas as etapas dos projetos, desde o planejamento até o encerramento.
+            Além de promover a geração de novas soluções, os PSPs proporcionam uma experiência completa de gerenciamento de projetos.
+          </p>
+          <img style={{ margin: 30, marginBottom: 0 }} alt="Imagem" src='http://producaounb.com.br/psp/wp-content/uploads/2017/06/new-piktochart_22996966_97374f78a6650361fd0822dc8046ce3c8857fed2-1.png' />
+        </div>
+        <div style={{ margin: 50, marginTop: 30, marginBottom: 30 }}>
+          <Card style={{ margin: 10 }}>
+            <CardBody>
+              <CardTitle>{'Aberto Edital 02/2018'}</CardTitle>
+              <CardSubtitle>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris</CardSubtitle>
+            </CardBody>
+            <CardBody>
+              <a onClick={() => { window.open('teste.pdf', '_blank', 'fullscreen=yes'); return false }}>BAIXE AQUI</a>
+            </CardBody>
+          </Card>
+        </div>
+        <div style={{ flexDirection: 'row', align: 'center', width: '100%' }}>
+          <div style={{ minWidth: '30%', maxWidth: '30%', float: 'left', margin: 50, marginTop: 0 }}>
+            <h2 style={{ marginLeft: 20 }}>Notícias</h2>
+            {/* {data.map((d, idx) => this.renderCard(d, idx))} */}
+          </div>
+          <div style={{ minWidth: '30%', maxWidth: '30%', float: 'right', margin: 50, marginTop: 0 }}>
+            <h2 style={{ marginLeft: 20 }}>Projetos</h2>
+            <Card style={{ margin: 10, marginBottom: 20 }}>
+            <CardImg top width="100%" height="240px" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+              <CardBody>
+                <CardTitle>{'Projeto 1'}</CardTitle>
+              </CardBody>
+              <CardBody>
+                <CardText>{'Descrição do Projeto 1'}</CardText>
+                <CardLink href="#">Ler mais...</CardLink>
+              </CardBody>
+            </Card>
+            <Card style={{ margin: 10, marginBottom: 20 }}>
+            <CardImg top width="100%" height="240px" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+              <CardBody>
+                <CardTitle>{'Projeto 2'}</CardTitle>
+              </CardBody>
+              <CardBody>
+                <CardText>{'Descrição do Projeto 2'}</CardText>
+                <CardLink href="#">Ler mais...</CardLink>
+              </CardBody>
+            </Card>
+            <Card style={{ margin: 10, marginBottom: 20 }}>
+            <CardImg top width="100%" height="240px" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+              <CardBody>
+                <CardTitle>{'Projeto 3'}</CardTitle>
+              </CardBody>
+              <CardBody>
+                <CardText>{'Descrição do Projeto 3'}</CardText>
+                <CardLink href="#">Ler mais...</CardLink>
+              </CardBody>
+            </Card>
+          </div>
+        </div>
       </div>
-     
     );
   }
 }

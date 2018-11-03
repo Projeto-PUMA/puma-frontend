@@ -19,11 +19,48 @@ class Register extends Component {
   phonemask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
   cepmask  = [/\d/, /\d/, /\d/, /\d/, /\d/, '-' , /\d/, /\d/, /\d/];
 
+  validateCPF(strCPF) {
+    var Soma;
+    var Resto;
+    Soma = 0;
+    if (strCPF === "00000000000") 
+      return false;
+      
+    for (var i=1; i<=9; i++) {
+      Soma = Soma + parseInt(strCPF.substring(i-1, i), 10) * (11 - i);
+    }
+    Resto = (Soma * 10) % 11;
+    
+    if ((Resto === 10) || (Resto === 11)) {
+      Resto = 0;
+    }
+    if (Resto !== parseInt(strCPF.substring(9, 10), 10))
+      return false;
+    
+    Soma = 0;
+    for (i = 1; i <= 10; i++) {
+      Soma = Soma + parseInt(strCPF.substring(i-1, i), 10) * (12 - i);
+    }
+    Resto = (Soma * 10) % 11;
+    
+    if ((Resto === 10) || (Resto === 11))
+      Resto = 0;
+    if (Resto !== parseInt(strCPF.substring(10, 11), 10) )
+      return false;
+    
+    return true;
+  }
 
   handleSubmit(event) {
     event.preventDefault();
     const data = new FormData(event.target);
 
+    if(!this.validateCPF(data.get('cpf').replace(/\D+/g, ''))) {
+      console.log(data.get('cpf').replace(/\D+/g, ''));
+      alert('CPF inválido!');
+      return;
+    }
+    
     const path = Store["backend"].path; // This is backend path
     axios
       .post(path + "/register", {

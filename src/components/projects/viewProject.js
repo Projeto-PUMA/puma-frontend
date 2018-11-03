@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import * as jwt_decode from "jwt-decode";
 import axios from 'axios';
 import * as Store from '../../store';
+import {Card, CardBody} from 'reactstrap';
+
 
 class ViewProject extends Component {
 
@@ -50,12 +52,12 @@ class ViewProject extends Component {
 	}
 
 	renderStatus(status) {
-		if (status === 1) {
-			return <h1>Status: Pendente</h1>;
+		if (status === 1) {;
+			return <h1 style={{ fontSize:28, color:'yellow' , textAlign:"center"}}>Status: Pendente</h1>;
 		} else if (status === 2) {
-			return <h1>Status: Rejeitado</h1>;
+			return <h1 style={{ fontSize:28, color:'red' , textAlign:"center"}}>Status: Rejeitado</h1>;
 		} else if (status === 3) {
-			return <h1>Status: Aceito</h1>;
+			return <h1 style={{ fontSize:28, color:'green' , textAlign:"center"}}>Status: Aceito</h1>;
 		}
 	}
 
@@ -73,8 +75,8 @@ class ViewProject extends Component {
       projectStatus: {id: 3},
     })
 			.then(() => {
-				document.getElementById("status").innerHTML = "<h1>Status: Aceito</h1>";
-        document.getElementById("answerShow").innerHTML = "Answer: " + answer;
+				document.getElementById("status").innerHTML = "<p>Status: Aceito</p>";
+        document.getElementById("answerShow").innerHTML = "Resposta: " + answer;
         document.getElementById("judge").style.display = "none";
 				alert('Projeto aceito com sucesso!');
 			})
@@ -95,8 +97,8 @@ class ViewProject extends Component {
       projectStatus: {id: 2},
     })
 			.then(() => {
-				document.getElementById("status").innerHTML = "<h1>Status: Rejeitado</h1>";
-        document.getElementById("answerShow").innerHTML = "Answer: " + answer;
+				document.getElementById("status").innerHTML = "<p>Status: Rejeitado</p>";
+        document.getElementById("answerShow").innerHTML = "Resposta: " + answer;
         document.getElementById("judge").style.display = "none";
 				alert('Projeto rejeitado com sucesso!');
 			})
@@ -124,13 +126,14 @@ class ViewProject extends Component {
 
 	renderJudge(id) {
 		return (
-			<div id="judge">
-				<button onClick={() => this.acceptProject(id)}>Aceitar</button>
-				<button onClick={() => this.rejectProject(id)}>Rejeitar</button>
-				<label>
-					Resposta:
-					<input type='text' id="answer"/>
+			<div id="judge" style={{ textAlign:"center"}}>
+				<button style={{ margin: 3}} onClick={() => this.acceptProject(id)}>Aceitar</button>
+				<button style={{ margin: 3}} onClick={() => this.rejectProject(id)}>Rejeitar</button>
+				<br></br>
+				<label for="answer" style={{display:"inline-block", verticalAlign: "center"}}>
+					Resposta: 	
 				</label>
+					<textarea style={{verticalAlign: "middle", margin: 5, width: "500px", height: "150px"}} type='text' id="answer"/>
 			</div>
 		);
 	}
@@ -138,13 +141,17 @@ class ViewProject extends Component {
 	render() {
 		return (
 			<div style={{margin:50}}>
-				<h3>Title: {this.state.project.title}</h3>
-				<h3>Body: {this.state.project.body}</h3>
-				<h3>Summary: {this.state.project.summary}</h3>
-				<h3>Author: {this.state.author.name}</h3>
-				<h3 id="answerShow">Answer: {this.state.project.answer}</h3>
-				<div id="status">{this.renderStatus(this.state.project.projectStatus)}</div>
-				{this.judgeable(this.state.project.projectStatus) ? this.renderJudge(this.state.project.id) : null}
+			<Card style={{margin:100}}>
+				<CardBody>
+					<li style={{fontSize:"20px", fontWeight: "bold", marginLeft: 5}}>Título do Projeto: </li><p style={{marginLeft: 33, marginTop: 8}}>{this.state.project.title}</p>
+					<li style={{fontSize:"20px", fontWeight: "bold", margin: 5}}>Objetivo: </li> <p style={{marginLeft: 33, marginTop: 8}}>{this.state.project.body}</p>
+					<li style={{fontSize:"20px", fontWeight: "bold", margin: 5}}>Problema a ser resolvido: </li> <p style={{marginLeft: 33, marginTop: 8}}>{this.state.project.summary}</p>
+					<li style={{fontSize:"20px", fontWeight: "bold", margin: 5}}>Autor: </li> <p style={{marginLeft: 33, marginTop: 8}}>{this.state.author.name}</p>
+					<li style={{fontSize:"20px", fontWeight: "bold", margin: 5}} id="answerShow">Resposta: </li> <p style={{marginLeft: 33, marginTop: 8}}>{this.state.project.answer}</p>
+					<div id="status">{this.renderStatus(this.state.project.projectStatus)}</div>
+					{this.judgeable(this.state.project.projectStatus) ? this.renderJudge(this.state.project.id) : null}
+				</CardBody>
+			</Card>
 			</div>
 		);
 	}
