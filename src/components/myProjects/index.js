@@ -74,8 +74,8 @@ class MyProjects extends Component {
   render() {
 		const data = this.state.projects;
     return (
-			<div>
-				<Table>
+			<div style={{margin:50}}>
+				<Table id="newsTable" hover responsive>
 					<thead>
 						<tr>
 							<th>Título</th>
