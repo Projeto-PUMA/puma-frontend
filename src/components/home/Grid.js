@@ -46,15 +46,21 @@ class Grid extends Component {
 
   renderCard(d, idx) {
     if (idx > 2) return;
+    var linkImage = "";
+    if (idx === 0) {
+      linkImage = "http://www.legacyschoolne.com/wp-content/uploads/2018/09/PBL-Header.png"
+    } else if (idx === 1) {
+      linkImage = "https://imgs.dm.com.br/resized/872//2018/09/Cassiano-Maschio.jpg";
+    }
     return (
       <div key={idx}>
         <Card onClick={() => this.viewNews(d.id)} style={{ margin: 10, marginBottom: 20 }}>
-          <CardImg top width="100%" height="240px" src="http://www.legacyschoolne.com/wp-content/uploads/2018/09/PBL-Header.png" alt="Card image cap" />
+          <CardImg top width="100%" height="240px" src={linkImage} alt="Card image cap" />
           <CardBody>
             <CardTitle>{d.title}</CardTitle>
           </CardBody>
           <CardBody>
-            <CardText>{ /*d.body.substring(0, 40)*/ 'Originada entre o final da década de 60 e início da década de 70 em Faculdades de Medicina do Canadá e Holanda o PBL (Project/Problem Based Learning)...'}</CardText>
+            {/* <CardText>{ d.body.substring(0, 40) 'Originada entre o final da década de 60 e início da década de 70 em Faculdades de Medicina do Canadá e Holanda o PBL (Project/Problem Based Learning)...'}</CardText> */}
             <CardLink style={{ color: 'blue' }}>Ler mais...</CardLink>
           </CardBody>
         </Card>
@@ -84,7 +90,7 @@ class Grid extends Component {
           <Card style={{ margin: 10 }}>
             <CardBody>
               <CardTitle>{'Aberto Edital 02/2018'}</CardTitle>
-              <CardSubtitle>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris</CardSubtitle>
+              <CardSubtitle>A fim de alcançar esse objetivo global o Plano Político Pedagógico do Curso de Engenharia de Produção da UnB foi criado com base no método conhecido como PBL - “Problem Based Learning”, (Aprendizagem Baseada em Problemas). </CardSubtitle>
             </CardBody>
             <CardBody>
               <a onClick={() => { window.open('Edital.pdf', '_blank', 'fullscreen=yes'); return false }}>BAIXE AQUI</a>
