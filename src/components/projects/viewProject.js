@@ -53,7 +53,7 @@ class ViewProject extends Component {
 
 	renderStatus(status) {
 		if (status === 1) {;
-			return <h1 style={{ fontSize:28, color:'yellow' , textAlign:"center"}}>Status: Pendente</h1>;
+			return <h1 style={{ fontSize:28, color:'gray' , textAlign:"center"}}>Status: Pendente</h1>;
 		} else if (status === 2) {
 			return <h1 style={{ fontSize:28, color:'red' , textAlign:"center"}}>Status: Rejeitado</h1>;
 		} else if (status === 3) {
