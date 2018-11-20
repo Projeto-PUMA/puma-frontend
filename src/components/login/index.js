@@ -133,7 +133,7 @@ class Login extends Component {
             id='password'
             required
             />
-          <Button type="submit" value ="submit" color="primary" style={{ display: "block",margin: "0 auto"}}>
+          <Button type="submit" value ="submit" color="primary" style={{ display: "block",margin: "0 auto", marginTop: 30 }}>
           Entrar
           </Button>
           </Form> 

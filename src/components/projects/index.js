@@ -66,13 +66,13 @@ class Projects extends Component {
 	}
 
 	renderTableLine(d, idx) {
-		return (<tr key={idx}><td>{d.title}</td><td>{d.body}</td><td>{this.renderStatus(d.projectStatus.id)}</td><td><i className="fas fa-eye" onClick={() => this.viewProject(d.id)}></i></td></tr>);
+		return (<tr key={idx}><td>{d.title}</td><td>{d.body.substring(0, 30)}</td><td>{this.renderStatus(d.projectStatus.id)}</td><td><i className="fas fa-eye" onClick={() => this.viewProject(d.id)}></i></td></tr>);
 	}
 
   render() {
 		const data = this.state.projects;
     return (
-			<div style={{margin:50}}>
+			<div style={{margin:50, marginTop: 100}}>
 				<Table id="newsTable" hover responsive>
 					<thead>
 						<tr>

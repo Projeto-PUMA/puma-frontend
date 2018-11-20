@@ -78,7 +78,7 @@ class News extends Component {
   render() {
 		const data = this.state.news;
     return (
-			<div style={{margin:50}}>
+			<div style={{margin:50, marginTop: 100}}>
 				<Table id="newsTable" hover responsive>
 					<thead >
 						<tr>
