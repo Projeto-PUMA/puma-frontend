@@ -46,7 +46,7 @@ class Login extends Component {
         JSON.stringify(tokenInfo.authorities)
       );
       // browserhistory to redirect
-      browserHistory.push('/meusprojetos');
+      browserHistory.push('/submeterprojeto');
     }
   }
 
