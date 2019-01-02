@@ -51,16 +51,41 @@ class Register extends Component {
     return true;
   }
 
+  validateCEP(strCEP) {
+    if(strCEP.length < 8) {
+      return false;
+    } else {
+        return true;
+    }
+  }
+
+  validateMainPhone(strPhone) {
+    if(strPhone.length < 11) {
+      return false;
+    } else {
+        return true;
+    }
+  }
+
   handleSubmit(event) {
     event.preventDefault();
     const data = new FormData(event.target);
 
     if(!this.validateCPF(data.get('cpf').replace(/\D+/g, ''))) {
-      console.log(data.get('cpf').replace(/\D+/g, ''));
       alert('CPF inválido!');
       return;
     }
+
+    if(!this.validateCEP(data.get('cep').replace(/\D+/g, ''))) {
+      alert('CEP inválido');
+      return;
+    }
     
+    if(!this.validateMainPhone(data.get('telefoneCel').replace(/\D+/g, ''))) {
+      alert('Telefone principal inválido');
+      return;
+    }
+
     const path = Store["backend"].path; // This is backend path
     axios
       .post(path + "/register", {
@@ -250,6 +275,7 @@ class Register extends Component {
                     label="Senha *"
                     type="password"
                     id="senha"
+                    required
                     errorMessage="Digite uma senha entre 6 e 16 digitos!"
                     validate={{
                       required: {value: true}, minLength: {value: 6},
