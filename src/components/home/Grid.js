@@ -4,7 +4,7 @@ import * as Store from '../../store';
 import CarouselApp from '../carousel/index.js';
 import {
   Card, CardText, CardBody, CardLink,
-  CardTitle, CardSubtitle, CardImg
+  CardTitle, CardSubtitle, CardImg, Button
 } from 'reactstrap';
 import { browserHistory } from 'react-router';
 
@@ -86,23 +86,24 @@ class Grid extends Component {
           </p>
           <img style={{ margin: 30, marginBottom: 0 }} alt="Imagem" src='http://producaounb.com.br/psp/wp-content/uploads/2017/06/new-piktochart_22996966_97374f78a6650361fd0822dc8046ce3c8857fed2-1.png' />
         </div>
-        <div style={{ margin: 50, marginTop: 30, marginBottom: 30 }}>
+        <div style={{ margin: 120, marginTop: 30, marginBottom: 30 }}>
           <Card style={{ margin: 10 }}>
             <CardBody>
-              <CardTitle>{'Aberto Edital 02/2018'}</CardTitle>
-              <CardSubtitle>A fim de alcançar esse objetivo global o Plano Político Pedagógico do Curso de Engenharia de Produção da UnB foi criado com base no método conhecido como PBL - “Problem Based Learning”, (Aprendizagem Baseada em Problemas). </CardSubtitle>
+              <CardTitle tag="h3" style={{fontWeight: 'bold'}}>{'Aberto Edital 02/2018'}</CardTitle>
+              <p></p>
+              <CardSubtitle style={{ marginRight: 300 }}>A fim de alcançar esse objetivo global o Plano Político Pedagógico do Curso de Engenharia de Produção da UnB foi criado com base no método conhecido como PBL - “Problem Based Learning”, (Aprendizagem Baseada em Problemas). </CardSubtitle>
             </CardBody>
             <CardBody>
-              <a onClick={() => { window.open('Edital.pdf', '_blank', 'fullscreen=yes'); return false }}>BAIXE AQUI</a>
+              <Button style={{ marginLeft: "800px", marginTop: "-90px", float: 'right'}} color="primary" onClick={() => { window.open('Edital.pdf', '_blank', 'fullscreen=yes'); return false }}>BAIXE AQUI</Button>
             </CardBody>
           </Card>
         </div>
         <div style={{ flexDirection: 'row', align: 'center', width: '100%' }}>
-          <div style={{ minWidth: '30%', maxWidth: '30%', float: 'left', margin: 50, marginTop: 0 }}>
+          <div style={{ minWidth: '30%', maxWidth: '30%', float: 'left', margin: 120, marginTop: 0 }}>
             <h2 style={{ marginLeft: 20 }}>Notícias</h2>
             {data.map((d, idx) => this.renderCard(d, idx))}
           </div>
-          <div style={{ minWidth: '30%', maxWidth: '30%', float: 'right', margin: 50, marginTop: 0 }}>
+          <div style={{ minWidth: '30%', maxWidth: '30%', float: 'right', margin: 120, marginTop: 0 }}>
             <h2 style={{ marginLeft: 20 }}>Projetos</h2>
             <Card style={{ margin: 10, marginBottom: 20 }}>
             <CardImg top width="100%" height="240px" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
