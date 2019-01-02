@@ -86,6 +86,11 @@ class Register extends Component {
       return;
     }
 
+    if(document.getElementById("senha").value !== document.getElementById("senhaConf").value) {
+      alert('A senha de confirmação não coincide!');
+      return;
+    }
+
     const path = Store["backend"].path; // This is backend path
     axios
       .post(path + "/register", {
@@ -106,6 +111,7 @@ class Register extends Component {
       })
       .catch(function(error) {
         if (error) {
+          console.log(error);
           console.log(data.get(["formSenha"]["senha"]));
           alert("Erro ao cadastrar!");
         }
