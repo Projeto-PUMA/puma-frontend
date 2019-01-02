@@ -129,10 +129,11 @@ class ProjectSubmission extends Component {
                  type='select'
                  name='area'
                  id='area'
+                 required
                  value={this.state.value}
                  onChange={this.handleChange}
                  >            
-                 <option ref="0">Selecionar Área</option>
+                 <option ref="0" disabled selected>Selecionar Área</option>
                  <option ref="1" value={"PSP1"} className="optionGroup" disabled>PSP1 - Probabilidade e Estatística</option>
                   <option ref="1.1"value={"PSP1-ABD"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Análise de Banco de Dados</option>
                   <option ref="1.2"value={"PSP1-CQP"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Criação de Questionários de Pesquisa</option>
@@ -166,7 +167,7 @@ class ProjectSubmission extends Component {
                 <legend>Tipo de Submissão *</legend>
                 <FormGroup check>
                   <Label check for='type'>
-                    <Input type="radio"  name='type' id='type' value='pf'/>{'Pessoa Física'}
+                    <Input type="radio"  name='type' id='type' value='pf' checked/>{'Pessoa Física'}
                   </Label>
                 </FormGroup>
                 <FormGroup check>

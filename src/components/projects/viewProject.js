@@ -45,6 +45,7 @@ class ViewProject extends Component {
 		project.title = response.data.title;
 		project.body = response.data.body;
 		project.summary = response.data.summary;
+		project.projectArea = response.data.projectArea.description;
 		project.projectStatus = response.data.projectStatus.id;
 		project.answer = response.data.answer;
 		author.name = response.data.author.name;
@@ -53,7 +54,7 @@ class ViewProject extends Component {
 
 	renderStatus(status) {
 		if (status === 1) {;
-			return <h1 style={{ fontSize:28, color:'yellow' , textAlign:"center"}}>Status: Pendente</h1>;
+			return <h1 style={{ fontSize:28, color:'gray' , textAlign:"center"}}>Status: Pendente</h1>;
 		} else if (status === 2) {
 			return <h1 style={{ fontSize:28, color:'red' , textAlign:"center"}}>Status: Rejeitado</h1>;
 		} else if (status === 3) {
@@ -139,6 +140,7 @@ class ViewProject extends Component {
 	}
 
 	render() {
+		console.log("Project Area = "+this.state.project.projectArea)
 		return (
 			<div style={{margin:50}}>
 			<Card style={{margin:100}}>
@@ -146,6 +148,7 @@ class ViewProject extends Component {
 					<li style={{fontSize:"20px", fontWeight: "bold", marginLeft: 5}}>Título do Projeto: </li><p style={{marginLeft: 33, marginTop: 8}}>{this.state.project.title}</p>
 					<li style={{fontSize:"20px", fontWeight: "bold", margin: 5}}>Objetivo: </li> <p style={{marginLeft: 33, marginTop: 8}}>{this.state.project.body}</p>
 					<li style={{fontSize:"20px", fontWeight: "bold", margin: 5}}>Problema a ser resolvido: </li> <p style={{marginLeft: 33, marginTop: 8}}>{this.state.project.summary}</p>
+					<li style={{fontSize:"20px", fontWeight: "bold", margin: 5}} id="area">Área: </li> <p style={{marginLeft: 33, marginTop: 8}}>{this.state.project.projectArea}</p>
 					<li style={{fontSize:"20px", fontWeight: "bold", margin: 5}}>Autor: </li> <p style={{marginLeft: 33, marginTop: 8}}>{this.state.author.name}</p>
 					<li style={{fontSize:"20px", fontWeight: "bold", margin: 5}} id="answerShow">Resposta: </li> <p style={{marginLeft: 33, marginTop: 8}}>{this.state.project.answer}</p>
 					<div id="status">{this.renderStatus(this.state.project.projectStatus)}</div>
