@@ -90,6 +90,22 @@ class NewsSubmission extends Component {
                 required/>
             </FormGroup>
             <FormGroup>
+              <Label for='title'>Categoria da Notícia *</Label>
+              <Input
+                ref='title'
+                type='select'
+                name='category'
+                id='category'
+                value={this.state.value}
+                onChange={this.handleChange}
+                required>
+                <option ref="0" disabled selected>Selecionar Categoria</option>
+                <option ref="1" value={"destaque"} className="optionGroup">Destaque</option>
+                <option ref="2" value={"normal"} className="optionGroup">Normal</option>
+                <option ref="3" value={"melhores-projetos"} className="optionGroup">Melhores Projetos</option>
+                </Input>
+            </FormGroup>
+            <FormGroup>
               <Label>Conteúdo/Corpo *</Label>
               <Editor
                 editorState={editorState}
@@ -98,6 +114,7 @@ class NewsSubmission extends Component {
                 name='body'
                 id='body'
                 onEditorStateChange={this.onEditorStateChange}
+                editorStyle={{border: '0.5px solid gainsboro', height: 300}}
                 required
               />
             </FormGroup>
