@@ -2,6 +2,14 @@ import React from "react";
 import { Link } from "react-router";
 import PropTypes from "prop-types";
 import MaterialTitlePanel from "./materialTitlePanel";
+import page from '../../images/blank-file.png';
+import shop from '../../images/shopping-cart.png';
+import news from '../../images/newspaper.png';
+import graph from '../../images/bar-chart.png';
+import stack from '../../images/stack-of-paper-outline.png';
+import exit from '../../images/exit.png';
+import addUser from '../../images/add-user.png';
+import login from '../../images/login.png';
 
 const styles = {
   sidebar: {
@@ -54,8 +62,8 @@ const SidebarContent = props => {
   // <Link to='/login' key="6" style={styles.sidebarLink}>Entrar</Link>
   // no lugar de
   // <button key="6" onClick={login} style={styles.sidebarLink}>Entrar</button>
-  unloggedLinks.push(<Link to='/login' key="6" style={styles.sidebarLink}>Entrar</Link>);
-  unloggedLinks.push(<Link to='/cadastro' key="8" style={styles.sidebarLink}>Registrar-se</Link>);
+  unloggedLinks.push(<Link to='/login' key="6" style={styles.sidebarLink}><img className="img-responsive" src={login} alt="login" style={{height: 25, marginRight: 7, marginTop:-2}}/>Entrar</Link>);
+  unloggedLinks.push(<Link to='/cadastro' key="8" style={styles.sidebarLink}><img className="img-responsive" src={addUser} alt="addUser" style={{height: 25, marginRight: 7, marginTop:-2}}/>Registrar-se</Link>);
 
   var logged = false;
   var adm = false;
@@ -79,15 +87,15 @@ const SidebarContent = props => {
     logged = true;
   }
 
-  const logOut = <Link to='/' key="7" onClick={logout} style={styles.sidebarLink}>Sair</Link>;
+  const logOut = <Link to='/' key="7" onClick={logout} style={styles.sidebarLink}><img className="img-responsive" src={exit} alt="exit" style={{height: 25, marginRight: 7, marginTop:-2}}/>Sair</Link>;
 
   const admLinks = [];
   const userLinks = [];
-  userLinks.push(<Link to='submeterprojeto' key="1" style={styles.sidebarLink}>Submeter Projeto</Link>);
-  userLinks.push(<Link to='/meusprojetos' key="2" style={styles.sidebarLink}>Meus Projetos</Link>);
-  admLinks.push(<Link to='/gerenciarprojetos' key="3" style={styles.sidebarLink}>Gerenciar Projetos</Link>);
-  admLinks.push(<Link to='/submeternoticia' key="4" style={styles.sidebarLink}>Submeter Notícia</Link>);
-  admLinks.push(<Link to='/gerenciarnoticias' key="5" style={styles.sidebarLink}>Gerenciar Notícias</Link>);
+  userLinks.push(<Link to='submeterprojeto' key="1" style={styles.sidebarLink}><img className="img-responsive" src={page} alt="page" style={{height: 25, marginRight: 7, marginTop:-2}}/> Submeter Projeto</Link>);
+  userLinks.push(<Link to='/meusprojetos' key="2" style={styles.sidebarLink}><img className="img-responsive" src={stack} alt="stack" style={{height: 25, marginRight: 7, marginTop:-2}}/>Meus Projetos</Link>);
+  admLinks.push(<Link to='/gerenciarprojetos' key="3" style={styles.sidebarLink}><img className="img-responsive" src={shop} alt="shop" style={{height: 25, marginRight: 7, marginTop:-2}}/>Gerenciar Projetos</Link>);
+  admLinks.push(<Link to='/submeternoticia' key="4" style={styles.sidebarLink}><img className="img-responsive" src={news} alt="news" style={{height: 25, marginRight: 7, marginTop:-2}}/>Submeter Notícia</Link>);
+  admLinks.push(<Link to='/gerenciarnoticias' key="5" style={styles.sidebarLink}><img className="img-responsive" src={graph} alt="graph" style={{height: 25, marginRight: 7, marginTop:-2}}/>Gerenciar Notícias</Link>);
 
   return (
     <MaterialTitlePanel title="Menu" style={style}>
