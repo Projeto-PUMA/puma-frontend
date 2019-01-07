@@ -3,7 +3,10 @@ import axios from 'axios';
 import * as Store from '../../store';
 import {Input,Label,Button,FormGroup, Form} from 'reactstrap';
 import { Editor } from 'react-draft-wysiwyg';
-import { EditorState } from 'draft-js';
+import { EditorState, convertToRaw } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
+import {browserHistory} from 'react-router';
+import * as jwt_decode from "jwt-decode";
 
 class UpdateNews extends Component {
 
@@ -38,6 +41,44 @@ class UpdateNews extends Component {
 			.then(response => { this.setNews(response.data) })
 			.catch(() => { alert('Erro ao processar noticia!') });
   }
+
+  getDecodedAccessToken(token) {
+    try {
+      return jwt_decode(token);
+    }
+    catch(Error){
+      return null;
+    }
+	}
+
+	handleNews=(e) => {
+        e.preventDefault();
+    
+        const data = new FormData(e.target);
+        const { editorState } = this.state;
+    
+            var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        var token = currentUser && currentUser.token;
+        axios.defaults.headers.common['Authorization'] = "Bearer " + token;
+        axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
+        let tokenInfo = this.getDecodedAccessToken(token);
+    
+        const path = Store['backend'].path; // This is backend path
+        axios.put(path + '/sec/post/update' + this.props.location.state.id, {
+          author: { id: tokenInfo.id },
+                title: data.get('title'),
+                body: draftToHtml(convertToRaw(editorState.getCurrentContent())),
+        })
+        .then(() => 
+          { alert('Notícia atualizada com sucesso!'); 
+            browserHistory.push('/gerenciarnoticias');})
+        .catch(function (error) {
+          if (error) {
+            alert('Notícia não cadastrada!');
+          }
+        });
+      }
+    
 
   setNews(response) {
 		let news = Object.assign({}, this.state.news);
