@@ -113,7 +113,7 @@ class Register extends Component {
         if (error) {
           console.log(error);
           console.log(data.get(["formSenha"]["senha"]));
-          alert("Erro ao cadastrar!");
+          alert("Erro ao cadastrar! CPF já cadastrado.");
         }
       });
     // } else return alert("Erro ao cadastrar!");
