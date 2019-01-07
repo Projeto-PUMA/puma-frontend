@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as Store from '../../store';
+import {Input,Label,Button,FormGroup, Form} from 'reactstrap';
+import { Editor } from 'react-draft-wysiwyg';
+import { EditorState } from 'draft-js';
 
 class UpdateNews extends Component {
 
@@ -8,6 +11,16 @@ class UpdateNews extends Component {
     super(props);
     this.state = {news: { body: '', title: '' }, author: {}};
   }
+
+  state = {
+    editorState: EditorState.createEmpty(),
+  }
+
+  onEditorStateChange = (editorState) => {
+    this.setState({
+      editorState,
+    });
+  };
   
   componentWillMount() {
 		const data = {};
@@ -37,12 +50,45 @@ class UpdateNews extends Component {
 	}
   
 	render() {
+        const { editorState } = this.state;
 		return (
-			<div style={{ margin: 50, marginTop: 120 }}>
-            TESTE
-				<h2>{this.state.news.title}</h2>
-        <div style={{ marginTop: 30 }} dangerouslySetInnerHTML={{ __html: this.state.news.body }} />
-			</div>
+            <div style={{ margin: 50, marginTop: 120 }}>
+                <Form
+                    id='updateNewsForm'
+                    name='updateNewsForm'
+                    onSubmit={this.handleNews}
+                >
+                    <FormGroup>
+                        <Label >Título da Notícia *</Label>
+                        <Input
+                            ref='title'
+                            type='text'
+                            name='title'
+                            id='title'
+                            value={this.state.news.title}
+                            required />
+                    </FormGroup>
+                    {/* <h2>{this.state.news.title}</h2> */}
+                    <FormGroup>
+                        <Label>Conteúdo/Corpo *</Label>
+                        <Editor
+                            editorState={editorState}
+                            ref='body'
+                            type='textarea'
+                            name='body'
+                            id='body'
+                            onEditorStateChange={this.onEditorStateChange}
+                            editorStyle={{ border: '0.5px solid gainsboro', height: 300 }}
+                            placeholder={this.state.news.body}
+                            required
+                        />
+                    </FormGroup>
+                    {/* <div style={{ marginTop: 30 }} dangerouslySetInnerHTML={{ __html: this.state.news.body }} /> */}
+                    <Button type="submit" value="submit" color="primary" style={{ display: "block", margin: "0 auto" }}>Salvar</Button>
+                    <Button value="cancel" color="danger" style={{ display: "block", margin: "0 auto", marginTop: "10px" }}>Cancelar</Button>
+
+                </Form>
+            </div>
 		);
 	}
 }
