@@ -14,6 +14,7 @@ import NewsSubmission from './components/newsSubmission';
 import News from './components/news/index';
 import ViewNews from './components/news/viewNews'
 import ViewProject from './components/projects/viewProject';
+import UpdateNews from './components/newsUpdate/index';
 
 ReactDOM.render(
   <Router history={browserHistory}>
@@ -27,6 +28,7 @@ ReactDOM.render(
           <Route path='/gerenciarprojetos' component={Projects} />
           <Route path='/submeternoticia' component={NewsSubmission} />
           <Route path='/noticia' component={ViewNews} />
+          <Route path='/noticia/editar' component={UpdateNews} />
           <Route path='/gerenciarnoticias' component={News} />
       </Route>
   </Router>

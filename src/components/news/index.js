@@ -47,6 +47,15 @@ class News extends Component {
     });
   }
 
+  viewNewsToEdit(id) {
+    browserHistory.push({
+      pathname: '/noticia/editar',
+      state: {
+        id: id,
+      },
+    });
+  }
+
 	getDecodedAccessToken(token) {
     try {
       return jwt_decode(token);
@@ -72,7 +81,7 @@ class News extends Component {
 	}
 
 	renderTableLine(d, idx) {
-		return (<tr key={idx}><td>{d.title}</td><td>{d.author.name}</td><td><i className="fas fa-trash" onClick={() => {this.deleteNews(d.id, idx)}}></i></td><td><i className="fas fa-eye" onClick={() => this.viewNews(d.id)}></i></td></tr>);
+		return (<tr key={idx}><td>{d.title}</td><td>{d.author.name}</td><td><i className="fas fa-trash" onClick={() => {this.deleteNews(d.id, idx)}}></i></td><td><i className="fas fa-edit" onClick={() => this.viewNewsToEdit(d.id)}></i></td><td><i className="fas fa-eye" onClick={() => this.viewNews(d.id)}></i></td></tr>);
 	}
 
   render() {
@@ -86,6 +95,7 @@ class News extends Component {
 							<th>Autor</th>
 							<th></th>
               <th></th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
