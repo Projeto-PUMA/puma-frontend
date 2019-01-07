@@ -39,7 +39,7 @@ class UpdateNews extends Component {
     const path = Store['backend'].path; // This is backend path
     axios.get(path + '/sec/post/listById/' + this.props.location.state.id)
 			.then(response => { this.setNews(response.data) })
-			.catch(() => { alert('Erro ao processar noticia!') });
+            .catch(() => { alert('Erro ao processar noticia!') });
   }
 
   getDecodedAccessToken(token) {
@@ -64,7 +64,7 @@ class UpdateNews extends Component {
         let tokenInfo = this.getDecodedAccessToken(token);
     
         const path = Store['backend'].path; // This is backend path
-        axios.put(path + '/sec/post/update' + this.props.location.state.id, {
+        axios.put(path + '/sec/post/update/' + this.props.location.state.id, {
           author: { id: tokenInfo.id },
                 title: data.get('title'),
                 body: draftToHtml(convertToRaw(editorState.getCurrentContent())),
@@ -78,7 +78,6 @@ class UpdateNews extends Component {
           }
         });
       }
-    
 
   setNews(response) {
 		let news = Object.assign({}, this.state.news);
@@ -106,10 +105,9 @@ class UpdateNews extends Component {
                             type='text'
                             name='title'
                             id='title'
-                            value={this.state.news.title}
-                            required />
+                            defaultValue={this.state.news.title}
+                            />
                     </FormGroup>
-                    {/* <h2>{this.state.news.title}</h2> */}
                     <FormGroup>
                         <Label>Conteúdo/Corpo *</Label>
                         <Editor
@@ -121,12 +119,11 @@ class UpdateNews extends Component {
                             onEditorStateChange={this.onEditorStateChange}
                             editorStyle={{ border: '0.5px solid gainsboro', height: 300 }}
                             placeholder={this.state.news.body}
-                            required
                         />
                     </FormGroup>
                     {/* <div style={{ marginTop: 30 }} dangerouslySetInnerHTML={{ __html: this.state.news.body }} /> */}
                     <Button type="submit" value="submit" color="primary" style={{ display: "block", margin: "0 auto" }}>Salvar</Button>
-                    <Button value="cancel" color="danger" style={{ display: "block", margin: "0 auto", marginTop: "10px" }}>Cancelar</Button>
+                    <Button value="cancel" color="danger" onClick={() => { browserHistory.push('/gerenciarnoticias')}} style={{ display: "block", margin: "0 auto", marginTop: "10px" }}>Cancelar</Button>
 
                 </Form>
             </div>
