@@ -163,6 +163,17 @@ class ProjectSubmission extends Component {
                  <option ref="8"value={"UNDEF"} className="optionGroup">Não sei em qual categoria meu projeto se encaixa</option>
                  </Input>
               </FormGroup>
+              <FormGroup>
+                 <Label>Link do PDF *</Label>
+                 <Input
+                 ref='title'
+                 type='text'
+                 name='title'
+                 id='title'
+                 maxLength="500"  
+                //  required              
+                 />
+              </FormGroup>
               <FormGroup tag="fieldset" required>
                 <legend>Tipo de Submissão *</legend>
                 <FormGroup check>
