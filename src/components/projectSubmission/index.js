@@ -14,7 +14,7 @@ class ProjectSubmission extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleProject = this.handleProject.bind(this);
-    this._handleRadio = this._handleRadio.bind(this);
+    this.handleRadio = this.handleRadio.bind(this);
   }
   
   getDecodedAccessToken(token) {
@@ -66,15 +66,17 @@ class ProjectSubmission extends Component {
   }
 
   renderJuridic() {
-    console.log("RenderJuridic")
-    return(
-      <div>
-        <h2>TESTANDO RENDERIZAÇÃO</h2>
-      </div>
-    )
+    if (this.state.showJuridic) {
+      console.log("RenderJuridic")
+      return (
+        <div>
+          <h2>TESTANDO RENDERIZAÇÃO</h2>
+        </div>
+      )
+    }
   }
   
-  _handleRadio(event) {
+  handleRadio(event) {
     const showJuridic = event.currentTarget.value === 'pj' ? true: false;
     console.log('handle', showJuridic);
     this.setState({ showJuridic });
@@ -82,7 +84,13 @@ class ProjectSubmission extends Component {
   
   render() {
     const { showJuridic } = this.state;
-    const stateJuridic = this.state.showJuridic ? this.renderJuridic() : null; 
+    // const stateJuridic = this.state.showJuridic ? this.renderJuridic() : null; 
+
+    let juridic;
+
+    if (this.state.showJuridic) {
+      juridic = this.renderJuridic();
+    }
     return (
       <div>
         <Row>
@@ -196,20 +204,20 @@ class ProjectSubmission extends Component {
                 <legend>Tipo de Submissão *</legend>
                 <FormGroup check>
                   <Label check for='type'>
-                    <Input type="radio"  name='type' id='type' value='pf' checked={showJuridic === false} onChange={this._handleRadio}/>{'Pessoa Física'}
+                    <Input type="radio"  name='type' id='type' value='pf' checked={showJuridic === false} onChange={this.handleRadio}/>{'Pessoa Física'}
                   </Label>
                 </FormGroup>
                 <FormGroup check>
                   <Label check>
-                    <Input type="radio"  name='type' id='type' value='pj' checked={showJuridic === true} onChange={this._handleRadio}/>{'Pessoa Jurídica'}
+                    <Input type="radio"  name='type' id='type' value='pj' checked={showJuridic === true} onChange={this.handleRadio}/>{'Pessoa Jurídica'}
                   </Label>
                 </FormGroup>
+                {juridic}
               </FormGroup>
                 <Button type="submit" value ="submit" color="primary" style={{ display: "block",margin: "0 auto"}}>
                  Enviar Projeto
                 </Button>
               </Form>
-
             </CardBody>
           <footer>
             <p>* Campo Obrigatório</p>
