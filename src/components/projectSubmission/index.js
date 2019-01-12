@@ -10,10 +10,11 @@ class ProjectSubmission extends Component {
 
 	constructor(props) {
     super(props);
-    this.state = {value: ''};
+    this.state = {value: '', showJuridic: false};
 
     this.handleChange = this.handleChange.bind(this);
     this.handleProject = this.handleProject.bind(this);
+    this._handleRadio = this._handleRadio.bind(this);
   }
   
   getDecodedAccessToken(token) {
@@ -62,9 +63,26 @@ class ProjectSubmission extends Component {
         alert('Projeto não cadastrado!');
       }
     });
-	}
-	
+  }
+
+  renderJuridic() {
+    console.log("RenderJuridic")
+    return(
+      <div>
+        <h2>TESTANDO RENDERIZAÇÃO</h2>
+      </div>
+    )
+  }
+  
+  _handleRadio(event) {
+    const showJuridic = event.currentTarget.value === 'pj' ? true: false;
+    console.log('handle', showJuridic);
+    this.setState({ showJuridic });
+  }
+  
   render() {
+    const { showJuridic } = this.state;
+    const stateJuridic = this.state.showJuridic ? this.renderJuridic() : null; 
     return (
       <div>
         <Row>
@@ -178,16 +196,15 @@ class ProjectSubmission extends Component {
                 <legend>Tipo de Submissão *</legend>
                 <FormGroup check>
                   <Label check for='type'>
-                    <Input type="radio"  name='type' id='type' value='pf' checked/>{'Pessoa Física'}
+                    <Input type="radio"  name='type' id='type' value='pf' checked={showJuridic === false} onChange={this._handleRadio}/>{'Pessoa Física'}
                   </Label>
                 </FormGroup>
                 <FormGroup check>
                   <Label check>
-                    <Input type="radio"  name='type' id='type' value='pj'/>{'Pessoa Jurídica'}
+                    <Input type="radio"  name='type' id='type' value='pj' checked={showJuridic === true} onChange={this._handleRadio}/>{'Pessoa Jurídica'}
                   </Label>
                 </FormGroup>
               </FormGroup>
-
                 <Button type="submit" value ="submit" color="primary" style={{ display: "block",margin: "0 auto"}}>
                  Enviar Projeto
                 </Button>
