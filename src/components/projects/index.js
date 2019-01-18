@@ -19,7 +19,17 @@ class Projects extends Component {
         id: id,
       },
     });
+	}
+	
+	viewProjectToEdit(id) {
+    browserHistory.push({
+      pathname: '/projeto/editar',
+      state: {
+        id: id,
+      },
+    });
   }
+
 
 	componentWillMount() {
 		const data = {};
@@ -66,7 +76,7 @@ class Projects extends Component {
 	}
 
 	renderTableLine(d, idx) {
-		return (<tr key={idx}><td>{d.title}</td><td>{d.body.substring(0, 30)}</td><td>{this.renderStatus(d.projectStatus.id)}</td><td><i className="fas fa-eye" onClick={() => this.viewProject(d.id)}></i></td></tr>);
+		return (<tr key={idx}><td>{d.title}</td><td>{d.body.substring(0, 30)}</td><td>{this.renderStatus(d.projectStatus.id)}</td><td><i className="fas fa-edit" onClick={() => this.viewProjectToEdit(d.id)}></i></td><td><i className="fas fa-eye" onClick={() => this.viewProject(d.id)}></i></td></tr>);
 	}
 
   render() {
@@ -79,6 +89,7 @@ class Projects extends Component {
 							<th>Título</th>
 							<th>Descrição</th>
 							<th>Status</th>
+							<th></th>
 							<th></th>
 						</tr>
 					</thead>

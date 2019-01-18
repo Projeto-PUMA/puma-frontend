@@ -5,37 +5,37 @@ import * as Store from '../../store';
 import {Card, CardBody} from 'reactstrap';
 
 
-class ViewProject extends Component {
+class ProjectUpdate extends Component {
 
 	constructor(props) {
-    super(props);
-    this.state = {project: {}, author: {}};
+        super(props);
+        this.state = {project: {title: '', body:'', summary:'', projectArea: ''}, author: {}};
 	}
 
 	getDecodedAccessToken(token) {
 		try {
-				return jwt_decode(token);
+			return jwt_decode(token);
 		}
 		catch (Error) {
-				return null;
+			return null;
 		}
 	}
 
 	componentWillMount() {
-		const data = {};
-    for (const field in this.refs) {
-      data[field] = this.refs[field].value;
-		}
-		
-		var currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    var token = currentUser && currentUser.token;
-    axios.defaults.headers.common['Authorization'] = "Bearer " + token;
-    axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
+        const data = {};
+        for (const field in this.refs) {
+        data[field] = this.refs[field].value;
+            }
+            
+            var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        var token = currentUser && currentUser.token;
+        axios.defaults.headers.common['Authorization'] = "Bearer " + token;
+        axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
 
-    const path = Store['backend'].path; // This is backend path
-    axios.get(path + '/sec/project/listById/' + this.props.location.state.id)
-			.then(response => { this.setProject(response) })
-			.catch(() => { alert('Erro ao processar projeto!') });
+        const path = Store['backend'].path; // This is backend path
+        axios.get(path + '/sec/project/listById/' + this.props.location.state.id)
+                .then(response => { this.setProject(response) })
+                .catch(() => { alert('Erro ao processar projeto!') });
 	}
 
 	setProject(response) {
@@ -104,8 +104,30 @@ class ViewProject extends Component {
 				alert('Projeto rejeitado com sucesso!');
 			})
 			.catch(() => { alert('Erro ao rejeitar o Projeto!') });
-	}
+    }
 
+	updateProject(id) {
+        const answer = document.getElementById("answer").value;
+    
+        var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        var token = currentUser && currentUser.token;
+        axios.defaults.headers.common['Authorization'] = "Bearer " + token;
+        axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
+    
+        const path = Store['backend'].path; // This is backend path
+        axios.put(path + '/sec/project/update/' + id, {
+          answer: answer,
+          projectStatus: {id: 1},
+        })
+                .then(() => {
+                    document.getElementById("status").innerHTML = "<p>Status: Aceito</p>";
+            document.getElementById("answerShow").innerHTML = "Resposta: " + answer;
+            document.getElementById("judge").style.display = "none";
+                    alert('Projeto aceito com sucesso!');
+                })
+                .catch(() => { alert('Erro ao aceitar o Projeto!') });
+        }
+    
 	judgeable(statusCode) {
 		var admin = false;
 		var role = JSON.parse(localStorage.getItem('authorities'));
@@ -151,7 +173,7 @@ class ViewProject extends Component {
 					<li style={{fontSize:"20px", fontWeight: "bold", margin: 5}} id="area">Área: </li> <p style={{marginLeft: 33, marginTop: 8}}>{this.state.project.projectArea}</p>
 					<li style={{fontSize:"20px", fontWeight: "bold", margin: 5}}>Autor: </li> <p style={{marginLeft: 33, marginTop: 8}}>{this.state.author.name}</p>
 					<li style={{fontSize:"20px", fontWeight: "bold", margin: 5}} id="answerShow">Resposta: </li> <p style={{marginLeft: 33, marginTop: 8}}>{this.state.project.answer}</p>
-					<div id="status">{this.renderStatus(this.state.project.projectStatus)}</div>
+					<div id="status">{this.renderStatus(this.state.project.projectStatus)} TESTE</div>
 					{this.judgeable(this.state.project.projectStatus) ? this.renderJudge(this.state.project.id) : null}
 				</CardBody>
 			</Card>
@@ -160,4 +182,4 @@ class ViewProject extends Component {
 	}
 }
 
-export default ViewProject;
+export default ProjectUpdate;
