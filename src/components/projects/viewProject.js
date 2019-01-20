@@ -3,6 +3,7 @@ import * as jwt_decode from "jwt-decode";
 import axios from 'axios';
 import * as Store from '../../store';
 import {Card, CardBody} from 'reactstrap';
+import {browserHistory} from 'react-router';
 
 
 class ViewProject extends Component {
@@ -52,9 +53,9 @@ class ViewProject extends Component {
 		this.setState({project, author});
 	}
 
-	renderStatus(status) {
+	renderStatus(status, id) {
 		if (status === 1) {;
-			return <div style={{ textAlign:"center"}}><h1 style={{ fontSize:28, color:'gray' , textAlign:"center"}}>Status: Pendente</h1><button onClick={() => console.log("Clicou")}>Editar Projeto</button></div>;
+			return <div style={{ textAlign:"center"}}><h1 style={{ fontSize:28, color:'gray' , textAlign:"center"}}>Status: Pendente</h1><button onClick={() => this.viewProjectToEdit(id)}>Editar Projeto</button></div>;
 		} else if (status === 2) {
 			return <h1 style={{ fontSize:28, color:'red' , textAlign:"center"}}>Status: Rejeitado</h1>;
 		} else if (status === 3) {
@@ -139,8 +140,16 @@ class ViewProject extends Component {
 		);
 	}
 
+	viewProjectToEdit(id) {
+		browserHistory.push({
+		  pathname: '/projeto/editar',
+		  state: {
+			id: id,
+		  },
+		});
+		}
+		
 	render() {
-		console.log("Project Area = "+this.state.project.projectArea)
 		return (
 			<div style={{margin:50}}>
 			<Card style={{margin:100}}>
@@ -151,7 +160,7 @@ class ViewProject extends Component {
 					<li style={{fontSize:"20px", fontWeight: "bold", margin: 5}} id="area">Área: </li> <p style={{marginLeft: 33, marginTop: 8}}>{this.state.project.projectArea}</p>
 					<li style={{fontSize:"20px", fontWeight: "bold", margin: 5}}>Autor: </li> <p style={{marginLeft: 33, marginTop: 8}}>{this.state.author.name}</p>
 					<li style={{fontSize:"20px", fontWeight: "bold", margin: 5}} id="answerShow">Resposta: </li> <p style={{marginLeft: 33, marginTop: 8}}>{this.state.project.answer}</p>
-					<div id="status">{this.renderStatus(this.state.project.projectStatus)}</div>
+					<div id="status">{this.renderStatus(this.state.project.projectStatus, this.state.project.id)}</div>
 					{this.judgeable(this.state.project.projectStatus) ? this.renderJudge(this.state.project.id) : null}
 				</CardBody>
 			</Card>
