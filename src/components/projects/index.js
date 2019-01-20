@@ -19,7 +19,7 @@ class Projects extends Component {
         id: id,
       },
     });
-  }
+	}
 
 	componentWillMount() {
 		const data = {};

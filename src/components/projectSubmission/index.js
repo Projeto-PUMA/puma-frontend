@@ -279,16 +279,6 @@ class ProjectSubmission extends Component {
                  id='body'
                  required
                  />
-                {/* <Editor
-                  ref='body'
-                  name='body'
-                  id='body'
-                  // editorState={editorState}
-                  toolbarClassName="toolbarClassName"
-                  wrapperClassName="wrapperClassName"
-                  editorClassName="editorClassName"
-                  // onEditorStateChange={this.onEditorStateChange}
-                /> */}
               </FormGroup>
               <FormGroup>
                  <Label for='area'>Área de Aplicação *</Label>
