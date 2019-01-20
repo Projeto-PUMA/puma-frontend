@@ -4,13 +4,19 @@ import axios from 'axios';
 import * as Store from '../../store';
 import { browserHistory } from 'react-router';
 import { Card, CardBody, Form, Label, Input, Row, Col, Button, FormGroup } from 'reactstrap';
+import MaskedInput from 'react-text-mask'
 
 
 class ProjectUpdate extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = { project: { title: '', body: '', summary: '', projectArea: '' }, author: {} };
+		this.state = { project: { title: '', body: '', summary: '', projectArea: '' }, author: {}, showJuridic: false };
+
+		this.handleRadio = this.handleRadio.bind(this);
+		this.handleChangeSummary = this.handleChangeSummary.bind(this);
+		this.handleChangeTitle = this.handleChangeTitle.bind(this);
+		this.handleChangeBody = this.handleChangeBody.bind(this);
 	}
 
 	getDecodedAccessToken(token) {
@@ -190,8 +196,181 @@ class ProjectUpdate extends Component {
 			});
 	}
 
+	renderJuridic() {
+		if (this.state.showJuridic) {
+		  return (
+			<div>
+			  <FormGroup>
+				<Label>Nome da Empresa *</Label>
+				<Input
+				  ref='title'
+				  type='text'
+				  name='companyName'
+				  id='companyName'
+				  maxLength="200"
+				  required
+				/>
+			  </FormGroup>
+			  <FormGroup>
+				<Label>Razão Social *</Label>
+				<Input
+				  ref='title'
+				  type='text'
+				  name='corporateName'
+				  id='corporateName'
+				  maxLength="200"
+				  required
+				/>
+			  </FormGroup>
+			  <FormGroup>
+				<Label>CNPJ</Label>
+				<Input
+				  ref='title'
+				  type='text'
+				  name='CNPJ'
+				  id='CNPJ'
+				  mask={this.cnpjmask}
+				  tag={MaskedInput}
+				  required
+				/>
+			  </FormGroup>
+			  <Row>
+			  <Col xs="auto">
+			  <FormGroup>
+				<Label>Endereço *</Label>
+				<Input
+				  ref='title'
+				  type='text'
+				  name='address'
+				  id='address'
+				  maxLength="200"
+				  style={{width: '38vw'}}
+				  required
+				/>
+			  </FormGroup>
+			  </Col>
+			  <Col xs="auto">
+			  <FormGroup>
+				<Label>Número *</Label>
+				<Input
+				  ref='title'
+				  type='number'
+				  name='number'
+				  id='number'
+				  maxLength="4"
+				  style={{width: '55px'}}
+				  required
+				/>
+			  </FormGroup>
+			  </Col>
+			  </Row>
+			  <Row>
+			  <Col xs="auto">
+			  <FormGroup>
+				<Label>País *</Label>
+				<Input
+				  ref='title'
+				  type='select'
+				  name='country'
+				  id='country'
+				  maxLength="50"
+				  style={{width: '140px'}}
+				  required
+				>
+				  <option ref="1" value={"brasil"} className="optionGroup">Brasil</option>
+				  <option ref="2" value={"outros"} className="optionGroup">Outros</option>
+				</Input>
+			  </FormGroup>
+			  </Col>
+			  <Col xs="auto">
+			  <FormGroup>
+				<Label>Estado *</Label>
+				<Input
+				  ref='title'
+				  type='select'
+				  name='state'
+				  id='state'
+				  maxLength="50"
+				  style={{width: '300px'}}
+				  required
+				>
+				  <option ref="1" value={"AC"} className="optionGroup">Acre - AC</option>
+				  <option ref="2" value={"AL"} className="optionGroup">Alagoas - AL</option>
+				  <option ref="3" value={"AP"} className="optionGroup">Amapá - AP</option>
+				  <option ref="4" value={"AM"} className="optionGroup">Amazonas - AM</option>
+				  <option ref="5" value={"BA"} className="optionGroup">Bahia - BA</option>
+				  <option ref="6" value={"CE"} className="optionGroup">Ceará - CE</option>
+				  <option ref="7" value={"DF"} className="optionGroup">Distrito Federal - DF</option>
+				  <option ref="8" value={"ES"} className="optionGroup">Espirito Santo - ES</option>
+				  <option ref="9" value={"GO"} className="optionGroup">Goiás - GO</option>
+				  <option ref="10" value={"MA"} className="optionGroup">Maranhão - MA</option>
+				  <option ref="11" value={"MT"} className="optionGroup">Mato Grosso - MT</option>
+				  <option ref="12" value={"MS"} className="optionGroup">Mato Grosso do Sul - MS</option>
+				  <option ref="13" value={"MG"} className="optionGroup">Minas Gerais - MG</option>
+				  <option ref="14" value={"PA"} className="optionGroup">Pará - PA</option>
+				  <option ref="15" value={"PB"} className="optionGroup">Paraíba - PB</option>
+				  <option ref="16" value={"PR"} className="optionGroup">Paraná - PR</option>
+				  <option ref="17" value={"PE"} className="optionGroup">Pernambuco - PE</option>
+				  <option ref="18" value={"PI"} className="optionGroup">Piauí - PI</option>
+				  <option ref="19" value={"RJ"} className="optionGroup">Rio de Janeiro - RJ</option>
+				  <option ref="20" value={"RN"} className="optionGroup">Rio Grande do Norte - RN</option>
+				  <option ref="21" value={"RS"} className="optionGroup">Rio Grande do Sul - RS</option>
+				  <option ref="22" value={"RO"} className="optionGroup">Rondônia - RO</option>
+				  <option ref="23" value={"RR"} className="optionGroup">Roraima - RR</option>
+				  <option ref="24" value={"SC"} className="optionGroup">Santa Catarina - SC</option>
+				  <option ref="25" value={"SP"} className="optionGroup">São Paulo - SP</option>
+				  <option ref="26" value={"SE"} className="optionGroup">Sergipe - SE</option>
+				  <option ref="27" value={"TO"} className="optionGroup">Tocantins - TO</option>
+				</Input>
+			  </FormGroup>
+			  </Col>
+			  <Col xs="auto">
+			  <FormGroup>
+				<Label>CEP *</Label>
+				<Input
+				  ref='title'
+				  type='text'
+				  name='cep'
+				  id='cep'
+				  style={{width: '140px'}}
+				  mask={this.cepmask}
+				  tag={MaskedInput}
+				  required
+				/>
+			  </FormGroup>
+			  </Col>
+			  </Row>
+			</div>
+		  )
+		}
+	  }
+	  
+  handleRadio(event) {
+    const showJuridic = event.currentTarget.value === 'pj' ? true: false;
+    console.log('handle', showJuridic);
+    this.setState({ showJuridic });
+  }
+
+  handleChangeSummary(event) {
+	this.setState({project: {summary: event.target.value}});
+  }
+  
+  handleChangeTitle(event) {
+	this.setState({project: {title: event.target.value}});
+  }
+
+  handleChangeBody(event) {
+	this.setState({project: {body: event.target.value}});
+  }
+
 	render() {
-		console.log("Project Area = " + this.state.project.projectArea)
+		const { showJuridic } = this.state;
+		let juridic;
+	
+		if (this.state.showJuridic) {
+		  juridic = this.renderJuridic();
+		}	
+
 		return (
 			<div>
 				<Row>
@@ -216,7 +395,8 @@ class ProjectUpdate extends Component {
 											name='title'
 											id='title'
 											maxLength="100"
-											defaultValue={this.state.project.title}
+											value={this.state.project.title}
+											onChange={this.handleChangeTitle}
 											required
 										/>
 									</FormGroup>
@@ -228,6 +408,7 @@ class ProjectUpdate extends Component {
 											name='summary'
 											id='summary'
 											value={this.state.project.summary}
+											onChange={this.handleChangeSummary}
 											required
 										/>
 									</FormGroup>
@@ -239,6 +420,7 @@ class ProjectUpdate extends Component {
 											name='body'
 											id='body'
 											value={this.state.project.body}
+											onChange={this.handleChangeBody}
 											required
 										/>
 									</FormGroup>
@@ -294,9 +476,24 @@ class ProjectUpdate extends Component {
 										//  required              
 										/>
 									</FormGroup>
+									<FormGroup tag="fieldset" required>
+										<legend>Tipo de Submissão *</legend>
+										<FormGroup check>
+											<Label check for='type'>
+												<Input type="radio" name='type' id='type' value='pf' checked={showJuridic === false} onChange={this.handleRadio} />{'Pessoa Física'}
+											</Label>
+										</FormGroup>
+										<FormGroup check>
+											<Label check>
+												<Input type="radio" name='type' id='type' value='pj' checked={showJuridic === true} onChange={this.handleRadio} />{'Pessoa Jurídica'}
+											</Label>
+										</FormGroup>
+										<br />
+										{juridic}
+									</FormGroup>
 									<Button type="submit" value="submit" color="primary" style={{ display: "block", margin: "0 auto" }}>
 										Atualizar Projeto
-					</Button>
+									</Button>
 								</Form>
 							</CardBody>
 							<footer>
