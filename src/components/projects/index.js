@@ -20,16 +20,6 @@ class Projects extends Component {
       },
     });
 	}
-	
-	viewProjectToEdit(id) {
-    browserHistory.push({
-      pathname: '/projeto/editar',
-      state: {
-        id: id,
-      },
-    });
-  }
-
 
 	componentWillMount() {
 		const data = {};

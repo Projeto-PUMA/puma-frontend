@@ -57,15 +57,6 @@ class MyProjects extends Component {
     }); 
   }
 
-	viewProjectToEdit(id) {
-    browserHistory.push({
-      pathname: '/projeto/editar',
-      state: {
-        id: id,
-      },
-    });
-	}
-	
 	renderStatus(statusCode) {
 		if (statusCode===1) {
 			return <td bgcolor="#FAFAE6">Pendente</td>;

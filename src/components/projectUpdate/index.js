@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import * as jwt_decode from "jwt-decode";
 import axios from 'axios';
 import * as Store from '../../store';
-import {Card, CardBody} from 'reactstrap';
+import { browserHistory } from 'react-router';
+import { Card, CardBody, Form, Label, Input, Row, Col, Button, FormGroup } from 'reactstrap';
 
 
 class ProjectUpdate extends Component {
 
 	constructor(props) {
-        super(props);
-        this.state = {project: {title: '', body:'', summary:'', projectArea: ''}, author: {}};
+		super(props);
+		this.state = { project: { title: '', body: '', summary: '', projectArea: '' }, author: {} };
 	}
 
 	getDecodedAccessToken(token) {
@@ -22,20 +23,20 @@ class ProjectUpdate extends Component {
 	}
 
 	componentWillMount() {
-        const data = {};
-        for (const field in this.refs) {
-        data[field] = this.refs[field].value;
-            }
-            
-            var currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        var token = currentUser && currentUser.token;
-        axios.defaults.headers.common['Authorization'] = "Bearer " + token;
-        axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
+		const data = {};
+		for (const field in this.refs) {
+			data[field] = this.refs[field].value;
+		}
 
-        const path = Store['backend'].path; // This is backend path
-        axios.get(path + '/sec/project/listById/' + this.props.location.state.id)
-                .then(response => { this.setProject(response) })
-                .catch(() => { alert('Erro ao processar projeto!') });
+		var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+		var token = currentUser && currentUser.token;
+		axios.defaults.headers.common['Authorization'] = "Bearer " + token;
+		axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
+
+		const path = Store['backend'].path; // This is backend path
+		axios.get(path + '/sec/project/listById/' + this.props.location.state.id)
+			.then(response => { this.setProject(response) })
+			.catch(() => { alert('Erro ao processar projeto!') });
 	}
 
 	setProject(response) {
@@ -49,97 +50,98 @@ class ProjectUpdate extends Component {
 		project.projectStatus = response.data.projectStatus.id;
 		project.answer = response.data.answer;
 		author.name = response.data.author.name;
-		this.setState({project, author});
+		this.setState({ project, author });
 	}
 
 	renderStatus(status) {
-		if (status === 1) {;
-			return <div style={{ textAlign:"center"}}><h1 style={{ fontSize:28, color:'gray' , textAlign:"center"}}>Status: Pendente</h1><button onClick={() => console.log("Clicou")}>Editar Projeto</button></div>;
+		if (status === 1) {
+			;
+			return <div style={{ textAlign: "center" }}><h1 style={{ fontSize: 28, color: 'gray', textAlign: "center" }}>Status: Pendente</h1><button onClick={() => console.log("Clicou")}>Editar Projeto</button></div>;
 		} else if (status === 2) {
-			return <h1 style={{ fontSize:28, color:'red' , textAlign:"center"}}>Status: Rejeitado</h1>;
+			return <h1 style={{ fontSize: 28, color: 'red', textAlign: "center" }}>Status: Rejeitado</h1>;
 		} else if (status === 3) {
-			return <h1 style={{ fontSize:28, color:'green' , textAlign:"center"}}>Status: Aceito</h1>;
+			return <h1 style={{ fontSize: 28, color: 'green', textAlign: "center" }}>Status: Aceito</h1>;
 		}
 	}
 
 	acceptProject(id) {
-    const answer = document.getElementById("answer").value;
+		const answer = document.getElementById("answer").value;
 
 		var currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    var token = currentUser && currentUser.token;
-    axios.defaults.headers.common['Authorization'] = "Bearer " + token;
-    axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
+		var token = currentUser && currentUser.token;
+		axios.defaults.headers.common['Authorization'] = "Bearer " + token;
+		axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
 
-    const path = Store['backend'].path; // This is backend path
-    axios.put(path + '/sec/project/update/' + id, {
+		const path = Store['backend'].path; // This is backend path
+		axios.put(path + '/sec/project/update/' + id, {
 			answer: answer,
-      projectStatus: {id: 3},
-    })
+			projectStatus: { id: 3 },
+		})
 			.then(() => {
 				document.getElementById("status").innerHTML = "<p>Status: Aceito</p>";
-        document.getElementById("answerShow").innerHTML = "Resposta: " + answer;
-        document.getElementById("judge").style.display = "none";
+				document.getElementById("answerShow").innerHTML = "Resposta: " + answer;
+				document.getElementById("judge").style.display = "none";
 				alert('Projeto aceito com sucesso!');
 			})
 			.catch(() => { alert('Erro ao aceitar o Projeto!') });
 	}
 
 	rejectProject(id) {
-    const answer = document.getElementById("answer").value;
+		const answer = document.getElementById("answer").value;
 
 		var currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    var token = currentUser && currentUser.token;
-    axios.defaults.headers.common['Authorization'] = "Bearer " + token;
-    axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
+		var token = currentUser && currentUser.token;
+		axios.defaults.headers.common['Authorization'] = "Bearer " + token;
+		axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
 
-    const path = Store['backend'].path; // This is backend path
-    axios.put(path + '/sec/project/update/' + id, {
+		const path = Store['backend'].path; // This is backend path
+		axios.put(path + '/sec/project/update/' + id, {
 			answer: answer,
-      projectStatus: {id: 2},
-    })
+			projectStatus: { id: 2 },
+		})
 			.then(() => {
 				document.getElementById("status").innerHTML = "<p>Status: Rejeitado</p>";
-        document.getElementById("answerShow").innerHTML = "Resposta: " + answer;
-        document.getElementById("judge").style.display = "none";
+				document.getElementById("answerShow").innerHTML = "Resposta: " + answer;
+				document.getElementById("judge").style.display = "none";
 				alert('Projeto rejeitado com sucesso!');
 			})
 			.catch(() => { alert('Erro ao rejeitar o Projeto!') });
-    }
+	}
 
 	updateProject(id) {
-        const answer = document.getElementById("answer").value;
-    
-        var currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        var token = currentUser && currentUser.token;
-        axios.defaults.headers.common['Authorization'] = "Bearer " + token;
-        axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
-    
-        const path = Store['backend'].path; // This is backend path
-        axios.put(path + '/sec/project/update/' + id, {
-          answer: answer,
-          projectStatus: {id: 1},
-        })
-                .then(() => {
-                    document.getElementById("status").innerHTML = "<p>Status: Aceito</p>";
-            document.getElementById("answerShow").innerHTML = "Resposta: " + answer;
-            document.getElementById("judge").style.display = "none";
-                    alert('Projeto aceito com sucesso!');
-                })
-                .catch(() => { alert('Erro ao aceitar o Projeto!') });
-        }
-    
+		const answer = document.getElementById("answer").value;
+
+		var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+		var token = currentUser && currentUser.token;
+		axios.defaults.headers.common['Authorization'] = "Bearer " + token;
+		axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
+
+		const path = Store['backend'].path; // This is backend path
+		axios.put(path + '/sec/project/update/' + id, {
+			answer: answer,
+			projectStatus: { id: 1 },
+		})
+			.then(() => {
+				document.getElementById("status").innerHTML = "<p>Status: Aceito</p>";
+				document.getElementById("answerShow").innerHTML = "Resposta: " + answer;
+				document.getElementById("judge").style.display = "none";
+				alert('Projeto aceito com sucesso!');
+			})
+			.catch(() => { alert('Erro ao aceitar o Projeto!') });
+	}
+
 	judgeable(statusCode) {
 		var admin = false;
 		var role = JSON.parse(localStorage.getItem('authorities'));
-		if(role) {
-			for(var i=0; i<role.length; i++) {
-				if(role[i].authority.includes("ADMIN")) {
+		if (role) {
+			for (var i = 0; i < role.length; i++) {
+				if (role[i].authority.includes("ADMIN")) {
 					admin = true;
 				}
 			}
 		}
-		if(admin) {
-			if(statusCode===1) {
+		if (admin) {
+			if (statusCode === 1) {
 				return true;
 			} else {
 				return false;
@@ -149,34 +151,161 @@ class ProjectUpdate extends Component {
 
 	renderJudge(id) {
 		return (
-			<div id="judge" style={{ textAlign:"center"}}>
-				<button style={{ margin: 3}} onClick={() => this.acceptProject(id)}>Aceitar</button>
-				<button style={{ margin: 3}} onClick={() => this.rejectProject(id)}>Rejeitar</button>
+			<div id="judge" style={{ textAlign: "center" }}>
+				<button style={{ margin: 3 }} onClick={() => this.acceptProject(id)}>Aceitar</button>
+				<button style={{ margin: 3 }} onClick={() => this.rejectProject(id)}>Rejeitar</button>
 				<br></br>
-				<label for="answer" style={{display:"inline-block", verticalAlign: "center"}}>
-					Resposta: 	
+				<label for="answer" style={{ display: "inline-block", verticalAlign: "center" }}>
+					Resposta:
 				</label>
-					<textarea style={{verticalAlign: "middle", margin: 5, width: "500px", height: "150px"}} type='text' id="answer" required/>
+				<textarea style={{ verticalAlign: "middle", margin: 5, width: "500px", height: "150px" }} type='text' id="answer" required />
 			</div>
 		);
 	}
 
+	handleProject=(e)=> {
+		e.preventDefault();
+    
+        const data = new FormData(e.target);
+
+		var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+		var token = currentUser && currentUser.token;
+		axios.defaults.headers.common['Authorization'] = "Bearer " + token;
+		axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
+
+		const path = Store['backend'].path;
+		axios.put(path + '/sec/project/update/' + this.props.location.state.id, {
+			title: data.get('title'),
+			summary: data.get('summary'),
+			body: data.get('body'),
+		})
+			.then(() => {
+				alert('Projeto atualizado com sucesso!')
+				browserHistory.push('/meusprojetos');
+			})
+			.catch(function (error) {
+				if (error) {
+					alert('Erro ao atualizar projeto. Tente novamente!');
+				}
+			});
+	}
+
 	render() {
-		console.log("Project Area = "+this.state.project.projectArea)
+		console.log("Project Area = " + this.state.project.projectArea)
 		return (
-			<div style={{margin:50}}>
-			<Card style={{margin:100}}>
-				<CardBody>
-					<li style={{fontSize:"20px", fontWeight: "bold", marginLeft: 5}}>Título do Projeto: </li><p style={{marginLeft: 33, marginTop: 8}}>{this.state.project.title}</p>
-					<li style={{fontSize:"20px", fontWeight: "bold", margin: 5}}>Objetivo: </li> <p style={{marginLeft: 33, marginTop: 8}}>{this.state.project.body}</p>
-					<li style={{fontSize:"20px", fontWeight: "bold", margin: 5}}>Problema a ser resolvido: </li> <p style={{marginLeft: 33, marginTop: 8}}>{this.state.project.summary}</p>
-					<li style={{fontSize:"20px", fontWeight: "bold", margin: 5}} id="area">Área: </li> <p style={{marginLeft: 33, marginTop: 8}}>{this.state.project.projectArea}</p>
-					<li style={{fontSize:"20px", fontWeight: "bold", margin: 5}}>Autor: </li> <p style={{marginLeft: 33, marginTop: 8}}>{this.state.author.name}</p>
-					<li style={{fontSize:"20px", fontWeight: "bold", margin: 5}} id="answerShow">Resposta: </li> <p style={{marginLeft: 33, marginTop: 8}}>{this.state.project.answer}</p>
-					<div id="status">{this.renderStatus(this.state.project.projectStatus)} TESTE</div>
-					{this.judgeable(this.state.project.projectStatus) ? this.renderJudge(this.state.project.id) : null}
-				</CardBody>
-			</Card>
+			<div>
+				<Row>
+					<Col sm='2' md='3' lg='4' xs='1' />
+					<Col sm='6' md='5' lg='4' xs='10' style={{ textAlign: 'center' }}><h2>Submissão de Projeto</h2></Col>
+				</Row>
+				<Row>
+					<Col sm='1' md='2' lg='3' xs='1' />
+					<Col sm='8' md='7' lg='6' xs='10'>
+						<Card>
+							<CardBody>
+								<Form
+									id='projectSubmissionForm'
+									name='projectSubmissionForm'
+									onSubmit={this.handleProject}
+								>
+									<FormGroup>
+										<Label>Qual o título do projeto? *</Label>
+										<Input
+											ref='title'
+											type='text'
+											name='title'
+											id='title'
+											maxLength="100"
+											defaultValue={this.state.project.title}
+											required
+										/>
+									</FormGroup>
+									<FormGroup>
+										<Label>Qual problema deseja resolver neste projeto? *</Label>
+										<Input
+											ref='summary'
+											type='textarea'
+											name='summary'
+											id='summary'
+											value={this.state.project.summary}
+											required
+										/>
+									</FormGroup>
+									<FormGroup>
+										<Label>Qual objetivo você quer alcançar com este projeto? *</Label>
+										<Input
+											ref='body'
+											type='textarea'
+											name='body'
+											id='body'
+											value={this.state.project.body}
+											required
+										/>
+									</FormGroup>
+									<FormGroup>
+										<Label for='area'>Área de Aplicação *</Label>
+										<Input
+											ref='area'
+											type='select'
+											name='area'
+											id='area'
+											required
+											value={this.state.value}
+											onChange={this.handleChange}
+										>
+											<option ref="0" disabled selected>Selecionar Área</option>
+											<option ref="1" value={"PSP1"} className="optionGroup" disabled>PSP1 - Probabilidade e Estatística</option>
+											<option ref="1.1" value={"PSP1-ABD"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Análise de Banco de Dados</option>
+											<option ref="1.2" value={"PSP1-CQP"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Criação de Questionários de Pesquisa</option>
+											<option ref="1.3" value={"PSP1-OTHERS"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Outras</option>
+											<option ref="2" value={"PSP2"} className="optionGroup" disabled>PSP2 - Sistemas de Informação</option>
+											<option ref="2.1" value={"PSP2-PSI"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Projeto de Sistemas de Informação</option>
+											<option ref="2.2" value={"PSP2-OTHERS"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Outras</option>
+											<option ref="3" value={"PSP3"} className="optionGroup" disabled>PSP3 - Livre</option>
+											<option ref="3.1" value={"PSP3-OTHERS"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Outras</option>
+											<option ref="4" value={"PSP4"} className="optionGroup" disabled>PSP4 - Planejamento e Controle da Produção</option>
+											<option ref="4.1" value={"PSP4-PDD"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Previsão de Demanda</option>
+											<option ref="4.2" value={"PSP4-GDE"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gestão de Estoques</option>
+											<option ref="4.3" value={"PSP4-CFA"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Criação de Ferramentas de Apoio ao Planejamento e Controle da Produção</option>
+											<option ref="4.4" value={"PSP4-OTHERS"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Outras</option>
+											<option ref="5" value={"PSP5"} className="optionGroup" disabled>PSP5 - Gestão da Qualidade</option>
+											<option ref="5.1" value={"PSP5-MDP"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mapeamento de Processos</option>
+											<option ref="5.2" value={"PSP5-CDV"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cadeia de Valor</option>
+											<option ref="5.3" value={"PSP5-MCP"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Melhoria Contínua de Processos</option>
+											<option ref="5.4" value={"PSP5-OTHERS"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Outras</option>
+											<option ref="6" value={"PSP6"} className="optionGroup" disabled>PSP6 - Engenharia do Produto</option>
+											<option ref="6.1" value={"PSP6-EPC"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Elaboração de Projeto Conceitual de Produto</option>
+											<option ref="6.2" value={"PSP6-OTHERS"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Outras</option>
+											<option ref="7" value={"PSP7"} className="optionGroup" disabled>PSP7 - Gestão Estratégica</option>
+											<option ref="7.1" value={"PSP7-DOE"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Definição de Objetivos Estratégicos</option>
+											<option ref="7.2" value={"PSP7-VBE"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Viabilidade Econômica</option>
+											<option ref="7.3" value={"PSP7-DDM"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Desdobramento de Metas</option>
+											<option ref="8" value={"UNDEF"} className="optionGroup">Não sei em qual categoria meu projeto se encaixa</option>
+										</Input>
+									</FormGroup>
+									<FormGroup>
+										<Label>Link do PDF *</Label>
+										<Input
+											ref='title'
+											type='text'
+											name='title'
+											id='title'
+											maxLength="500"
+										//  required              
+										/>
+									</FormGroup>
+									<Button type="submit" value="submit" color="primary" style={{ display: "block", margin: "0 auto" }}>
+										Atualizar Projeto
+					</Button>
+								</Form>
+							</CardBody>
+							<footer>
+								<p>* Campo Obrigatório</p>
+							</footer>
+						</Card>
+					</Col>
+				</Row>
+
 			</div>
 		);
 	}
