@@ -7,11 +7,16 @@ import * as Store from "../../store";
 import MaskedInput from 'react-text-mask'
 import {Card, CardBody, Form, Label, Input,Row,Col,Button, FormGroup} from 'reactstrap';
 import {browserHistory} from 'react-router';
+import ViaCep from 'react-via-cep';
 
 class Register extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = { cep: ''};
+
+    this.handleChangeCep = this.handleChangeCep.bind(this);
+    this.handleSuccess = this.handleSuccess.bind(this);
   }
 
   cpfmask = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-' , /\d/, /\d/];
@@ -65,6 +70,14 @@ class Register extends Component {
     } else {
         return true;
     }
+  }
+
+  handleChangeCep(event) {
+    this.setState({ cep: event.target.value })
+  }
+
+  handleSuccess(cepData) {
+    console.log(cepData);
   }
 
   handleSubmit(event) {
@@ -161,30 +174,63 @@ class Register extends Component {
                   required
                 />
               </FormGroup>
-              <FormGroup>
-                <Label className="label">CEP *</Label>
-                <Input
-                  ref="body"
-                  type="text"
-                  name="cep"
-                  id="cep"
-                  className="input"
-                  mask={this.cepmask}
-                  tag={MaskedInput}
-                  required
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label className="label">Endereço *</Label>
-                <Input
-                  ref="title"
-                  type="text"
-                  name="endereco"
-                  id="endereco"
-                  className="input"
-                  required
-                />
-              </FormGroup>
+              <ViaCep cep={this.state.cep} onSuccess={this.handleSuccess} lazy>
+                { ({ data, loading, error, fetch }) => {
+                  if (loading) {
+                    return <p>Carregando...</p>
+                  }
+                  if (error) {
+                    return <p>Erro</p>
+                  }
+                  if (data) {
+                    return <div>
+                      <FormGroup>
+                        <Label className="label">CEP *</Label>
+                        <Input
+                          ref="body"
+                          type="text"
+                          name="cep"
+                          id="cep"
+                          className="input"
+                          mask={this.cepmask}
+                          tag={MaskedInput}
+                          value= {data.cep}
+                          required
+                        />
+                    </FormGroup>
+                      <FormGroup>
+                        <Label className="label">Endereço *</Label>
+                        <Input
+                          ref="title"
+                          type="text"
+                          name="endereco"
+                          id="endereco"
+                          className="input"
+                          required
+                          value={data.logradouro +[' ']+ data.bairro + [' ']+ data.localidade + [' ']+ data.uf}
+                        />
+                      </FormGroup>
+                    </div>
+                  }
+                  return <div>
+                    <FormGroup>
+                      <Label className="label">CEP *</Label>
+                      <Input
+                        ref="body"
+                        type="text"
+                        name="cep"
+                        id="cep"
+                        className="input"
+                        mask={this.cepmask}
+                        tag={MaskedInput}
+                        onChange={this.handleChangeCep} value={this.state.cep} placeholder="CEP" type="text"
+                        required
+                      />
+                    </FormGroup>
+                    <button onClick={fetch}>Pesquisar</button>
+                  </div>
+                }}
+              </ViaCep>
               <FormGroup>
                 <Label className="label">Telefone Principal * </Label>
                 <Input
