@@ -177,12 +177,32 @@ class Register extends Component {
               <ViaCep cep={this.state.cep} onSuccess={this.handleSuccess} lazy>
                 { ({ data, loading, error, fetch }) => {
                   if (loading) {
-                    return <p>Carregando...</p>
+                    return <p>Pesquisando CEP...</p>
                   }
                   if (error) {
-                    return <p>Erro</p>
+                    return console.log('CEP inválido!');
                   }
                   if (data) {
+                    if (data.erro === true) {
+                      return <div>
+                        <FormGroup>
+                          <Label className="label">CEP *</Label>
+                          <Input
+                            ref="body"
+                            type="text"
+                            name="cep"
+                            id="cep"
+                            className="input"
+                            mask={this.cepmask}
+                            tag={MaskedInput}
+                            onChange={this.handleChangeCep} value={this.state.cep} 
+                            required
+                          />
+                        </FormGroup>
+                        <div style={{marginTop: -12, fontSize: 12, color: 'red'}}>CEP Inválido</div>
+                        <button onClick={fetch}>Pesquisar</button>
+                      </div>
+                    }
                     return <div>
                       <FormGroup>
                         <Label className="label">CEP *</Label>
@@ -223,7 +243,7 @@ class Register extends Component {
                         className="input"
                         mask={this.cepmask}
                         tag={MaskedInput}
-                        onChange={this.handleChangeCep} value={this.state.cep} placeholder="CEP" type="text"
+                        onChange={this.handleChangeCep} value={this.state.cep} 
                         required
                       />
                     </FormGroup>
