@@ -3,7 +3,7 @@ import axios from 'axios';
 import * as Store from '../../store';
 import {Input,Label,Button,FormGroup, Form} from 'reactstrap';
 import { Editor } from 'react-draft-wysiwyg';
-import { EditorState, convertToRaw, ContentState } from 'draft-js';
+import { EditorState, convertToRaw, ContentState, convertFromHTML } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import {browserHistory} from 'react-router';
 import * as jwt_decode from "jwt-decode";
@@ -89,7 +89,14 @@ class UpdateNews extends Component {
 		news.body = response.body;
     author.name = response.author.name;
     this.setState({news, author});
-    this.setState({ editorState: EditorState.createWithContent(ContentState.createFromText(news.body)) });
+
+    const blocksFromHTML = convertFromHTML(news.body);
+    const content = ContentState.createFromBlockArray(
+      blocksFromHTML.contentBlocks,
+      blocksFromHTML.entityMap
+    );
+
+    this.setState({ editorState:  EditorState.createWithContent(content) });
 	}
   
 	render() {
