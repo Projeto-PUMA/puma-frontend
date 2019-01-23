@@ -237,7 +237,7 @@ class ProjectSubmission extends Component {
       <div>
         <Row>
         <Col sm='2' md='3' lg='4' xs='1'/>
-        <Col sm='6' md='5' lg='4' xs='10' style={{textAlign:'center'}}><h2>Submissão de Projeto</h2></Col>
+        <Col sm='6' md='5' lg='4' xs='10' style={{textAlign:'center', margin:'20px'}}><h2>Submissão de Projeto</h2></Col>
         </Row>
         <Row>
           <Col sm='1' md='2' lg='3' xs='1'/>
@@ -291,7 +291,7 @@ class ProjectSubmission extends Component {
                  value={this.state.value}
                  onChange={this.handleChange}
                  >            
-                 <option ref="0" disabled selected>Selecionar Área</option>
+                 <option ref="0" value="" placeholder disabled selected defaultValue >Selecionar Área</option>
                  <option ref="1" value={"PSP1"} className="optionGroup" disabled>PSP1 - Probabilidade e Estatística</option>
                   <option ref="1.1"value={"PSP1-ABD"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Análise de Banco de Dados</option>
                   <option ref="1.2"value={"PSP1-CQP"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Criação de Questionários de Pesquisa</option>
@@ -353,7 +353,7 @@ class ProjectSubmission extends Component {
               </Form>
             </CardBody>
           <footer>
-            <p>* Campo Obrigatório</p>
+            <p style={{marginLeft:'20px'}}>* Campo Obrigatório</p>
           </footer>
           </Card>
           </Col>
