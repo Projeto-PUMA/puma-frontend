@@ -17,22 +17,31 @@ import ViewProject from './components/projects/viewProject';
 import UpdateNews from './components/newsUpdate/index';
 import ProjectUpdate from './components/projectUpdate/index';
 
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+import rootReducer from './reducers';
+
+const store = createStore(rootReducer, applyMiddleware(thunk));
+
 ReactDOM.render(
-  <Router history={browserHistory}>
-      <Route path='/' component={App}>
-          <IndexRoute component={Home} />
-          <Route path='/login' component={Login} />
-          <Route path='/cadastro' component={Register} />
-          <Route path='/meusprojetos' component={MyProjects} />
-          <Route path='/projeto' component={ViewProject} />
-          <Route path='/submeterprojeto' component={ProjectSubmission} />
-          <Route path='/gerenciarprojetos' component={Projects} />
-          <Route path='/submeternoticia' component={NewsSubmission} />
-          <Route path='/noticia' component={ViewNews} />
-          <Route path='/noticia/editar' component={UpdateNews} />
-          <Route path='/gerenciarnoticias' component={News} />
-          <Route path='/projeto/editar'component={ProjectUpdate} />
-      </Route>
-  </Router>
-  , document.getElementById('root'));
+	<Provider store={store}>
+		<Router history={browserHistory}>
+			<Route path='/' component={App}>
+				<IndexRoute component={Home} />
+				<Route path='/login' component={Login} />
+				<Route path='/cadastro' component={Register} />
+				<Route path='/meusprojetos' component={MyProjects} />
+				<Route path='/projeto' component={ViewProject} />
+				<Route path='/submeterprojeto' component={ProjectSubmission} />
+				<Route path='/gerenciarprojetos' component={Projects} />
+				<Route path='/submeternoticia' component={NewsSubmission} />
+				<Route path='/noticia' component={ViewNews} />
+				<Route path='/noticia/editar' component={UpdateNews} />
+				<Route path='/gerenciarnoticias' component={News} />
+				<Route path='/projeto/editar' component={ProjectUpdate} />
+			</Route>
+		</Router>
+	</Provider>
+	, document.getElementById('root'));
 registerServiceWorker();

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   Carousel,
   CarouselItem,
@@ -6,8 +7,6 @@ import {
   CarouselIndicators,
   CarouselCaption
 } from 'reactstrap';
-import axios from 'axios';
-import * as Store from '../../store';
 import { browserHistory } from 'react-router';
 
 class Example extends Component {
@@ -22,24 +21,14 @@ class Example extends Component {
   }
 
   componentWillMount() {
-    const data = {};
-    for (const field in this.refs) {
-      data[field] = this.refs[field].value;
-    }
-
-    const path = Store['backend'].path; // This is backend path
-    axios.get(path + '/blog/listAll')
-      .then(response => { this.setNews(response) })
-      .catch((error) => { console.log(error);alert('Erro ao processar notícias!') });
+    this.setNews(Object.values(this.props.news));
   }
 
-  setNews(response) {
-    for (var i = 0; i < response.data.length; i++) {
-      this.setState({
-        ...this.state,
-        news: this.state.news.concat(response.data[i]),
-      })
-    }
+  setNews(news) {
+    this.setState({
+      ...this.state,
+      news: news,
+    });
   }
 
   onExiting() {
@@ -85,7 +74,7 @@ class Example extends Component {
         <CarouselItem
           onExiting={this.onExiting}
           onExited={this.onExited}
-          key={item.title}
+          key={item.id}
         >
         <div className="image-carousel" onClick={() => this.viewNews(item.id)} style={{ height: 500, cursor: 'pointer' }}>
           <img src={'http://www.legacyschoolne.com/wp-content/uploads/2018/09/PBL-Header.png'} alt={item.title} style={{ width: '100%', height: 500 }} />
@@ -112,5 +101,8 @@ class Example extends Component {
   }
 }
 
+Example.propTypes = {
+  news: PropTypes.object.isRequired,
+};
 
 export default Example;

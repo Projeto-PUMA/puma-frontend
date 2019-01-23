@@ -18,11 +18,6 @@ class News extends Component {
     for (const field in this.refs) {
       data[field] = this.refs[field].value;
 		}
-		
-		var currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    var token = currentUser && currentUser.token;
-    axios.defaults.headers.common['Authorization'] = "Bearer " + token;
-    axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
 
     const path = Store['backend'].path; // This is backend path
     axios.get(path + '/sec/post/listAll')
