@@ -13,10 +13,11 @@ class Register extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = { cep: ''};
+    this.state = { cep: '', address: '' };
 
     this.handleChangeCep = this.handleChangeCep.bind(this);
     this.handleSuccess = this.handleSuccess.bind(this);
+    this.changeAddress = this.changeAddress.bind(this);
   }
 
   cpfmask = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-' , /\d/, /\d/];
@@ -73,11 +74,15 @@ class Register extends Component {
   }
 
   handleChangeCep(event) {
-    this.setState({ cep: event.target.value })
+    this.setState({ ...this.state, cep: event.target.value })
   }
 
-  handleSuccess(cepData) {
-    console.log(cepData);
+  handleSuccess(data) {
+    this.setState({ ...this.state, address: data.logradouro +[' ']+ data.bairro + [' ']+ data.localidade + [' ']+ data.uf });
+  }
+
+  changeAddress(event) {
+    this.setState({ address: event.target.value });
   }
 
   handleSubmit(event) {
@@ -227,7 +232,8 @@ class Register extends Component {
                           id="endereco"
                           className="input"
                           required
-                          value={data.logradouro +[' ']+ data.bairro + [' ']+ data.localidade + [' ']+ data.uf}
+                          value={this.state.address}
+                          onChange={this.changeAddress}
                         />
                       </FormGroup>
                     </div>
