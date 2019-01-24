@@ -12,7 +12,7 @@ import ProjectSubmission from './components/projectSubmission';
 import Projects from './components/projects';
 import NewsSubmission from './components/newsSubmission';
 import News from './components/news/index';
-import ViewNews from './components/news/viewNews'
+import ViewNews from './components/news/show'
 import ViewProject from './components/projects/viewProject';
 import UpdateNews from './components/newsUpdate/index';
 import ProjectUpdate from './components/projectUpdate/index';

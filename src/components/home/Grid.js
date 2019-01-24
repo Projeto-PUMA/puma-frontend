@@ -19,7 +19,6 @@ class Grid extends Component {
   }
 
   renderCard(d, idx) {
-    if (idx > 2) return;
     var linkImage = "";
     if (idx === 0) {
       linkImage = "http://www.legacyschoolne.com/wp-content/uploads/2018/09/PBL-Header.png"
@@ -34,7 +33,6 @@ class Grid extends Component {
             <CardTitle>{d.title}</CardTitle>
           </CardBody>
           <CardBody>
-            {/* <CardText>{ d.body.substring(0, 40) 'Originada entre o final da década de 60 e início da década de 70 em Faculdades de Medicina do Canadá e Holanda o PBL (Project/Problem Based Learning)...'}</CardText> */}
             <CardLink style={{ color: 'blue' }}>Ler mais...</CardLink>
           </CardBody>
         </Card>
