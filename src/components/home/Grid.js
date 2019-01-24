@@ -44,11 +44,13 @@ class Grid extends Component {
 
   render() {
     const { data } = this.props;
+
+    const items = data.slice(data.length - 3, data.length);
     
     return (
       <div id='content' style={{ width: '100%', height: '100%' }}>
         <div style={{ marginTop: 40, width: '100%', align: 'center', marginBottom: 20 }}>
-          { data.length > 1 ? <CarouselApp data={data} /> : null }
+          { data.length > 1 ? <CarouselApp data={items} /> : null }
         </div>
         <div style={{ textAlign: 'center', marginTop: 50 }}>
           <h1>PROJETO DE SISTEMAS DE PRODUÇÃO (PSP)</h1>
@@ -76,7 +78,7 @@ class Grid extends Component {
         <div style={{ flexDirection: 'row', align: 'center', width: '100%' }}>
           <div style={{ minWidth: '30%', maxWidth: '30%', float: 'left', margin: 120, marginTop: 0 }}>
             <h2 style={{ marginLeft: 20 }}>Notícias</h2>
-            { data.map((d, idx) => this.renderCard(d, idx)) }
+            { items.map((d, idx) => this.renderCard(d, idx)) }
           </div>
           <div style={{ minWidth: '30%', maxWidth: '30%', float: 'right', margin: 120, marginTop: 0 }}>
             <h2 style={{ marginLeft: 20 }}>Projetos</h2>

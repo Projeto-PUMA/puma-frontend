@@ -58,9 +58,7 @@ class Example extends Component {
     const { activeIndex } = this.state;
     const { data } = this.props;
 
-    const items = data.slice(data.length - 3, data.length);
-
-    const slides = items.map((item, idx) => {
+    const slides = data.map((item, idx) => {
       return (
         <CarouselItem
           onExiting={this.onExiting}
@@ -82,7 +80,7 @@ class Example extends Component {
           next={this.next}
           previous={this.previous}
         >
-          <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={this.goToIndex} />
+          <CarouselIndicators items={data} activeIndex={activeIndex} onClickHandler={this.goToIndex} />
           {slides}
           <CarouselControl direction="prev" directionText="Previous" onClickHandler={this.previous} />
           <CarouselControl direction="next" directionText="Next" onClickHandler={this.next} />
