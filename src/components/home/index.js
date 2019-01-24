@@ -14,9 +14,15 @@ class Home extends Component {
   render() {
 
     const { news } = this.props;
+
+    const data = [];
+    for (var key in news) {
+      news[key].key = key;
+      data.push(news[key]);
+    }
     
     return (
-      <Grid news={news} />
+      <Grid data={data} />
     );
   }
 }

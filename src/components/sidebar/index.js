@@ -63,7 +63,7 @@ export default class Index extends React.Component {
             =
           </button>
         )}
-        <span> PUMA</span>
+        <span onClick={() => this.redirectHome()}> PUMA</span>
       </span>
     );
 

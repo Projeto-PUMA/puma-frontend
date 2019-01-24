@@ -12,23 +12,12 @@ import { browserHistory } from 'react-router';
 class Example extends Component {
   constructor(props) {
     super(props);
-    this.state = { activeIndex: 0, news: [] };
+    this.state = { activeIndex: 0 };
     this.next = this.next.bind(this);
     this.previous = this.previous.bind(this);
     this.goToIndex = this.goToIndex.bind(this);
     this.onExiting = this.onExiting.bind(this);
     this.onExited = this.onExited.bind(this);
-  }
-
-  componentWillMount() {
-    this.setNews(Object.values(this.props.news));
-  }
-
-  setNews(news) {
-    this.setState({
-      ...this.state,
-      news: news,
-    });
   }
 
   onExiting() {
@@ -41,13 +30,13 @@ class Example extends Component {
 
   next() {
     if (this.animating) return;
-    const nextIndex = this.state.activeIndex === this.state.news.length - 1 ? 0 : this.state.activeIndex + 1;
+    const nextIndex = this.state.activeIndex === 3 - 1 ? 0 : this.state.activeIndex + 1;
     this.setState({ ...this.state, activeIndex: nextIndex });
   }
 
   previous() {
     if (this.animating) return;
-    const nextIndex = this.state.activeIndex === 0 ? this.state.news.length - 1 : this.state.activeIndex - 1;
+    const nextIndex = this.state.activeIndex === 0 ? 3 - 1 : this.state.activeIndex - 1;
     this.setState({ ...this.state, activeIndex: nextIndex });
   }
 
@@ -66,20 +55,22 @@ class Example extends Component {
   }
 
   render() {
-    const { activeIndex, news } = this.state;
+    const { activeIndex } = this.state;
+    const { data } = this.props;
 
-    const slides = news.map((item, idx) => {
-      if (idx > 2) return null;
+    const items = data.slice(data.length - 3, data.length);
+
+    const slides = items.map((item, idx) => {
       return (
         <CarouselItem
           onExiting={this.onExiting}
           onExited={this.onExited}
           key={item.id}
         >
-        <div className="image-carousel" onClick={() => this.viewNews(item.id)} style={{ height: 500, cursor: 'pointer' }}>
+        <div key={idx} className="image-carousel" onClick={() => this.viewNews(item.id)} style={{ height: 500, cursor: 'pointer' }}>
           <img src={'http://www.legacyschoolne.com/wp-content/uploads/2018/09/PBL-Header.png'} alt={item.title} style={{ width: '100%', height: 500 }} />
         </div>
-          <CarouselCaption captionText={item.body} captionHeader={item.title} />
+          <CarouselCaption captionText={''} captionHeader={item.title} />
         </CarouselItem>
       );
     });
@@ -91,7 +82,7 @@ class Example extends Component {
           next={this.next}
           previous={this.previous}
         >
-          <CarouselIndicators items={news} activeIndex={activeIndex} onClickHandler={this.goToIndex} />
+          <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={this.goToIndex} />
           {slides}
           <CarouselControl direction="prev" directionText="Previous" onClickHandler={this.previous} />
           <CarouselControl direction="next" directionText="Next" onClickHandler={this.next} />
@@ -102,7 +93,7 @@ class Example extends Component {
 }
 
 Example.propTypes = {
-  news: PropTypes.object.isRequired,
+  data: PropTypes.array.isRequired,
 };
 
 export default Example;

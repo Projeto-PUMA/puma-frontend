@@ -100,7 +100,7 @@ const SidebarContent = props => {
   return (
     <MaterialTitlePanel title="Menu" style={style}>
       <div style={styles.content}>
-        <Link to='/' key="0" style={styles.sidebarLink}><img className="img-responsive" src={page} alt="page" style={{height: 25, marginRight: 7, marginTop:-2}}/> Página Inicial</Link>
+        {/* <Link to='/' key="0" style={styles.sidebarLink}><img className="img-responsive" src={page} alt="page" style={{height: 25, marginRight: 7, marginTop:-2}}/> Página Inicial</Link> */}
         { logged ? logOut : unloggedLinks }
         <div style={styles.divider} />
         { user ? userLinks : null }

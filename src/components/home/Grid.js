@@ -43,11 +43,12 @@ class Grid extends Component {
   }
 
   render() {
-    const data = this.props.news;
+    const { data } = this.props;
+    
     return (
       <div id='content' style={{ width: '100%', height: '100%' }}>
         <div style={{ marginTop: 40, width: '100%', align: 'center', marginBottom: 20 }}>
-          <CarouselApp news={this.props.news} />
+          { data.length > 1 ? <CarouselApp data={data} /> : null }
         </div>
         <div style={{ textAlign: 'center', marginTop: 50 }}>
           <h1>PROJETO DE SISTEMAS DE PRODUÇÃO (PSP)</h1>
@@ -75,7 +76,7 @@ class Grid extends Component {
         <div style={{ flexDirection: 'row', align: 'center', width: '100%' }}>
           <div style={{ minWidth: '30%', maxWidth: '30%', float: 'left', margin: 120, marginTop: 0 }}>
             <h2 style={{ marginLeft: 20 }}>Notícias</h2>
-            {Object.keys(data).map((d, idx) => this.renderCard(d, idx))}
+            { data.map((d, idx) => this.renderCard(d, idx)) }
           </div>
           <div style={{ minWidth: '30%', maxWidth: '30%', float: 'right', margin: 120, marginTop: 0 }}>
             <h2 style={{ marginLeft: 20 }}>Projetos</h2>
@@ -117,7 +118,7 @@ class Grid extends Component {
 }
 
 Grid.propTypes = {
-  news: PropTypes.object.isRequired,
+  data: PropTypes.array.isRequired,
 };
 
 export default Grid;
