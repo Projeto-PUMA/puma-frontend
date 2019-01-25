@@ -5,6 +5,7 @@ import * as Store from '../../store';
 import './style.css';
 import { Table } from 'reactstrap';
 import { browserHistory } from 'react-router';
+import { auth } from '../../helpers/token';
 
 class News extends Component {
 
@@ -20,7 +21,7 @@ class News extends Component {
 		}
 
     const path = Store['backend'].path; // This is backend path
-    axios.get(path + '/sec/post/listAll')
+    axios.get(path + '/sec/post/listAll', auth)
 			.then(response => { this.setNews(response) })
 			.catch(() => { alert('Erro ao processar notícias!') });
 	}
