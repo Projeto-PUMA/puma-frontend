@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import * as Store from '../../store';
+import PropTypes from 'prop-types';
 import CarouselApp from '../carousel/index.js';
 import {
   Card, CardText, CardBody, CardLink,
@@ -9,31 +8,6 @@ import {
 import { browserHistory } from 'react-router';
 
 class Grid extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = { news: [] };
-  }
-
-  componentWillMount() {
-    const data = {};
-    for (const field in this.refs) {
-      data[field] = this.refs[field].value;
-    }
-
-    const path = Store['backend'].path; // This is backend path
-    axios.get(path + '/blog/listAll')
-      .then(response => { this.setNews(response) })
-      .catch((error) => { console.log(error);alert('Erro ao processar notícias!') });
-  }
-
-  setNews(response) {
-    for (var i = 0; i < response.data.length; i++) {
-      this.setState({
-        news: this.state.news.concat(response.data[i])
-      })
-    }
-  }
 
   viewNews(id) {
     browserHistory.push({
@@ -45,7 +19,6 @@ class Grid extends Component {
   }
 
   renderCard(d, idx) {
-    if (idx > 2) return;
     var linkImage = "";
     if (idx === 0) {
       linkImage = "http://www.legacyschoolne.com/wp-content/uploads/2018/09/PBL-Header.png"
@@ -60,7 +33,6 @@ class Grid extends Component {
             <CardTitle>{d.title}</CardTitle>
           </CardBody>
           <CardBody>
-            {/* <CardText>{ d.body.substring(0, 40) 'Originada entre o final da década de 60 e início da década de 70 em Faculdades de Medicina do Canadá e Holanda o PBL (Project/Problem Based Learning)...'}</CardText> */}
             <CardLink style={{ color: 'blue' }}>Ler mais...</CardLink>
           </CardBody>
         </Card>
@@ -69,11 +41,14 @@ class Grid extends Component {
   }
 
   render() {
-    const data = this.state.news;
+    const { data } = this.props;
+
+    const items = data.slice(data.length - 3, data.length);
+    
     return (
       <div id='content' style={{ width: '100%', height: '100%' }}>
         <div style={{ marginTop: 40, width: '100%', align: 'center', marginBottom: 20 }}>
-          <CarouselApp />
+          { data.length > 1 ? <CarouselApp data={items} /> : null }
         </div>
         <div style={{ textAlign: 'center', marginTop: 50 }}>
           <h1>PROJETO DE SISTEMAS DE PRODUÇÃO (PSP)</h1>
@@ -101,7 +76,7 @@ class Grid extends Component {
         <div style={{ flexDirection: 'row', align: 'center', width: '100%' }}>
           <div style={{ minWidth: '30%', maxWidth: '30%', float: 'left', margin: 120, marginTop: 0 }}>
             <h2 style={{ marginLeft: 20 }}>Notícias</h2>
-            {data.map((d, idx) => this.renderCard(d, idx))}
+            { items.map((d, idx) => this.renderCard(d, idx)) }
           </div>
           <div style={{ minWidth: '30%', maxWidth: '30%', float: 'right', margin: 120, marginTop: 0 }}>
             <h2 style={{ marginLeft: 20 }}>Projetos</h2>
@@ -141,5 +116,9 @@ class Grid extends Component {
     );
   }
 }
+
+Grid.propTypes = {
+  data: PropTypes.array.isRequired,
+};
 
 export default Grid;
