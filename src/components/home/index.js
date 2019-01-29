@@ -26,7 +26,7 @@ class Home extends Component {
       news[key].key = key;
       data.push(news[key]);
     }
-    
+
     return (
       <Grid data={data} />
     );
