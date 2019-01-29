@@ -258,7 +258,7 @@ class Register extends Component {
                     }}
                   </ViaCep>
                   <FormGroup>
-                    <Label className="label">Telefone Principal * </Label>
+                    <Label className="label">Telefone Celular * </Label>
                     <Input
                       ref="title"
                       type="text"
@@ -271,7 +271,7 @@ class Register extends Component {
                     />
                   </FormGroup>
                   <FormGroup>
-                    <Label className="label">Telefone Alternativo</Label>
+                    <Label className="label">Telefone Fixo</Label>
                     <Input
                       ref="title"
                       type="text"

@@ -199,7 +199,19 @@ class ProjectUpdate extends Component {
 	renderJuridic() {
 		if (this.state.showJuridic) {
 		  return (
-			<div>
+				<div>
+				<FormGroup>
+					<Label>CNPJ</Label>
+					<Input
+						ref='title'
+						type='text'
+						name='CNPJ'
+						id='CNPJ'
+						mask={this.cnpjmask}
+						tag={MaskedInput}
+						required
+					/>
+				</FormGroup>
 			  <FormGroup>
 				<Label>Nome da Empresa *</Label>
 				<Input
@@ -219,18 +231,6 @@ class ProjectUpdate extends Component {
 				  name='corporateName'
 				  id='corporateName'
 				  maxLength="200"
-				  required
-				/>
-			  </FormGroup>
-			  <FormGroup>
-				<Label>CNPJ</Label>
-				<Input
-				  ref='title'
-				  type='text'
-				  name='CNPJ'
-				  id='CNPJ'
-				  mask={this.cnpjmask}
-				  tag={MaskedInput}
 				  required
 				/>
 			  </FormGroup>
@@ -473,7 +473,7 @@ class ProjectUpdate extends Component {
 											name='title'
 											id='title'
 											maxLength="500"
-										//  required              
+										  required              
 										/>
 									</FormGroup>
 									<FormGroup tag="fieldset" required>
