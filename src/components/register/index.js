@@ -13,11 +13,14 @@ class Register extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = { cep: '', address: '' };
+    this.state = { cep: '', uf: '', localidade: '', bairro: '', logradouro: '' };
 
     this.handleChangeCep = this.handleChangeCep.bind(this);
     this.handleSuccess = this.handleSuccess.bind(this);
-    this.changeAddress = this.changeAddress.bind(this);
+    this.changeUf = this.changeUf.bind(this);
+    this.changeCidade = this.changeCidade.bind(this);
+    this.changeBairro = this.changeBairro.bind(this);
+    this.changeLogradouro = this.changeLogradouro.bind(this);
   }
 
   cpfmask = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/];
@@ -78,11 +81,23 @@ class Register extends Component {
   }
 
   handleSuccess(data) {
-    this.setState({ ...this.state, address: data.logradouro + [' '] + data.bairro + [' '] + data.localidade + [' '] + data.uf });
+    this.setState({ ...this.state, uf: data.uf, localidade: data.localidade, bairro: data.bairro, logradouro: data.logradouro});
   }
 
-  changeAddress(event) {
-    this.setState({ address: event.target.value });
+  changeUf(event) {
+    this.setState({ uf: event.target.value });
+  }
+
+  changeCidade(event) {
+    this.setState({ localidade: event.target.value });
+  }
+
+  changeBairro(event) {
+    this.setState({ bairro: event.target.value });
+  }
+
+  changeLogradouro(event) {
+    this.setState({ logradouro: event.target.value });
   }
 
   handleSubmit(event) {
@@ -111,17 +126,24 @@ class Register extends Component {
 
     const path = Store["backend"].path; // This is backend path
     axios
-      .post(path + "/register", {
-        name: data.get("nome"),
-        username: data.get("cpf").replace(/\D+/g, ''),
-        cep: data.get("cep").replace(/\D+/g, ''),
-        fullAddress: data.get("endereco"),
+      .post(path + "/usuario", {
+        nome: data.get("nome"),
+        email: data.get("email"),
+        senha: document.getElementById("senha").value,
+        cpf: data.get("cpf").replace(/\D+/g, ''),
+        escolaridade: data.get("escolaridade"),
+        endereco: {
+          uf: data.get("uf"),  
+          cep: data.get("cep").replace(/\D+/g, ''),
+          localidade: data.get("localidade"),
+          bairro: data.get("bairro"),
+          logradouro: data.get("logradouro"),
+          numero: data.get("numero"),
+          complemento: data.get("complemento")
+        },
         phonePrincipal: data.get("telefoneCel").replace(/\D+/g, ''),
         phoneAlternative: data.get("telefoneFix").replace(/\D+/g, ''),
-        education: data.get("escolaridade"),
         profession: data.get("profissao"),
-        password: document.getElementById("senha").value,
-        email: data.get("email")
       })
       .then(() => {
         alert("Usuário cadastrado com sucesso!");
@@ -224,16 +246,76 @@ class Register extends Component {
                             />
                           </FormGroup>
                           <FormGroup>
-                            <Label className="label">Endereço *</Label>
+                            <Label className="label">Estado *</Label>
                             <Input
                               ref="title"
                               type="text"
-                              name="endereco"
-                              id="endereco"
+                              name="uf"
+                              id="uf"
                               className="input"
                               required
-                              value={this.state.address}
-                              onChange={this.changeAddress}
+                              value={this.state.uf}
+                              onChange={this.changeUf}
+                            />
+                          </FormGroup>
+                          <FormGroup>
+                            <Label className="label">Cidade *</Label>
+                            <Input
+                              ref="title"
+                              type="text"
+                              name="localidade"
+                              id="localidade"
+                              className="input"
+                              required
+                              value={this.state.localidade}
+                              onChange={this.changeCidade}
+                            />
+                          </FormGroup>
+                          <FormGroup>
+                            <Label className="label">Bairro *</Label>
+                            <Input
+                              ref="title"
+                              type="text"
+                              name="bairro"
+                              id="bairro"
+                              className="input"
+                              required
+                              value={this.state.bairro}
+                              onChange={this.changeBairro}
+                            />
+                          </FormGroup>
+                          <FormGroup>
+                            <Label className="label">Rua *</Label>
+                            <Input
+                              ref="title"
+                              type="text"
+                              name="logradouro"
+                              id="logradouro"
+                              className="input"
+                              required
+                              value={this.state.logradouro}
+                              onChange={this.changeLogradouro}
+                            />
+                          </FormGroup>
+                          <FormGroup>
+                            <Label className="label">Número *</Label>
+                            <Input
+                              ref="title"
+                              type="text"
+                              name="numero"
+                              id="numero"
+                              className="input"
+                              required
+                            />
+                          </FormGroup>
+                          <FormGroup>
+                            <Label className="label">Complemento</Label>
+                            <Input
+                              ref="title"
+                              type="text"
+                              name="complemento"
+                              id="complemento"
+                              className="input"
                             />
                           </FormGroup>
                         </div>
