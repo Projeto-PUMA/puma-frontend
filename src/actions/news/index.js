@@ -16,7 +16,7 @@ export const loadNews = () => (dispatch) => {
     });
 };
 
-export const createNews = (author, title, body) => (dispatch) => {
+export const createNews = (title, subtitle, body, author, category) => (dispatch) => {
   const thenCallback = (result) => {
     dispatch(SyncOperationAC.syncOperationFinished(result));
     dispatch(loadNews());
@@ -33,7 +33,7 @@ export const createNews = (author, title, body) => (dispatch) => {
   };
 
   dispatch(SyncOperationAC.syncOperationLoading());
-  newsApi.postNews(author, title, body)
+  newsApi.postNews(title, subtitle, body, author, category)
       .then(thenCallback)
       .catch(catchCallback);
 };

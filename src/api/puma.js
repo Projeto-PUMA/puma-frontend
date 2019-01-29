@@ -23,7 +23,7 @@ const formatApiResult = (result) => {
 const createAxiosService = () => {
   const timeout = 14000;
 
-  const baseURL = 'https://pumarestapi.herokuapp.com';
+  const baseURL = 'https://pumarestapi.herokuapp.com/api';
 
   const axiosService = axios.create({ baseURL, timeout });
   

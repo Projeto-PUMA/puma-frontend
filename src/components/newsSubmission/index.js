@@ -14,10 +14,16 @@ class NewsSubmission extends Component {
   constructor(props) {
     super(props);
     this.handleNews = this.handleNews.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   state = {
     editorState: EditorState.createEmpty(),
+    category: 0,
+  }
+
+  handleChange(event) {
+    this.setState({ category: event.target.value });
   }
 
   onEditorStateChange = (editorState) => {
@@ -30,10 +36,11 @@ class NewsSubmission extends Component {
     e.preventDefault();
 
     const data = new FormData(e.target);
-    const { editorState } = this.state;
-
+    const { editorState, category } = this.state;
     const { dispatch } = this.props;
-    dispatch(createNews({ id: tokenInfo().id }, data.get('title'), draftToHtml(convertToRaw(editorState.getCurrentContent()))));
+    
+    // title, subtitle, body, author, category
+    dispatch(createNews( data.get('title'), '', draftToHtml(convertToRaw(editorState.getCurrentContent())), tokenInfo().id, category ));
   }
 
   render() {
@@ -62,11 +69,11 @@ class NewsSubmission extends Component {
                   </FormGroup>
                   <FormGroup>
                     <Label for='title'>Categoria da Notícia *</Label>
-                    <Input ref='title' type='select' name='category' id='category' value={this.state.value} onChange={this.handleChange} required>
-                      <option ref="0" disabled>Selecionar Categoria</option>
-                      <option ref="1" value={"destaque"} className="optionGroup">Destaque</option>
-                      <option ref="2" value={"normal"} className="optionGroup">Normal</option>
-                      <option ref="3" value={"melhores-projetos"} className="optionGroup">Melhores Projetos</option>
+                    <Input ref='title' type='select' name='category' id='category' value={this.state.category} onChange={this.handleChange} required>
+                      <option ref="0" value={0} disabled>Selecionar Categoria</option>
+                      <option ref="1" value={1} className="optionGroup">Destaque</option>
+                      <option ref="2" value={2} className="optionGroup">Normal</option>
+                      <option ref="3" value={3} className="optionGroup">Melhores Projetos</option>
                     </Input>
                   </FormGroup>
                   <FormGroup>

@@ -2,14 +2,16 @@ import PumaApi from './puma';
 import { auth } from '../helpers/token';
 
 export default {
-  getNews: () => PumaApi.get(`/api/noticia/?limit=3`),
+  getNews: () => PumaApi.get(`/noticia/?limit=3`),
 
-  postNews: (author, title, body) => {
+  postNews: (title, subtitle, body, author, category) => {
     const data = {
-      author: author,
-      title: title,
-      body: body,
+      titulo: title,
+      subtitulo: subtitle,
+      texto: body,
+      usuario_id: author,      
+      noticia_categoria_id: category,
     };
-    return PumaApi.post('/sec/post/new', data, auth);
+    return PumaApi.post('/noticia', data, auth);
   },
 };
