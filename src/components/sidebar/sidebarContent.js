@@ -70,12 +70,13 @@ const SidebarContent = props => {
   var user = false;
 
   var role = JSON.parse(localStorage.getItem('authorities'));
+  console.log("role = " + role);
   if(role) {
     for(var i=0; i<role.length; i++) {
-      if(role[i].authority.includes("ADMIN")) {
+      if(role[i].includes("ADMIN")) {
         adm = true;
       }
-      if(role[i].authority.includes("USER")) {
+      if(role[i].includes("USUARIO")) {
         user = true;
       }
     }

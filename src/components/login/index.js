@@ -43,9 +43,10 @@ class Login extends Component {
         JSON.stringify({ token: response.data.token })
       );
       let tokenInfo = this.getDecodedAccessToken(this.getToken());
+      console.log("tokenInfo = "+tokenInfo.papel)
       localStorage.setItem(
         "authorities",
-        JSON.stringify(tokenInfo.authorities)
+        JSON.stringify(tokenInfo.papel)
       );
       // browserhistory to redirect
       browserHistory.push('/submeterprojeto');
@@ -60,6 +61,7 @@ class Login extends Component {
 
   getDecodedAccessToken(token) {
     try {
+      console.log(jwt_decode(token))
       return jwt_decode(token);
     } catch (Error) {
       return null;
