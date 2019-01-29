@@ -23,7 +23,7 @@ const formatApiResult = (result) => {
 const createAxiosService = () => {
   const timeout = 14000;
 
-  const baseURL = 'http://backend-puma.herokuapp.com';
+  const baseURL = 'http://localhost:3000/api';
 
   var currentUser = JSON.parse(localStorage.getItem('currentUser'));
   var token = currentUser && currentUser.token;

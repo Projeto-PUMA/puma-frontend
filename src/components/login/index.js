@@ -20,15 +20,16 @@ class Login extends Component {
 
     const path = Store["backend"].path; // This is backend path
     axios
-      .post(path + "/auth", {
-        username: data.get("username"),
-        password: data.get("password")
+      .post(path + "/auth/login", {
+        cpf: data.get("username"),
+        senha: data.get("password")
       })
       .then(response => {
         this.setLogin(response);
       })
       .catch(function(error) {
         if (error) {
+          console.log(error)
           alert("Usuário ou senha incorreto!");
         }
       });
@@ -36,6 +37,7 @@ class Login extends Component {
 
   setLogin(response) {
     if (response.status === 200) {
+      console.log("Login Bem Sucedido");
       localStorage.setItem(
         "currentUser",
         JSON.stringify({ token: response.data.token })
