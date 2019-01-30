@@ -10,7 +10,7 @@ import Register from './components/register';
 import MyProjects from './components/myProjects';
 import ProjectSubmission from './components/projectSubmission';
 import Projects from './components/projects';
-import NewsSubmission from './components/newsSubmission';
+import NewsSubmission from './components/news/submission';
 import News from './components/news/index';
 import ViewNews from './components/news/show';
 import ViewProject from './components/projects/viewProject';
