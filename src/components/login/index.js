@@ -62,6 +62,7 @@ class Login extends Component {
   getDecodedAccessToken(token) {
     try {
       console.log(jwt_decode(token))
+      console.log(token)
       return jwt_decode(token);
     } catch (Error) {
       return null;

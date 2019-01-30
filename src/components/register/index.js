@@ -81,7 +81,7 @@ class Register extends Component {
   }
 
   handleSuccess(data) {
-    this.setState({ ...this.state, uf: data.uf, localidade: data.localidade, bairro: data.bairro, logradouro: data.logradouro});
+    this.setState({ ...this.state, uf: data.uf, localidade: data.localidade, bairro: data.bairro, logradouro: data.logradouro });
   }
 
   changeUf(event) {
@@ -128,22 +128,23 @@ class Register extends Component {
     axios
       .post(path + "/usuario", {
         nome: data.get("nome"),
+        cpf: data.get("cpf").replace(/\D+/g, ''),
         email: data.get("email"),
         senha: document.getElementById("senha").value,
-        cpf: data.get("cpf").replace(/\D+/g, ''),
         escolaridade: data.get("escolaridade"),
         endereco: {
-          uf: data.get("uf"),  
+          estado: data.get("uf"),
           cep: data.get("cep").replace(/\D+/g, ''),
-          localidade: data.get("localidade"),
+          cidade: data.get("localidade"),
           bairro: data.get("bairro"),
-          logradouro: data.get("logradouro"),
+          rua: data.get("logradouro"),
           numero: data.get("numero"),
-          complemento: data.get("complemento")
+          complemento: data.get("complemento"),
+          endereco_categoria_id: data.get("categoria")
         },
-        phonePrincipal: data.get("telefoneCel").replace(/\D+/g, ''),
-        phoneAlternative: data.get("telefoneFix").replace(/\D+/g, ''),
-        profession: data.get("profissao"),
+        telefone: data.get("telefoneCel").replace(/\D+/g, ''),
+        // phoneAlternative: data.get("telefoneFix").replace(/\D+/g, ''),
+        // profession: data.get("profissao"),
       })
       .then(() => {
         alert("Usuário cadastrado com sucesso!");
@@ -152,7 +153,26 @@ class Register extends Component {
       .catch(function (error) {
         if (error) {
           console.log(error);
-          console.log(data.get(["formSenha"]["senha"]));
+          console.log(path + "/usuario", {
+            nome: data.get("nome"),
+            cpf: data.get("cpf").replace(/\D+/g, ''),
+            email: data.get("email"),
+            senha: document.getElementById("senha").value,
+            escolaridade: data.get("escolaridade"),
+            endereco: {
+              estado: data.get("uf"),
+              cep: data.get("cep").replace(/\D+/g, ''),
+              cidade: data.get("localidade"),
+              bairro: data.get("bairro"),
+              rua: data.get("logradouro"),
+              numero: data.get("numero"),
+              complemento: data.get("complemento"),
+              endereco_categoria_id: data.get("categoria")
+            },
+            telefone: data.get("telefoneCel").replace(/\D+/g, ''),
+            // phoneAlternative: data.get("telefoneFix").replace(/\D+/g, ''),
+            // profession: data.get("profissao"),
+          })
           alert("Erro ao cadastrar! CPF já cadastrado.");
         }
       });
@@ -231,46 +251,57 @@ class Register extends Component {
                           </div>
                         }
                         return <div>
-                          <FormGroup>
-                            <Label className="label">CEP *</Label>
-                            <Input
-                              ref="body"
-                              type="text"
-                              name="cep"
-                              id="cep"
-                              className="input"
-                              mask={this.cepmask}
-                              tag={MaskedInput}
-                              value={data.cep}
-                              required
-                            />
-                          </FormGroup>
-                          <FormGroup>
-                            <Label className="label">Estado *</Label>
-                            <Input
-                              ref="title"
-                              type="text"
-                              name="uf"
-                              id="uf"
-                              className="input"
-                              required
-                              value={this.state.uf}
-                              onChange={this.changeUf}
-                            />
-                          </FormGroup>
-                          <FormGroup>
-                            <Label className="label">Cidade *</Label>
-                            <Input
-                              ref="title"
-                              type="text"
-                              name="localidade"
-                              id="localidade"
-                              className="input"
-                              required
-                              value={this.state.localidade}
-                              onChange={this.changeCidade}
-                            />
-                          </FormGroup>
+                          <Row>
+                            <Col xs="auto">
+                              <FormGroup>
+                                <Label className="label">CEP *</Label>
+                                <Input
+                                  ref="body"
+                                  type="text"
+                                  name="cep"
+                                  id="cep"
+                                  className="input"
+                                  mask={this.cepmask}
+                                  tag={MaskedInput}
+                                  value={data.cep}
+                                  style={{ width: '150px' }}
+                                  required
+                                />
+                              </FormGroup>
+                            </Col>
+                            <Col xs="auto">
+                              <FormGroup>
+                                <Label className="label">Cidade *</Label>
+                                <Input
+                                  ref="title"
+                                  type="text"
+                                  name="localidade"
+                                  id="localidade"
+                                  className="input"
+                                  required
+                                  value={this.state.localidade}
+                                  onChange={this.changeCidade}
+                                  style={{ width: '150px' }}
+                                />
+                              </FormGroup>
+                            </Col>
+                            <Col xs="auto">
+                              <FormGroup>
+                                <Label className="label">Estado *</Label>
+                                <Input
+                                  ref="title"
+                                  type="text"
+                                  name="uf"
+                                  id="uf"
+                                  className="input"
+                                  required
+                                  value={this.state.uf}
+                                  onChange={this.changeUf}
+                                  style={{ width: '50px' }}
+                                />
+                              </FormGroup>
+                            </Col>
+                          </Row>
                           <FormGroup>
                             <Label className="label">Bairro *</Label>
                             <Input
@@ -285,7 +316,7 @@ class Register extends Component {
                             />
                           </FormGroup>
                           <FormGroup>
-                            <Label className="label">Rua *</Label>
+                            <Label className="label">Logradouro *</Label>
                             <Input
                               ref="title"
                               type="text"
@@ -317,6 +348,21 @@ class Register extends Component {
                               id="complemento"
                               className="input"
                             />
+                          </FormGroup>
+                          <FormGroup>
+                            <Label>Categoria *</Label>
+                            <Input
+                              ref='title'
+                              type='select'
+                              name='categoria'
+                              id='categoria'
+                              maxLength="50"
+                              style={{ width: '300px' }}
+                              required
+                            >
+                              <option ref="1" value={1} className="optionGroup">Residencial</option>
+                              <option ref="2" value={2} className="optionGroup">Comercial</option>
+                            </Input>
                           </FormGroup>
                         </div>
                       }
@@ -384,24 +430,12 @@ class Register extends Component {
                       className="escolaridade"
                       required
                     >
-                      <option value="Ensino Fundamental Incompleto">
-                        Ensino Fundamental Incompleto
-                  </option>
-                      <option value="Ensino Fundamental Completo">
-                        Ensino Fundamental Completo
-                  </option>
-                      <option value="Ensino Médio Incompleto">
-                        Ensino Médio Incompleto
-                  </option>
-                      <option value="Ensino Médio Completo">
-                        Ensino Médio Completo
-                  </option>
-                      <option value="Ensino Superior Incompleto">
-                        Ensino Superior Incompleto
-                  </option>
-                      <option value="Ensino Superior Completo">
-                        Ensino Superior Completo
-                  </option>
+                      <option value="Ensino Fundamental Incompleto">Ensino Fundamental Incompleto</option>
+                      <option value="Ensino Fundamental Completo">Ensino Fundamental Completo</option>
+                      <option value="Ensino Médio Incompleto">Ensino Médio Incompleto</option>
+                      <option value="Ensino Médio Completo">Ensino Médio Completo</option>
+                      <option value="Ensino Superior Incompleto">Ensino Superior Incompleto</option>
+                      <option value="Ensino Superior Completo">Ensino Superior Completo</option>
                       <option value="Mestrando(a)">Mestrando(a)</option>
                       <option value="Mestre(a)">Mestre(a)</option>
                       <option value="Doutorando(a)">Doutorando(a)</option>
