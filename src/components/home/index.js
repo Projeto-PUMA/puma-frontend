@@ -17,7 +17,6 @@ class Home extends Component {
     const { news, loading } = this.props;
 
     if (loading) {
-      console.log('loading');
       return <Loading />;
     }
 

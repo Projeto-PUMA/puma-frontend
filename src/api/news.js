@@ -2,7 +2,7 @@ import PumaApi from './puma';
 import { auth } from '../helpers/token';
 
 export default {
-  getNews: () => PumaApi.get(`/noticia/?limit=3`),
+  getNews: () => PumaApi.get(`/noticia`),
 
   postNews: (title, subtitle, body, author, category) => {
     const data = {
@@ -14,4 +14,8 @@ export default {
     };
     return PumaApi.post('/noticia', data, auth);
   },
+
+  deleteNews: (id) => {
+    return PumaApi.delete(`/noticia/${id}`, auth);
+  }
 };

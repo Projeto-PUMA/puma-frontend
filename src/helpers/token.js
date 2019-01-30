@@ -17,5 +17,5 @@ export const token = () => {
 }
 
 export const auth = {
-  headers: { 'Authorization': 'Bearer ' + token() },
+  headers: { 'Authorization': token() },
 };

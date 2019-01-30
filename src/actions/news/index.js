@@ -37,3 +37,24 @@ export const createNews = (title, subtitle, body, author, category) => (dispatch
       .then(thenCallback)
       .catch(catchCallback);
 };
+
+export const deleteNews = (id) => (dispatch) => {
+  const thenCallback = (result) => {
+    dispatch(SyncOperationAC.syncOperationFinished(result));
+    dispatch(loadNews());
+    if (result.status === 200) {
+      alert('Notícia deletada com sucesso!');
+    }
+  };
+
+  const catchCallback = (error) => {
+    alert('Notícia não deletada!');
+    console.log('create news error: ', error);
+    dispatch(SyncOperationAC.syncOperationFinished(error));
+  };
+
+  dispatch(SyncOperationAC.syncOperationLoading());
+  newsApi.deleteNews(id)
+      .then(thenCallback)
+      .catch(catchCallback);
+};
