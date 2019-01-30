@@ -59,14 +59,16 @@ class News extends Component {
 	render() {
 		const { news, loading } = this.props;
 
-    if (loading) {
+    if (loading || !news) {
       return <Loading />;
     }
 
     const data = [];
     for (var key in news) {
-      news[key].key = key;
-      data.push(news[key]);
+			if(!isNaN(key)) {
+				news[key].key = key;
+      	data.push(news[key]);
+			}
 		}
 
 		return (

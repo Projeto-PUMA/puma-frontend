@@ -22,8 +22,10 @@ class Home extends Component {
 
     const data = [];
     for (var key in news) {
-      news[key].key = key;
-      data.push(news[key]);
+      if (!isNaN(key)) {
+        news[key].key = key;
+        data.push(news[key]);
+      }
     }
 
     return (

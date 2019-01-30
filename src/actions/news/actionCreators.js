@@ -3,7 +3,7 @@ export const fetchNews = news => ({
   news,
 });
 
-export const fetchAllNews = allNews => ({
-  type: 'FETCH_ALL_NEWS',
-  allNews,
+export const getNews = news_by_id => ({
+  type: 'GET_NEWS',
+  news_by_id,
 });

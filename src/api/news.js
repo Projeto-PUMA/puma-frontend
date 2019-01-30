@@ -4,6 +4,8 @@ import { auth } from '../helpers/token';
 export default {
   getNews: () => PumaApi.get(`/noticia`),
 
+  getNewsId: (id) => PumaApi.get(`/noticia/${id}`),
+
   postNews: (title, subtitle, body, author, category) => {
     const data = {
       titulo: title,

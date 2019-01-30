@@ -16,6 +16,16 @@ export const loadNews = () => (dispatch) => {
     });
 };
 
+export const getNews = (id) => (dispatch) => {
+  newsApi.getNewsId(id)
+      .then((result) => {
+        dispatch(NewsAC.getNews(result.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+};
+
 export const createNews = (title, subtitle, body, author, category) => (dispatch) => {
   const thenCallback = (result) => {
     dispatch(SyncOperationAC.syncOperationFinished(result));
