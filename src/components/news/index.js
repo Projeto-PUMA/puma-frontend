@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { loadNews } from '../../actions/news/index';
 import Loading from '../../helpers/loading';
-import './style.css';
 import { Table } from 'reactstrap';
 import { browserHistory } from 'react-router';
 import { deleteNews } from '../../actions/news';
