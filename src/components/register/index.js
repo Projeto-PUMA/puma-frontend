@@ -100,6 +100,29 @@ class Register extends Component {
     this.setState({ logradouro: event.target.value });
   }
 
+  componentWillMount() {
+		const path = Store['backend'].path; // This is backend path
+		axios.get(path + '/profissao')
+			.then( response => this.getProfissoes(response))
+			.catch(() => { alert('Erro ao processar lista de profissões!') });
+  }
+
+  getProfissoes(response) {
+    if (response.status === 200) {
+      console.log("Lista de profissões recebida!");
+      localStorage.setItem(
+        "profissoes",
+        JSON.stringify({ profissoes: response.data })
+      );
+    }
+  }
+
+  setProfissoes(){
+    var profissoes = localStorage.getItem('profissoes');
+    console.log('Profissoes: ', JSON.parse(profissoes));
+    return profissoes;
+  }
+  
   handleSubmit(event) {
     event.preventDefault();
     const data = new FormData(event.target);
@@ -142,7 +165,9 @@ class Register extends Component {
           complemento: data.get("complemento"),
           endereco_categoria_id: data.get("categoria")
         },
-        telefone: data.get("telefoneCel").replace(/\D+/g, ''),
+        telefone: {
+          telefone: data.get("telefoneCel").replace(/\D+/g, ''),
+        }
         // phoneAlternative: data.get("telefoneFix").replace(/\D+/g, ''),
         // profession: data.get("profissao"),
       })
@@ -169,7 +194,9 @@ class Register extends Component {
               complemento: data.get("complemento"),
               endereco_categoria_id: data.get("categoria")
             },
-            telefone: data.get("telefoneCel").replace(/\D+/g, ''),
+            telefone: {
+              telefone: data.get("telefoneCel").replace(/\D+/g, ''),
+            }
             // phoneAlternative: data.get("telefoneFix").replace(/\D+/g, ''),
             // profession: data.get("profissao"),
           })
