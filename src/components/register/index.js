@@ -12,72 +12,25 @@ import { Card, CardBody, Form, Label, Input, Row, Col, Button, FormGroup } from 
 import { browserHistory } from 'react-router';
 import ViaCep from 'react-via-cep';
 import { loadOccupations } from "../../actions/occupations";
+import  {validateCPF}  from "../../helpers/validations";
+import  {validateCEP}  from "../../helpers/validations";
+import  {validateMainPhone}  from "../../helpers/validations";
+import  {cpfmask}  from "../../helpers/validations";
+import  {cellphonemask}  from "../../helpers/validations";
+import  {phonemask}  from "../../helpers/validations";
+import  {cepmask}  from "../../helpers/validations";
 
 class Register extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = { cep: '', uf: '', localidade: '', bairro: '', logradouro: '', profissao: '' };
-
     this.handleChangeCep = this.handleChangeCep.bind(this);
     this.handleSuccess = this.handleSuccess.bind(this);
     this.changeUf = this.changeUf.bind(this);
     this.changeCidade = this.changeCidade.bind(this);
     this.changeBairro = this.changeBairro.bind(this);
     this.changeLogradouro = this.changeLogradouro.bind(this);
-  }
-
-  cpfmask = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/];
-  cellphonemask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
-  phonemask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
-  cepmask = [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/];
-
-  validateCPF(strCPF) {
-    var Soma;
-    var Resto;
-    Soma = 0;
-    if (strCPF === "00000000000")
-      return false;
-
-    for (var i = 1; i <= 9; i++) {
-      Soma = Soma + parseInt(strCPF.substring(i - 1, i), 10) * (11 - i);
-    }
-    Resto = (Soma * 10) % 11;
-
-    if ((Resto === 10) || (Resto === 11)) {
-      Resto = 0;
-    }
-    if (Resto !== parseInt(strCPF.substring(9, 10), 10))
-      return false;
-
-    Soma = 0;
-    for (i = 1; i <= 10; i++) {
-      Soma = Soma + parseInt(strCPF.substring(i - 1, i), 10) * (12 - i);
-    }
-    Resto = (Soma * 10) % 11;
-
-    if ((Resto === 10) || (Resto === 11))
-      Resto = 0;
-    if (Resto !== parseInt(strCPF.substring(10, 11), 10))
-      return false;
-
-    return true;
-  }
-
-  validateCEP(strCEP) {
-    if (strCEP.length < 8) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  validateMainPhone(strPhone) {
-    if (strPhone.length < 11) {
-      return false;
-    } else {
-      return true;
-    }
   }
 
   handleChangeCep(event) {
@@ -113,17 +66,17 @@ class Register extends Component {
     event.preventDefault();
     const data = new FormData(event.target);
 
-    if (!this.validateCPF(data.get('cpf').replace(/\D+/g, ''))) {
+    if (!validateCPF(data.get('cpf').replace(/\D+/g, ''))) {
       alert('CPF inválido!');
       return;
     }
 
-    if (!this.validateCEP(data.get('cep').replace(/\D+/g, ''))) {
+    if (!validateCEP(data.get('cep').replace(/\D+/g, ''))) {
       alert('CEP inválido');
       return;
     }
 
-    if (!this.validateMainPhone(data.get('telefoneCel').replace(/\D+/g, ''))) {
+    if (!validateMainPhone(data.get('telefoneCel').replace(/\D+/g, ''))) {
       alert('Telefone principal inválido');
       return;
     }
@@ -238,7 +191,7 @@ class Register extends Component {
                       name="cpf"
                       id="cpf"
                       className="input"
-                      mask={this.cpfmask}
+                      mask={cpfmask}
                       tag={MaskedInput}
                       required
                     />
@@ -262,7 +215,7 @@ class Register extends Component {
                                 name="cep"
                                 id="cep"
                                 className="input"
-                                mask={this.cepmask}
+                                mask={cepmask}
                                 tag={MaskedInput}
                                 onChange={this.handleChangeCep} value={this.state.cep}
                                 required
@@ -283,7 +236,7 @@ class Register extends Component {
                                   name="cep"
                                   id="cep"
                                   className="input"
-                                  mask={this.cepmask}
+                                  mask={cepmask}
                                   tag={MaskedInput}
                                   value={data.cep}
                                   style={{ width: '150px' }}
@@ -397,7 +350,7 @@ class Register extends Component {
                             name="cep"
                             id="cep"
                             className="input"
-                            mask={this.cepmask}
+                            mask={cepmask}
                             tag={MaskedInput}
                             onChange={this.handleChangeCep} value={this.state.cep}
                             required
@@ -415,7 +368,7 @@ class Register extends Component {
                       name="telefoneCel"
                       id="telefoneCel"
                       className="input"
-                      mask={this.cellphonemask}
+                      mask={cellphonemask}
                       tag={MaskedInput}
                       required
                     />
@@ -428,7 +381,7 @@ class Register extends Component {
                       name="telefoneFix"
                       id="telefoneFix"
                       className="input"
-                      mask={this.phonemask}
+                      mask={phonemask}
                       tag={MaskedInput}
                     />
                   </FormGroup>
