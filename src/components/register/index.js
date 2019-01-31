@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Autocomplete from 'react-autocomplete';
+import Autocomplete from '../../helpers/autoComplete';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { AvForm, AvField } from "availity-reactstrap-validation";
 import axios from "axios";
@@ -198,8 +198,7 @@ class Register extends Component {
     const data = [];
     for (var key in occupations) {
       if (!isNaN(key)) {
-        occupations[key].key = key;
-        data.push(occupations[key]);
+        data.push(occupations[key].termo.toString());
       }
     }
 
@@ -469,16 +468,7 @@ class Register extends Component {
                   <FormGroup>
                     <Label className="label">Profissão *</Label>
                     <Autocomplete
-                      getItemValue={(item) => item.termo}
-                      items={data}
-                      renderItem={(item, isHighlighted) =>
-                        <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
-                          {item.termo}
-                        </div>
-                      }
-                      value={this.state.profissao}
-                      onChange={(e) => {this.setState({ ...this.state, profissao: e.target.value })}}
-                      onSelect={(val) => {this.setState({ ...this.state, profissao: val })}}
+                      suggestions={data}
                     />
                   </FormGroup>
                   <AvForm name="formSenha">
