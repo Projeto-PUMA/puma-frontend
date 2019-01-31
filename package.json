@@ -12,6 +12,7 @@
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.11",
     "react": "^16.5.2",
+    "react-autocomplete": "^1.8.1",
     "react-dom": "^16.5.2",
     "react-draft-wysiwyg": "^1.12.13",
     "react-input-mask": "^2.0.4",

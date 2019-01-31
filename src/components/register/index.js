@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import Autocomplete from 'react-autocomplete';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { AvForm, AvField } from "availity-reactstrap-validation";
 import axios from "axios";
@@ -8,12 +11,13 @@ import MaskedInput from 'react-text-mask'
 import { Card, CardBody, Form, Label, Input, Row, Col, Button, FormGroup } from 'reactstrap';
 import { browserHistory } from 'react-router';
 import ViaCep from 'react-via-cep';
+import { loadOccupations } from "../../actions/occupations";
 
 class Register extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = { cep: '', uf: '', localidade: '', bairro: '', logradouro: '' };
+    this.state = { cep: '', uf: '', localidade: '', bairro: '', logradouro: '', profissao: '' };
 
     this.handleChangeCep = this.handleChangeCep.bind(this);
     this.handleSuccess = this.handleSuccess.bind(this);
@@ -101,28 +105,10 @@ class Register extends Component {
   }
 
   componentWillMount() {
-		const path = Store['backend'].path; // This is backend path
-		axios.get(path + '/profissao')
-			.then( response => this.getProfissoes(response))
-			.catch(() => { alert('Erro ao processar lista de profissões!') });
+    const { dispatch } = this.props;
+    dispatch(loadOccupations());
   }
 
-  getProfissoes(response) {
-    if (response.status === 200) {
-      console.log("Lista de profissões recebida!");
-      localStorage.setItem(
-        "profissoes",
-        JSON.stringify({ profissoes: response.data })
-      );
-    }
-  }
-
-  setProfissoes(){
-    var profissoes = localStorage.getItem('profissoes');
-    console.log('Profissoes: ', JSON.parse(profissoes));
-    return profissoes;
-  }
-  
   handleSubmit(event) {
     event.preventDefault();
     const data = new FormData(event.target);
@@ -207,6 +193,16 @@ class Register extends Component {
   }
 
   render() {
+
+    const { occupations } = this.props;
+    const data = [];
+    for (var key in occupations) {
+      if (!isNaN(key)) {
+        occupations[key].key = key;
+        data.push(occupations[key]);
+      }
+    }
+
     return (
       <div className="container">
         <Row>
@@ -472,13 +468,17 @@ class Register extends Component {
                   </FormGroup>
                   <FormGroup>
                     <Label className="label">Profissão *</Label>
-                    <Input
-                      name="profissao"
-                      id="profissao"
-                      type="text"
-                      className="input"
-                      maxLength="35"
-                      required
+                    <Autocomplete
+                      getItemValue={(item) => item.termo}
+                      items={data}
+                      renderItem={(item, isHighlighted) =>
+                        <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+                          {item.termo}
+                        </div>
+                      }
+                      value={this.state.profissao}
+                      onChange={(e) => {this.setState({ ...this.state, profissao: e.target.value })}}
+                      onSelect={(val) => {this.setState({ ...this.state, profissao: val })}}
                     />
                   </FormGroup>
                   <AvForm name="formSenha">
@@ -535,4 +535,12 @@ class Register extends Component {
   }
 }
 
-export default Register;
+Register.propTypes = {
+  occupations: PropTypes.object,
+};
+
+const mapStateToProps = ({ occupations }) => ({
+  occupations,
+});
+
+export default connect(mapStateToProps)(Register);
