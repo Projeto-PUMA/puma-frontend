@@ -1,17 +1,14 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Autocomplete from '../../helpers/autoComplete';
-import "bootstrap/dist/css/bootstrap.min.css";
-import { AvForm, AvField } from "availity-reactstrap-validation";
-import axios from "axios";
-// eslint-disable-next-line
-import * as Store from "../../store";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { AvForm, AvField } from 'availity-reactstrap-validation';
 import MaskedInput from 'react-text-mask'
 import { Card, CardBody, Form, Label, Input, Row, Col, Button, FormGroup } from 'reactstrap';
-import { browserHistory } from 'react-router';
 import ViaCep from 'react-via-cep';
-import { loadOccupations } from "../../actions/occupations";
+import { loadOccupations } from '../../actions/occupations';
+import { createUser } from '../../actions/user';
 
 class Register extends Component {
   constructor(props) {
@@ -110,6 +107,7 @@ class Register extends Component {
   }
 
   handleSubmit(event) {
+    const { dispatch } = this.props;
     event.preventDefault();
     const data = new FormData(event.target);
 
@@ -133,63 +131,23 @@ class Register extends Component {
       return;
     }
 
-    const path = Store["backend"].path; // This is backend path
-    axios
-      .post(path + "/usuario", {
-        nome: data.get("nome"),
-        cpf: data.get("cpf").replace(/\D+/g, ''),
-        email: data.get("email"),
-        senha: document.getElementById("senha").value,
-        escolaridade: data.get("escolaridade"),
-        endereco: {
-          estado: data.get("uf"),
-          cep: data.get("cep").replace(/\D+/g, ''),
-          cidade: data.get("localidade"),
-          bairro: data.get("bairro"),
-          rua: data.get("logradouro"),
-          numero: data.get("numero"),
-          complemento: data.get("complemento"),
-          endereco_categoria_id: data.get("categoria")
-        },
-        telefone: {
-          telefone: data.get("telefoneCel").replace(/\D+/g, ''),
-        }
-        // phoneAlternative: data.get("telefoneFix").replace(/\D+/g, ''),
-        // profession: data.get("profissao"),
-      })
-      .then(() => {
-        alert("Usuário cadastrado com sucesso!");
-        browserHistory.push('/login');
-      })
-      .catch(function (error) {
-        if (error) {
-          console.log(error);
-          console.log(path + "/usuario", {
-            nome: data.get("nome"),
-            cpf: data.get("cpf").replace(/\D+/g, ''),
-            email: data.get("email"),
-            senha: document.getElementById("senha").value,
-            escolaridade: data.get("escolaridade"),
-            endereco: {
-              estado: data.get("uf"),
-              cep: data.get("cep").replace(/\D+/g, ''),
-              cidade: data.get("localidade"),
-              bairro: data.get("bairro"),
-              rua: data.get("logradouro"),
-              numero: data.get("numero"),
-              complemento: data.get("complemento"),
-              endereco_categoria_id: data.get("categoria")
-            },
-            telefone: {
-              telefone: data.get("telefoneCel").replace(/\D+/g, ''),
-            }
-            // phoneAlternative: data.get("telefoneFix").replace(/\D+/g, ''),
-            // profession: data.get("profissao"),
-          })
-          alert("Erro ao cadastrar! CPF já cadastrado.");
-        }
-      });
-    // } else return alert("Erro ao cadastrar!");
+    dispatch(createUser(
+      data.get("nome"),
+      data.get("email"),
+      document.getElementById("senha").value,
+      data.get("cpf").replace(/\D+/g, ''),
+      data.get("escolaridade"),
+      data.get("cep").replace(/\D+/g, ''),
+      data.get("uf"),
+      data.get("localidade"),
+      data.get("bairro"),
+      data.get("logradouro"),
+      data.get("numero"),
+      data.get("complemento"),
+      data.get("categoria"),
+      "2410-05",
+      data.get("telefoneCel").replace(/\D+/g, ''),
+    ));
   }
 
   render() {

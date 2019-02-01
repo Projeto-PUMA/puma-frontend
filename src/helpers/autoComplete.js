@@ -115,7 +115,7 @@ class Autocomplete extends Component {
                 className = "suggestion-active";
               }
 
-              if (index > 4) return;
+              if (index > 4) return null;
 
               return (
                 <li
