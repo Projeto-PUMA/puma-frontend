@@ -9,13 +9,7 @@ import { Card, CardBody, Form, Label, Input, Row, Col, Button, FormGroup } from 
 import ViaCep from 'react-via-cep';
 import { loadOccupations } from '../../actions/occupations';
 import { createUser } from '../../actions/user';
-import  {validateCPF}  from "../../helpers/validations";
-import  {validateCEP}  from "../../helpers/validations";
-import  {validateMainPhone}  from "../../helpers/validations";
-import  {cpfmask}  from "../../helpers/validations";
-import  {cellphonemask}  from "../../helpers/validations";
-import  {phonemask}  from "../../helpers/validations";
-import  {cepmask}  from "../../helpers/validations";
+import  { validateUser, masks }  from "../../helpers/validations";
 
 class Register extends Component {
   constructor(props) {
@@ -64,26 +58,19 @@ class Register extends Component {
     event.preventDefault();
     const data = new FormData(event.target);
 
-    if (!validateCPF(data.get('cpf').replace(/\D+/g, ''))) {
-      alert('CPF inválido!');
+    const valid = validateUser({
+      cpf: data.get('cpf'),
+      cep: data.get('cep'),
+      telefoneCel: data.get('telefoneCel'),
+      senha: document.getElementById("senha").value,
+      senhaConf: document.getElementById("senhaConf").value,
+    });
+      
+    if(valid.invalid) {
+      alert(valid.message);
       return;
     }
-
-    if (!validateCEP(data.get('cep').replace(/\D+/g, ''))) {
-      alert('CEP inválido');
-      return;
-    }
-
-    if (!validateMainPhone(data.get('telefoneCel').replace(/\D+/g, ''))) {
-      alert('Telefone principal inválido');
-      return;
-    }
-
-    if (document.getElementById("senha").value !== document.getElementById("senhaConf").value) {
-      alert('A senha de confirmação não coincide!');
-      return;
-    }
-
+    
     dispatch(createUser(
       data.get("nome"),
       data.get("email"),
@@ -149,7 +136,7 @@ class Register extends Component {
                       name="cpf"
                       id="cpf"
                       className="input"
-                      mask={cpfmask}
+                      mask={masks.cpf}
                       tag={MaskedInput}
                       required
                     />
@@ -173,7 +160,7 @@ class Register extends Component {
                                 name="cep"
                                 id="cep"
                                 className="input"
-                                mask={cepmask}
+                                mask={masks.cep}
                                 tag={MaskedInput}
                                 onChange={this.handleChangeCep} value={this.state.cep}
                                 required
@@ -194,7 +181,7 @@ class Register extends Component {
                                   name="cep"
                                   id="cep"
                                   className="input"
-                                  mask={cepmask}
+                                  mask={masks.cep}
                                   tag={MaskedInput}
                                   value={data.cep}
                                   style={{ width: '150px' }}
@@ -308,7 +295,7 @@ class Register extends Component {
                             name="cep"
                             id="cep"
                             className="input"
-                            mask={cepmask}
+                            mask={masks.cep}
                             tag={MaskedInput}
                             onChange={this.handleChangeCep} value={this.state.cep}
                             required
@@ -326,7 +313,7 @@ class Register extends Component {
                       name="telefoneCel"
                       id="telefoneCel"
                       className="input"
-                      mask={cellphonemask}
+                      mask={masks.cellphone}
                       tag={MaskedInput}
                       required
                     />
@@ -339,7 +326,7 @@ class Register extends Component {
                       name="telefoneFix"
                       id="telefoneFix"
                       className="input"
-                      mask={phonemask}
+                      mask={masks.phone}
                       tag={MaskedInput}
                     />
                   </FormGroup>
