@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
+import { Input } from 'reactstrap';
 
 class Autocomplete extends Component {
   static propTypes = {
@@ -140,7 +141,7 @@ class Autocomplete extends Component {
 
     return (
       <Fragment>
-        <input
+        <Input
           type="text"
           onChange={onChange}
           onKeyDown={onKeyDown}

@@ -42,20 +42,20 @@ input {
   margin-top: 0;
   max-height: 143px;
   overflow-y: auto;
-  padding-left: 0;
-  width: calc(300px + 1rem);
+  padding-left: 0vw;
+  width: calc(450px + 1rem);
 }
 
 .suggestions li {
-  padding: 0.5rem;
+  padding: 0.2rem;
 }
 
 .suggestion-active,
 .suggestions li:hover {
-  background-color: #008f68;
-  color: #fae042;
+  background-color: rgb(3, 169, 244);
+  color: #ffffff;
   cursor: pointer;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .suggestions li:not(:last-of-type) {

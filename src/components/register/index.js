@@ -365,6 +365,7 @@ class Register extends Component {
                   </FormGroup>
                   <FormGroup>
                     <Label className="label">Profissão *</Label>
+                    <br/>
                     <Autocomplete
                       suggestions={data}
                     />
