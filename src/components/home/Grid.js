@@ -19,18 +19,12 @@ class Grid extends Component {
   }
 
   renderCard(d, idx) {
-    var linkImage = "";
-    if (idx === 0) {
-      linkImage = "http://www.legacyschoolne.com/wp-content/uploads/2018/09/PBL-Header.png"
-    } else if (idx === 1) {
-      linkImage = "https://imgs.dm.com.br/resized/872//2018/09/Cassiano-Maschio.jpg";
-    }
     return (
       <div key={idx}>
         <Card onClick={() => this.viewNews(d.id)} style={{ margin: 10, marginBottom: 20 }}>
-          <CardImg top width="100%" height="240px" src={linkImage} alt="Card image cap" />
+          <CardImg top width="100%" height="240px" src={d.urlThumbnail && d.urlThumbnail !== '' ? d.urlThumbnail : 'http://vanguardacomunicacao.com.br/santoremedio/wp-content/uploads/2018/07/img.jpg'} alt="Card image cap" />
           <CardBody>
-            <CardTitle>{d.title}</CardTitle>
+            <CardTitle>{d.titulo}</CardTitle>
           </CardBody>
           <CardBody>
             <CardLink style={{ color: 'blue' }}>Ler mais...</CardLink>
@@ -43,8 +37,8 @@ class Grid extends Component {
   render() {
     const { data } = this.props;
 
-    const items = data.slice(data.length - 3, data.length);
-    
+    const items = data.slice(0, 3);
+
     return (
       <div id='content' style={{ width: '100%', height: '100%' }}>
         <div style={{ marginTop: 40, width: '100%', align: 'center', marginBottom: 20 }}>

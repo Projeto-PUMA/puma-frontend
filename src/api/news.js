@@ -6,12 +6,13 @@ export default {
 
   getNewsId: (id) => PumaApi.get(`/noticia/${id}`),
 
-  postNews: (title, subtitle, body, author, category) => {
+  postNews: (title, subtitle, body, author, image, category) => {
     const data = {
       titulo: title,
       subtitulo: subtitle,
       texto: body,
-      usuario_id: author,      
+      usuario_id: author,
+      url_thumbnail: image,
       noticia_categoria_id: category,
     };
     return PumaApi.post('/noticia', data, auth);

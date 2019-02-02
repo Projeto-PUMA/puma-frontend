@@ -48,7 +48,7 @@ export const updateNews = (news) => (dispatch) => {
       });
 }
 
-export const createNews = (title, subtitle, body, author, category) => (dispatch) => {
+export const createNews = (title, subtitle, body, author, image, category) => (dispatch) => {
   const thenCallback = (result) => {
     dispatch(MetaAC.syncOperationFinished(result));
     dispatch(loadNews());
@@ -65,7 +65,7 @@ export const createNews = (title, subtitle, body, author, category) => (dispatch
   };
 
   dispatch(MetaAC.syncOperationLoading());
-  newsApi.postNews(title, subtitle, body, author, category)
+  newsApi.postNews(title, subtitle, body, author, image, category)
       .then(thenCallback)
       .catch(catchCallback);
 };
