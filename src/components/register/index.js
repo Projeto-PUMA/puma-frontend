@@ -15,7 +15,7 @@ class Register extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = { cep: '', uf: '', localidade: '', bairro: '', logradouro: '', profissao: '', occupation: '' };
+    this.state = { cep: '', uf: '', localidade: '', bairro: '', logradouro: '', occupation: '' };
     this.handleChangeCep = this.handleChangeCep.bind(this);
     this.handleSuccess = this.handleSuccess.bind(this);
     this.changeUf = this.changeUf.bind(this);
@@ -24,10 +24,15 @@ class Register extends Component {
     this.changeLogradouro = this.changeLogradouro.bind(this);
   }
 
-  changeOccupation(newValue) {
+  componentWillMount() {
+    const { dispatch } = this.props;
+    dispatch(loadOccupations());
+  }
+
+  changeOccupation(occupation) {
     this.setState({
       ...this.state,
-      occupation: newValue,
+      occupation,
     });
   }
 
@@ -55,9 +60,17 @@ class Register extends Component {
     this.setState({ logradouro: event.target.value });
   }
 
-  componentWillMount() {
-    const { dispatch } = this.props;
-    dispatch(loadOccupations());
+  getOccupationId() {
+    const { occupations } = this.props;
+    const { occupation } = this.state;
+
+    const occupationsArray = [];
+    for (var key in occupations) {
+      occupationsArray.push(occupations[key]);
+    }
+    const occ = occupationsArray.find(x => x.termo === occupation);
+
+    return occ.id;
   }
 
   handleSubmit(event) {
@@ -92,19 +105,17 @@ class Register extends Component {
       data.get("numero"),
       data.get("complemento"),
       data.get("categoria"),
-      "2410-05",
+      this.getOccupationId(),
       data.get("telefoneCel").replace(/\D+/g, ''),
     ));
   }
 
   render() {
-
     const { occupations } = this.props;
-    const data = [];
+
+    const occupationsTermos = [];
     for (var key in occupations) {
-      if (!isNaN(key)) {
-        data.push(occupations[key].termo.toString());
-      }
+      occupationsTermos.push(occupations[key].termo.toString());
     }
 
     return (
@@ -374,7 +385,7 @@ class Register extends Component {
                     <Label className="label">Profissão *</Label>
                     <br/>
                     <Autocomplete
-                      suggestions={data}
+                      suggestions={occupationsTermos}
                       changeOccupation={this.changeOccupation.bind(this)}
                     />
                   </FormGroup>
