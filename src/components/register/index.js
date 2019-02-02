@@ -15,13 +15,20 @@ class Register extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = { cep: '', uf: '', localidade: '', bairro: '', logradouro: '', profissao: '' };
+    this.state = { cep: '', uf: '', localidade: '', bairro: '', logradouro: '', profissao: '', occupation: '' };
     this.handleChangeCep = this.handleChangeCep.bind(this);
     this.handleSuccess = this.handleSuccess.bind(this);
     this.changeUf = this.changeUf.bind(this);
     this.changeCidade = this.changeCidade.bind(this);
     this.changeBairro = this.changeBairro.bind(this);
     this.changeLogradouro = this.changeLogradouro.bind(this);
+  }
+
+  changeOccupation(newValue) {
+    this.setState({
+      ...this.state,
+      occupation: newValue,
+    });
   }
 
   handleChangeCep(event) {
@@ -368,6 +375,7 @@ class Register extends Component {
                     <br/>
                     <Autocomplete
                       suggestions={data}
+                      changeOccupation={this.changeOccupation.bind(this)}
                     />
                   </FormGroup>
                   <AvForm name="formSenha">
