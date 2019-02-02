@@ -98,7 +98,7 @@ News.propTypes = {
 
 const mapStateToProps = state => ({
 	news: state.news,
-	loading: state.syncOperation.isLoading,
+	loading: state.meta.syncOperation.isLoading,
 });
 
 export default connect(mapStateToProps)(News);

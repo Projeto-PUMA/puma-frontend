@@ -34,7 +34,7 @@ class NewsSubmission extends Component {
     id: -1,
     created: false,
   }
-  
+
   handleChange(event) {
     this.setState({ category: event.target.value });
   }
@@ -126,7 +126,7 @@ class NewsSubmission extends Component {
                   <br></br>
                   <Button type="submit" value="submit" color="primary" style={{ display: "block", margin: "0 auto" }}>
                     Enviar Notícia
-            </Button>
+                  </Button>
                 </Form>
               </CardBody>
               <footer>
@@ -143,11 +143,13 @@ class NewsSubmission extends Component {
 NewsSubmission.propTypes = {
   loading: PropTypes.bool.isRequired,
   news_by_id: PropTypes.object,
+  editor: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
-  loading: state.syncOperation.isLoading,
+  loading: state.meta.syncOperation.isLoading,
   news_by_id: state.news.news_by_id,
+  editor: state.meta.editor,
 });
 
 

@@ -1,14 +1,14 @@
 import projectsApi from '../../api/projects';
 import * as ProjectsAC from './actionCreators';
-import * as SyncOperationAC from '../meta/actionCreators';
+import * as MetaAC from '../meta/actionCreators';
 
 export const loadProjects = () => (dispatch) => {
-  dispatch(SyncOperationAC.syncOperationLoading());
+  dispatch(MetaAC.syncOperationLoading());
   projectsApi.getProjects()
     .then((result) => {
       const projects = result.data;
       dispatch(ProjectsAC.fetchProjects(projects));
-      dispatch(SyncOperationAC.syncOperationFinished(result));
+      dispatch(MetaAC.syncOperationFinished(result));
     })
     .catch((error) => {
       console.log(error);

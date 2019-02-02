@@ -79,7 +79,7 @@ Projects.propTypes = {
 
 const mapStateToProps = state => ({
 	projects: state.projects,
-	loading: state.syncOperation.isLoading,
+	loading: state.meta.syncOperation.isLoading,
 });
 
 export default connect(mapStateToProps)(Projects);
