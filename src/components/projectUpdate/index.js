@@ -61,8 +61,7 @@ class ProjectUpdate extends Component {
 
 	renderStatus(status) {
 		if (status === 1) {
-			;
-			return <div style={{ textAlign: "center" }}><h1 style={{ fontSize: 28, color: 'gray', textAlign: "center" }}>Status: Pendente</h1><button onClick={() => console.log("Clicou")}>Editar Projeto</button></div>;
+			return <div style={{ textAlign: "center" }}><h1 style={{ fontSize: 28, color: 'gray', textAlign: "center" }}>Status: Pendente</h1><button onClick={() => {}}>Editar Projeto</button></div>;
 		} else if (status === 2) {
 			return <h1 style={{ fontSize: 28, color: 'red', textAlign: "center" }}>Status: Rejeitado</h1>;
 		} else if (status === 3) {
@@ -347,7 +346,6 @@ class ProjectUpdate extends Component {
 	  
   handleRadio(event) {
     const showJuridic = event.currentTarget.value === 'pj' ? true: false;
-    console.log('handle', showJuridic);
     this.setState({ showJuridic });
   }
 

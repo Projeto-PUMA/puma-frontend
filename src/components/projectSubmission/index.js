@@ -221,7 +221,6 @@ class ProjectSubmission extends Component {
   
   handleRadio(event) {
     const showJuridic = event.currentTarget.value === 'pj' ? true: false;
-    console.log('handle', showJuridic);
     this.setState({ showJuridic });
   }
   

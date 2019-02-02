@@ -46,7 +46,6 @@ const SidebarContent = props => {
       if(localStorage.getItem('currentUser')){
         localStorage.removeItem('authorities');
         localStorage.removeItem('currentUser');
-        window.location.reload();
         return true;
       }
       else {
@@ -59,9 +58,6 @@ const SidebarContent = props => {
   }
 
   const unloggedLinks = [];
-  // <Link to='/login' key="6" style={styles.sidebarLink}>Entrar</Link>
-  // no lugar de
-  // <button key="6" onClick={login} style={styles.sidebarLink}>Entrar</button>
   unloggedLinks.push(<Link to='/login' key="6" style={styles.sidebarLink}><img className="img-responsive" src={login} alt="login" style={{height: 25, marginRight: 7, marginTop:-2}}/>Entrar</Link>);
   unloggedLinks.push(<Link to='/cadastro' key="8" style={styles.sidebarLink}><img className="img-responsive" src={addUser} alt="addUser" style={{height: 25, marginRight: 7, marginTop:-2}}/>Registrar-se</Link>);
 
@@ -70,7 +66,6 @@ const SidebarContent = props => {
   var user = false;
 
   var role = JSON.parse(localStorage.getItem('authorities'));
-  console.log("role = " + role);
   if(role) {
     for(var i=0; i<role.length; i++) {
       if(role[i].includes("ADMIN")) {
