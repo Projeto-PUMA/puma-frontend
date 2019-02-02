@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { EditorState, convertToRaw } from 'draft-js';
+import { EditorState, convertToRaw, ContentState, convertFromHTML } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import { Col, Row, Input, Label, Button, FormGroup, Card, CardBody, Form } from 'reactstrap';
 import { Editor } from 'react-draft-wysiwyg';
 import { tokenInfo } from '../../helpers/token';
-import { createNews } from '../../actions/news';
+import { createNews, getNews, updateNews } from '../../actions/news';
 import Loading from '../../helpers/loading';
 
 class NewsSubmission extends Component {
@@ -17,11 +17,24 @@ class NewsSubmission extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  componentWillMount() {
+    const { location, dispatch } = this.props;
+
+    const id = location ? (location.state ? (location.state.id ? location.state.id : null) : null) : null;
+
+    if (id) {
+      this.setState({ ...this.state, id });
+      dispatch(getNews(id));
+    }
+  }
+
   state = {
     editorState: EditorState.createEmpty(),
     category: 0,
+    id: -1,
+    created: false,
   }
-
+  
   handleChange(event) {
     this.setState({ category: event.target.value });
   }
@@ -37,25 +50,46 @@ class NewsSubmission extends Component {
 
     const data = new FormData(e.target);
     const { editorState, category } = this.state;
-    const { dispatch } = this.props;
-    
-    // title, subtitle, body, author, category
-    dispatch(createNews( data.get('title'), '', draftToHtml(convertToRaw(editorState.getCurrentContent())), tokenInfo().id, category ));
+    const { dispatch, news_by_id } = this.props;
+
+    news_by_id ?
+      dispatch(updateNews({
+        id: news_by_id.id,
+        titulo: data.get('title'),
+        subtitulo: '',
+        texto: draftToHtml(convertToRaw(editorState.getCurrentContent())),
+        usuario_id: tokenInfo().id,
+        url_thumbnail: '',
+        categoria: category,
+      })) : dispatch(createNews(data.get('title'), '', draftToHtml(convertToRaw(editorState.getCurrentContent())), tokenInfo().id, category));
   }
 
   render() {
-    const { editorState } = this.state;
-    const { loading } = this.props;
+    const { id, editorState, created } = this.state;
+    const { loading, news_by_id } = this.props;
+
+    let content = null;
 
     if (loading) {
       return <Loading />;
+    }
+
+    if (id !== -1 && news_by_id && !created) {
+      const blocksFromHTML = convertFromHTML(news_by_id.texto);
+      content = ContentState.createFromBlockArray(
+        blocksFromHTML.contentBlocks,
+        blocksFromHTML.entityMap
+      );
+      this.setState({ ...this.state, editorState: EditorState.createWithContent(content), created: true });
     }
 
     return (
       <div>
         <Row>
           <Col sm='2' md='3' lg='4' xs='1' />
-          <Col sm='6' md='5' lg='4' xs='10' style={{ textAlign: 'center' }}><h2>Submissão de Notícia</h2></Col>
+          <Col sm='6' md='5' lg='4' xs='10' style={{ textAlign: 'center' }}>
+            <h2>{news_by_id ? 'Edição' : 'Submissão'} de Notícia</h2>
+          </Col>
         </Row>
         <Row>
           <Col sm='1' md='2' lg='3' xs='1' />
@@ -65,11 +99,11 @@ class NewsSubmission extends Component {
                 <Form id='projectSubmissionForm' name='projectSubmissionForm' onSubmit={this.handleNews}>
                   <FormGroup>
                     <Label >Título da Notícia *</Label>
-                    <Input ref='title' type='text' name='title' id='title' required />
+                    <Input ref='title' type='text' name='title' id='title' defaultValue={news_by_id ? news_by_id.titulo : ''} required />
                   </FormGroup>
                   <FormGroup>
                     <Label for='title'>Categoria da Notícia *</Label>
-                    <Input ref='title' type='select' name='category' id='category' value={this.state.category} onChange={this.handleChange} required>
+                    <Input ref='title' type='select' name='category' id='category' value={news_by_id ? news_by_id.category : this.state.category} onChange={this.handleChange} required>
                       <option ref="0" value={0} disabled>Selecionar Categoria</option>
                       <option ref="1" value={1} className="optionGroup">Destaque</option>
                       <option ref="2" value={2} className="optionGroup">Normal</option>
@@ -108,10 +142,12 @@ class NewsSubmission extends Component {
 
 NewsSubmission.propTypes = {
   loading: PropTypes.bool.isRequired,
+  news_by_id: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
   loading: state.syncOperation.isLoading,
+  news_by_id: state.news.news_by_id,
 });
 
 

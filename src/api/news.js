@@ -19,5 +19,9 @@ export default {
 
   deleteNews: (id) => {
     return PumaApi.delete(`/noticia/${id}`, auth);
+  },
+
+  updateNews: (news) => {
+    return PumaApi.patch(`/noticia/${news.id}`, news, auth);
   }
 };

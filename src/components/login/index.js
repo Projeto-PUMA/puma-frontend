@@ -42,6 +42,7 @@ class Login extends Component {
         "currentUser",
         JSON.stringify({ token: response.data.token })
       );
+      console.log(JSON.stringify({ token: response.data.token }));
       let tokenInfo = this.getDecodedAccessToken(this.getToken());
       console.log("tokenInfo = "+tokenInfo.papel)
       localStorage.setItem(

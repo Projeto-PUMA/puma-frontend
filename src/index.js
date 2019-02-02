@@ -14,7 +14,6 @@ import NewsSubmission from './components/news/submission';
 import News from './components/news/index';
 import ViewNews from './components/news/show';
 import ViewProject from './components/projects/viewProject';
-import UpdateNews from './components/newsUpdate/index';
 import ProjectUpdate from './components/projectUpdate/index';
 
 import { createStore, applyMiddleware } from 'redux';
@@ -37,7 +36,6 @@ ReactDOM.render(
 				<Route path='/gerenciarprojetos' component={Projects} />
 				<Route path='/submeternoticia' component={NewsSubmission} />
 				<Route path='/noticia' component={ViewNews} />
-				<Route path='/noticia/editar' component={UpdateNews} />
 				<Route path='/gerenciarnoticias' component={News} />
 				<Route path='/projeto/editar' component={ProjectUpdate} />
 			</Route>

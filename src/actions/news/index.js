@@ -13,18 +13,40 @@ export const loadNews = () => (dispatch) => {
     })
     .catch((error) => {
       console.log(error);
+      dispatch(SyncOperationAC.syncOperationFinished(error));
     });
 };
 
 export const getNews = (id) => (dispatch) => {
+  dispatch(SyncOperationAC.syncOperationLoading());
   newsApi.getNewsId(id)
       .then((result) => {
         dispatch(NewsAC.getNews(result.data));
+        dispatch(SyncOperationAC.syncOperationFinished(result));
       })
       .catch((error) => {
         console.log(error);
+        dispatch(SyncOperationAC.syncOperationFinished(error));
       });
 };
+
+export const updateNews = (news) => (dispatch) => {
+  dispatch(SyncOperationAC.syncOperationLoading());
+  newsApi.updateNews(news)
+      .then((result) => {
+        browserHistory.push('/gerenciarnoticias');
+        if(result.status === 200) {
+          alert('Notícia atualizada com sucesso!');
+        }
+        dispatch(SyncOperationAC.syncOperationFinished(result));
+        dispatch(loadNews());
+      })
+      .catch((error) => {
+        alert('Ocorreu um erro ao atualizar a notícia!');
+        console.log('update news error: ', error);
+        dispatch(SyncOperationAC.syncOperationFinished(error));
+      });
+}
 
 export const createNews = (title, subtitle, body, author, category) => (dispatch) => {
   const thenCallback = (result) => {

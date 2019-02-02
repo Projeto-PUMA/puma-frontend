@@ -25,7 +25,7 @@ class News extends Component {
 
 	viewNewsToEdit(id) {
 		browserHistory.push({
-			pathname: '/noticia/editar',
+			pathname: '/submeternoticia',
 			state: {
 				id: id,
 			},
