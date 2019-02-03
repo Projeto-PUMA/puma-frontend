@@ -1,73 +1,64 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import * as Store from '../../store';
-import * as jwt_decode from "jwt-decode";
 import {Card, CardBody, Form, Label, Input,Row,Col,Button, FormGroup} from 'reactstrap';
-import {browserHistory} from 'react-router';
-import MaskedInput from 'react-text-mask'
+import MaskedInput from 'react-text-mask';
+
+import { masks } from '../../helpers/validations';
+import { tokenInfo } from '../../helpers/token';
+import { createProject } from '../../actions/projects';
 
 class ProjectSubmission extends Component {
 
 	constructor(props) {
     super(props);
-    this.state = {value: '', showJuridic: false};
+    this.state = { value: '', showJuridic: false };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleProject = this.handleProject.bind(this);
     this.handleRadio = this.handleRadio.bind(this);
   }
 
-  cepmask  = [/\d/, /\d/, /\d/, /\d/, /\d/, '-' , /\d/, /\d/, /\d/];
-  cnpjmask = [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/];
-
-  
-  getDecodedAccessToken(token) {
-    try {
-      return jwt_decode(token);
-    }
-    catch(Error){
-      return null;
-    }
-  }
   handleChange(event){
     this.setState({value: event.target.value});
   }
 	
 	handleProject(e) {
     e.preventDefault();
-
     var data = new FormData(e.target);
 
-		var currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    var token = currentUser && currentUser.token;
-    axios.defaults.headers.common['Authorization'] = "Bearer " + token;
-    axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
-    let tokenInfo = this.getDecodedAccessToken(token);
+    const { dispatch } = this.props;
+    const { showJuridic } = this.state;
 
-    const path = Store['backend'].path;
-    axios.post(path + '/sec/project/new', {
-      title: data.get('title'),
-			summary: data.get('summary'),
-			body: data.get('body'),//document.getElementById('body'),
-			author: { id: tokenInfo.id },
-			projectAuthorCategory: {id:1},//document.getElementById('type').value,  //// 1 to PF, 2 to PJ
-			cnpj: null, // have a PJ?
-			projectStatus: { id: 1 }, // Initial status to project
-			answer: null, // Response from coord
-      projectArea: { id: 1 },//data.get('area'),//data.get('area'), // this is a dropdown
-      projectSubArea: { id: 1 }, // this is a dropdown
-			projectAreaDescription: { id: 1 }, // this is ??
-    })
-    .then(() => 
-      { alert('Projeto cadastrado com sucesso!') 
-          browserHistory.push('/meusprojetos');
-      })
-    .catch(function (error) {
-      if (error) {
-        alert('Projeto não cadastrado!');
-      }
-    });
+    var project = {
+      usuario_id: tokenInfo().id,
+      titulo: data.get('title'),
+      objetivo: data.get('summary'),
+      problematica: data.get('body'),
+      psp_id: 18, // arrumar isso no dropdown ali de baixo
+      anexo: data.get('anexo'),
+    };
+
+    // corrigir os valores de endereço de empresa
+    const empresa = {
+      cnpj: data.get('CNPJ'),
+      nome_fantasia: data.get('companyName'),
+      nome: data.get('corporateName'),
+      endereco: {
+        estado: 'GO',
+        cidade: 'Goiânia',
+        bairro: 'Alagados',
+        rua: 'Rua 10',
+        numero: '123',
+        complemento: null,
+        endereco_categoria_id: 2,
+      },
+    };
+
+    if(showJuridic) project.empresa = empresa;
+
+    dispatch(createProject(project));
   }
 
   renderJuridic() {
@@ -81,7 +72,7 @@ class ProjectSubmission extends Component {
               type='text'
               name='CNPJ'
               id='CNPJ'
-              mask={this.cnpjmask}
+              mask={masks.cnpj}
               tag={MaskedInput}
               required
             />
@@ -207,7 +198,7 @@ class ProjectSubmission extends Component {
               name='cep'
               id='cep'
               style={{width: '140px'}}
-              mask={this.cepmask}
+              mask={masks.cep}
               tag={MaskedInput}
               required
             />
@@ -220,17 +211,11 @@ class ProjectSubmission extends Component {
   }
   
   handleRadio(event) {
-    const showJuridic = event.currentTarget.value === 'pj' ? true: false;
-    this.setState({ showJuridic });
+    this.setState({ showJuridic: event.currentTarget.value === 'pj' ? true: false });
   }
   
   render() {
     const { showJuridic } = this.state;
-    let juridic;
-
-    if (this.state.showJuridic) {
-      juridic = this.renderJuridic();
-    }
 
     return (
       <div>
@@ -323,10 +308,10 @@ class ProjectSubmission extends Component {
               <FormGroup>
                  <Label>Link do PDF *</Label>
                  <Input
-                 ref='title'
+                 ref='anexo'
                  type='text'
-                 name='title'
-                 id='title'
+                 name='anexo'
+                 id='anexo'
                  maxLength="500"  
                  required              
                  />
@@ -344,7 +329,7 @@ class ProjectSubmission extends Component {
                   </Label>
                 </FormGroup>
                 <br/>
-                {juridic}
+                { showJuridic ? this.renderJuridic() : null }
               </FormGroup>
                 <Button type="submit" value ="submit" color="primary" style={{ display: "block",margin: "0 auto"}}>
                  Enviar Projeto
@@ -363,4 +348,14 @@ class ProjectSubmission extends Component {
   }
 }
 
-export default ProjectSubmission;
+ProjectSubmission.propTypes = {
+	project_by_id: PropTypes.object.isRequired,
+	loading: PropTypes.bool.isRequired,
+};
+
+const mapStateToProps = state => ({
+	project_by_id: state.project.project_by_id,
+	loading: state.meta.syncOperation.isLoading,
+});
+
+export default connect(mapStateToProps)(ProjectSubmission);

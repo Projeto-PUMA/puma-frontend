@@ -147,13 +147,11 @@ class NewsSubmission extends Component {
 NewsSubmission.propTypes = {
   loading: PropTypes.bool.isRequired,
   news_by_id: PropTypes.object,
-  editor: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
   loading: state.meta.syncOperation.isLoading,
   news_by_id: state.news.news_by_id,
-  editor: state.meta.editor,
 });
 
 
