@@ -7,8 +7,13 @@ export const loadProjects = (token) => (dispatch) => {
   dispatch(MetaAC.syncOperationLoading());
   projectsApi.getProjects(token)
     .then((result) => {
-      const projects = result.data;
-      dispatch(ProjectsAC.fetchProjects(projects));
+      if (result.status === 200) {
+        const projects = result.data;
+        dispatch(ProjectsAC.fetchProjects(projects));
+      }
+      if (result.status === 401) {
+        alert('Atualize a página e tente novamente!');
+      }
       dispatch(MetaAC.syncOperationFinished(result));
     })
     .catch((error) => {
@@ -22,8 +27,13 @@ export const loadMyProjects = (id, token) => (dispatch) => {
   dispatch(MetaAC.syncOperationLoading());
   projectsApi.getMyProjects(id, token)
     .then((result) => {
-      const projects = result.data;
-      dispatch(ProjectsAC.fetchMyProjects(projects));
+      if (result.status === 200) {
+        const projects = result.data;
+        dispatch(ProjectsAC.fetchMyProjects(projects));
+      }
+      if (result.status === 401) {
+        alert('Atualize a página e tente novamente!');
+      }
       dispatch(MetaAC.syncOperationFinished(result));
     })
     .catch((error) => {
@@ -40,6 +50,9 @@ export const createProject = (projeto, token) => (dispatch) => {
     if (result.status === 200) {
       browserHistory.push('/meusprojetos');
       alert('Projeto criado com sucesso!');
+    }
+    if (result.status === 401) {
+      alert('Atualize a página e tente novamente!');
     }
   };
 
@@ -59,8 +72,13 @@ export const loadProjectById = (id, token) => (dispatch) => {
   dispatch(MetaAC.syncOperationLoading());
   projectsApi.getProjectById(id, token)
     .then((result) => {
-      const project = result.data;
-      dispatch(ProjectsAC.fetchProjectById(project));
+      if (result.status === 200) {
+        const project = result.data;
+        dispatch(ProjectsAC.fetchProjectById(project));
+      }
+      if (result.status === 401) {
+        alert('Atualize a página e tente novamente!');
+      }
       dispatch(MetaAC.syncOperationFinished(result));
     })
     .catch((error) => {
@@ -73,9 +91,12 @@ export const loadProjectById = (id, token) => (dispatch) => {
 export const updateProject = (projeto, token) => (dispatch) => {
   const thenCallback = (result) => {
     dispatch(MetaAC.syncOperationFinished(result));
-    dispatch(loadProjectById(projeto.id));
     if (result.status === 200) {
+      dispatch(loadProjectById(projeto.id));
       alert('Projeto atualizado com sucesso!');
+    }
+    if (result.status === 401) {
+      alert('Atualize a página e tente novamente!');
     }
   };
 

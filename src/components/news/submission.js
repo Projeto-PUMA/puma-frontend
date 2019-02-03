@@ -52,8 +52,6 @@ class NewsSubmission extends Component {
     const { editorState, category } = this.state;
     const { dispatch, news_by_id, user } = this.props;
 
-    console.log(user);
-
     news_by_id ?
       dispatch(updateNews({
         id: news_by_id.id,

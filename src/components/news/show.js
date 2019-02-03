@@ -23,7 +23,7 @@ class ViewNews extends Component {
 		return (
 			<div style={{ margin: 50, marginTop: 120 }}>
 				<h2>{news_by_id.titulo}</h2>
-        <div style={{ marginTop: 30 }} dangerouslySetInnerHTML={{ __html: news_by_id.conteudo }} />
+        <div style={{ marginTop: 30 }} dangerouslySetInnerHTML={{ __html: news_by_id.texto }} />
 			</div>
 		);
 	}
