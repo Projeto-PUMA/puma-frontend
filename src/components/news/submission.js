@@ -103,7 +103,7 @@ class NewsSubmission extends Component {
                   </FormGroup>
                   <FormGroup>
                     <Label >URL da Imagem *</Label>
-                    <Input ref='image' type='text' name='image' id='image' defaultValue={news_by_id ? news_by_id.url_thumbnail : ''} required />
+                    <Input ref='image' type='text' name='image' id='image' defaultValue={news_by_id ? news_by_id.urlThumbnail : ''} required />
                   </FormGroup>
                   <FormGroup>
                     <Label for='title'>Categoria da Notícia *</Label>
