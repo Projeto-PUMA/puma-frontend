@@ -18,15 +18,14 @@ class Grid extends Component {
     });
   }
 
-  renderCard(d, idx) {
+  renderCards(d, idx) {
     return (
       <div key={idx}>
-        <Card onClick={() => this.viewNews(d.id)} style={{ margin: 10, marginBottom: 20 }}>
+        <Card onClick={() => this.viewNews(d.id)} style={{ margin: 16, marginBottom: 20 }}>
           <CardImg top width="100%" height="240px" src={d.urlThumbnail && d.urlThumbnail !== '' ? d.urlThumbnail : 'http://vanguardacomunicacao.com.br/santoremedio/wp-content/uploads/2018/07/img.jpg'} alt="Card image cap" />
           <CardBody>
             <CardTitle>{d.titulo}</CardTitle>
-          </CardBody>
-          <CardBody>
+            <CardText>{d.texto.substring(0,30)}</CardText>
             <CardLink style={{ color: 'blue' }}>Ler mais...</CardLink>
           </CardBody>
         </Card>
@@ -34,15 +33,29 @@ class Grid extends Component {
     );
   }
 
+  filterNews(value) {
+    return value.noticiaCategoriaId === 3;
+  }
+
+  filterHighlights(value) {
+    return value.noticiaCategoriaId === 2;
+  }
+
+  filterBestProjects(value) {
+    return value.noticiaCategoriaId === 1;
+  }
+
   render() {
     const { data } = this.props;
 
-    const items = data.slice(0, 3);
+    var filteredNews = data.filter(this.filterNews);
+    var filtererdBestProjects = data.filter(this.filterBestProjects);
+    var filtererdHighlights = data.filter(this.filterHighlights);
 
     return (
       <div id='content' style={{ width: '100%', height: '100%' }}>
         <div style={{ marginTop: 40, width: '100%', align: 'center', marginBottom: 20 }}>
-          { data.length > 1 ? <CarouselApp data={items} /> : null }
+          { data.length > 1 ? <CarouselApp data={filtererdHighlights} /> : null }
         </div>
         <div style={{ textAlign: 'center', marginTop: 50 }}>
           <h1>PROJETO DE SISTEMAS DE PRODUÇÃO (PSP)</h1>
@@ -70,40 +83,11 @@ class Grid extends Component {
         <div style={{ flexDirection: 'row', align: 'center', width: '100%' }}>
           <div style={{ minWidth: '30%', maxWidth: '30%', float: 'left', margin: 120, marginTop: 0 }}>
             <h2 style={{ marginLeft: 20 }}>Notícias</h2>
-            { items.map((d, idx) => this.renderCard(d, idx)) }
+            { filteredNews.map((d, idx) => this.renderCards(d, idx)) }
           </div>
           <div style={{ minWidth: '30%', maxWidth: '30%', float: 'right', margin: 120, marginTop: 0 }}>
             <h2 style={{ marginLeft: 20 }}>Projetos</h2>
-            <Card style={{ margin: 10, marginBottom: 20 }}>
-            <CardImg top width="100%" height="240px" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
-              <CardBody>
-                <CardTitle>{'Projeto 1'}</CardTitle>
-              </CardBody>
-              <CardBody>
-                <CardText>{'Descrição do Projeto 1'}</CardText>
-                <CardLink href="#">Ler mais...</CardLink>
-              </CardBody>
-            </Card>
-            <Card style={{ margin: 10, marginBottom: 20 }}>
-            <CardImg top width="100%" height="240px" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
-              <CardBody>
-                <CardTitle>{'Projeto 2'}</CardTitle>
-              </CardBody>
-              <CardBody>
-                <CardText>{'Descrição do Projeto 2'}</CardText>
-                <CardLink href="#">Ler mais...</CardLink>
-              </CardBody>
-            </Card>
-            <Card style={{ margin: 10, marginBottom: 20 }}>
-            <CardImg top width="100%" height="240px" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
-              <CardBody>
-                <CardTitle>{'Projeto 3'}</CardTitle>
-              </CardBody>
-              <CardBody>
-                <CardText>{'Descrição do Projeto 3'}</CardText>
-                <CardLink href="#">Ler mais...</CardLink>
-              </CardBody>
-            </Card>
+            { filtererdBestProjects.map((d, idx) => this.renderCards(d, idx)) }
           </div>
         </div>
       </div>
