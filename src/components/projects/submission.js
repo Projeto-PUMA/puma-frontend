@@ -9,6 +9,7 @@ import ViaCep from '../../lib/react-via-cep/dist/index';
 import { masks } from '../../helpers/validations';
 import { tokenInfo } from '../../helpers/token';
 import { createProject } from '../../actions/projects';
+import Loading from '../../helpers/loading';
 
 class ProjectSubmission extends Component {
 
