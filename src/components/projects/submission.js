@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import {Card, CardBody, Form, Label, Input,Row,Col,Button, FormGroup} from 'reactstrap';
 import MaskedInput from 'react-text-mask';
+import ViaCep from '../../lib/react-via-cep/dist/index';
 
 import { masks } from '../../helpers/validations';
 import { tokenInfo } from '../../helpers/token';
@@ -13,17 +14,47 @@ class ProjectSubmission extends Component {
 
 	constructor(props) {
     super(props);
-    this.state = { value: '', showJuridic: false };
+    this.state = { value: '', showJuridic: false, cep: '', uf: '', localidade: '', bairro: '', logradouro: '' };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleProject = this.handleProject.bind(this);
     this.handleRadio = this.handleRadio.bind(this);
+    this.handleChangeCep = this.handleChangeCep.bind(this);
+    this.handleSuccess = this.handleSuccess.bind(this);
+    this.changeUf = this.changeUf.bind(this);
+    this.changeCidade = this.changeCidade.bind(this);
+    this.changeBairro = this.changeBairro.bind(this);
+    this.changeLogradouro = this.changeLogradouro.bind(this);
   }
 
   handleChange(event){
     this.setState({value: event.target.value});
   }
-	
+  
+  handleChangeCep(event) {
+    this.setState({ ...this.state, cep: event.target.value })
+  }
+
+  handleSuccess(data) {
+    this.setState({ ...this.state, uf: data.uf, localidade: data.localidade, bairro: data.bairro, logradouro: data.logradouro });
+  }
+
+  changeUf(event) {
+    this.setState({ uf: event.target.value });
+  }
+
+  changeCidade(event) {
+    this.setState({ localidade: event.target.value });
+  }
+
+  changeBairro(event) {
+    this.setState({ bairro: event.target.value });
+  }
+
+  changeLogradouro(event) {
+    this.setState({ logradouro: event.target.value });
+  }
+
 	handleProject(e) {
     e.preventDefault();
     var data = new FormData(e.target);
@@ -46,14 +77,14 @@ class ProjectSubmission extends Component {
       nome_fantasia: data.get('companyName'),
       nome: data.get('corporateName'),
       endereco: {
-        estado: 'GO',
-        cidade: 'Goiânia',
-        bairro: 'Alagados',
-        rua: 'Rua 10',
-        numero: '123',
-        complemento: null,
+        estado: data.get("uf"),
+        cidade: data.get("localidade"),
+        bairro: data.get("bairro"),
+        rua: data.get("logradouro"),
+        numero: data.get("numero"),
+        complemento: data.get("complemento"),
         cep: data.get('cep'),
-        endereco_categoria_id: 2,
+        endereco_categoria_id: data.get("categoria"),
       },
     };
 
@@ -100,112 +131,184 @@ class ProjectSubmission extends Component {
               required
             />
           </FormGroup>
-          <Row>
-          <Col xs="auto">
-          <FormGroup>
-            <Label>Endereço *</Label>
-            <Input
-              ref='title'
-              type='text'
-              name='address'
-              id='address'
-              maxLength="200"
-              style={{width: '38vw'}}
-              required
-            />
-          </FormGroup>
-          </Col>
-          <Col xs="auto">
-          <FormGroup>
-            <Label>Número *</Label>
-            <Input
-              ref='title'
-              type='number'
-              name='number'
-              id='number'
-              maxLength="4"
-              style={{width: '55px'}}
-              required
-            />
-          </FormGroup>
-          </Col>
-          </Row>
-          <Row>
-          <Col xs="auto">
-          <FormGroup>
-            <Label>País *</Label>
-            <Input
-              ref='title'
-              type='select'
-              name='country'
-              id='country'
-              maxLength="50"
-              style={{width: '140px'}}
-              required
-            >
-              <option ref="1" value={"brasil"} className="optionGroup">Brasil</option>
-              <option ref="2" value={"outros"} className="optionGroup">Outros</option>
-            </Input>
-          </FormGroup>
-          </Col>
-          <Col xs="auto">
-          <FormGroup>
-            <Label>Estado *</Label>
-            <Input
-              ref='title'
-              type='select'
-              name='state'
-              id='state'
-              maxLength="50"
-              style={{width: '300px'}}
-              required
-            >
-              <option ref="1" value={"AC"} className="optionGroup">Acre - AC</option>
-              <option ref="2" value={"AL"} className="optionGroup">Alagoas - AL</option>
-              <option ref="3" value={"AP"} className="optionGroup">Amapá - AP</option>
-              <option ref="4" value={"AM"} className="optionGroup">Amazonas - AM</option>
-              <option ref="5" value={"BA"} className="optionGroup">Bahia - BA</option>
-              <option ref="6" value={"CE"} className="optionGroup">Ceará - CE</option>
-              <option ref="7" value={"DF"} className="optionGroup">Distrito Federal - DF</option>
-              <option ref="8" value={"ES"} className="optionGroup">Espirito Santo - ES</option>
-              <option ref="9" value={"GO"} className="optionGroup">Goiás - GO</option>
-              <option ref="10" value={"MA"} className="optionGroup">Maranhão - MA</option>
-              <option ref="11" value={"MT"} className="optionGroup">Mato Grosso - MT</option>
-              <option ref="12" value={"MS"} className="optionGroup">Mato Grosso do Sul - MS</option>
-              <option ref="13" value={"MG"} className="optionGroup">Minas Gerais - MG</option>
-              <option ref="14" value={"PA"} className="optionGroup">Pará - PA</option>
-              <option ref="15" value={"PB"} className="optionGroup">Paraíba - PB</option>
-              <option ref="16" value={"PR"} className="optionGroup">Paraná - PR</option>
-              <option ref="17" value={"PE"} className="optionGroup">Pernambuco - PE</option>
-              <option ref="18" value={"PI"} className="optionGroup">Piauí - PI</option>
-              <option ref="19" value={"RJ"} className="optionGroup">Rio de Janeiro - RJ</option>
-              <option ref="20" value={"RN"} className="optionGroup">Rio Grande do Norte - RN</option>
-              <option ref="21" value={"RS"} className="optionGroup">Rio Grande do Sul - RS</option>
-              <option ref="22" value={"RO"} className="optionGroup">Rondônia - RO</option>
-              <option ref="23" value={"RR"} className="optionGroup">Roraima - RR</option>
-              <option ref="24" value={"SC"} className="optionGroup">Santa Catarina - SC</option>
-              <option ref="25" value={"SP"} className="optionGroup">São Paulo - SP</option>
-              <option ref="26" value={"SE"} className="optionGroup">Sergipe - SE</option>
-              <option ref="27" value={"TO"} className="optionGroup">Tocantins - TO</option>
-            </Input>
-          </FormGroup>
-          </Col>
-          <Col xs="auto">
-          <FormGroup>
-            <Label>CEP *</Label>
-            <Input
-              ref='cep'
-              type='text'
-              name='cep'
-              id='cep'
-              style={{width: '140px'}}
-              mask={masks.cep}
-              tag={MaskedInput}
-              required
-            />
-          </FormGroup>
-          </Col>
-          </Row>
+          <ViaCep cep={this.state.cep} onSuccess={this.handleSuccess} lazy>
+                    {({ data, loading, error, fetch }) => {
+                      if (loading) {
+                        return <p>Pesquisando CEP...</p>
+                      }
+                      if (error) {
+                        return console.log('CEP inválido!');
+                      }
+                      if (data) {
+                        if (data.erro === true) {
+                          return <div>
+                            <FormGroup>
+                              <Label className="label">CEP *</Label>
+                              <Input
+                                ref="body"
+                                type="text"
+                                name="cep"
+                                id="cep"
+                                className="input"
+                                mask={masks.cep}
+                                tag={MaskedInput}
+                                onChange={this.handleChangeCep} value={this.state.cep}
+                                required
+                              />
+                            </FormGroup>
+                            <div style={{ marginTop: -12, fontSize: 12, color: 'red' }}>CEP Inválido</div>
+                            <button onClick={fetch}>Pesquisar</button>
+                          </div>
+                        }
+                        return <div>
+                          <Row debug="true">
+                            <Col debug="true">
+                              <FormGroup>
+                                <Label className="label">CEP *</Label>
+                                <Input
+                                  ref="body"
+                                  type="text"
+                                  name="cep"
+                                  id="cep"
+                                  className="input"
+                                  mask={masks.cep}
+                                  tag={MaskedInput}
+                                  value={data.cep}
+                                  style={{ width: '250px' }}
+                                  required
+                                />
+                              </FormGroup>
+                            </Col>
+                            <Col debug="true">
+                              <FormGroup>
+                                <Label className="label">Cidade *</Label>
+                                <Input
+                                  ref="title"
+                                  type="text"
+                                  name="localidade"
+                                  id="localidade"
+                                  className="input"
+                                  required
+                                  value={this.state.localidade}
+                                  onChange={this.changeCidade}
+                                  style={{ width: '250px' }}
+                                />
+                              </FormGroup>
+                            </Col>
+                            <Col debug="true">
+                              <FormGroup>
+                                <Label className="label">Estado *</Label>
+                                <Input
+                                  ref="title"
+                                  type="text"
+                                  name="uf"
+                                  id="uf"
+                                  className="input"
+                                  required
+                                  value={this.state.uf}
+                                  onChange={this.changeUf}
+                                  style={{ width: '60px' }}
+                                />
+                              </FormGroup>
+                            </Col>
+                          </Row>
+                          <FormGroup>
+                            <Label className="label">Bairro *</Label>
+                            <Input
+                              ref="title"
+                              type="text"
+                              name="bairro"
+                              id="bairro"
+                              className="input"
+                              required
+                              value={this.state.bairro}
+                              onChange={this.changeBairro}
+                            />
+                          </FormGroup>
+                          <Row debug="true">
+                          <Col debug="true">
+                          <FormGroup>
+                            <Label className="label">Logradouro *</Label>
+                            <Input
+                              ref="title"
+                              type="text"
+                              name="logradouro"
+                              id="logradouro"
+                              className="input"
+                              required
+                              value={this.state.logradouro}
+                              onChange={this.changeLogradouro}
+                              style={{ width: '500px' }}
+                            />
+                          </FormGroup>
+                          </Col>
+                          <Col debug="true">
+                          <FormGroup>
+                            <Label className="label">Número *</Label>
+                            <Input
+                              ref="title"
+                              type="text"
+                              name="numero"
+                              id="numero"
+                              className="input"
+                              required
+                              style={{ width: '60px' }}
+                            />
+                          </FormGroup>
+                          </Col>
+                          </Row>
+                          <Row debug="true">
+                          <Col debug="true">
+                          <FormGroup>
+                            <Label className="label">Complemento</Label>
+                            <Input
+                              ref="title"
+                              type="text"
+                              name="complemento"
+                              id="complemento"
+                              className="input"
+                            />
+                          </FormGroup>
+                          </Col>
+                          <Col debug="true">
+                          <FormGroup>
+                            <Label>Categoria *</Label>
+                            <Input
+                              ref='title'
+                              type='select'
+                              name='categoria'
+                              id='categoria'
+                              maxLength="50"
+                              style={{ width: '300px' }}
+                              required
+                            >
+                              <option ref="1" value={1} className="optionGroup">Residencial</option>
+                              <option ref="2" value={2} className="optionGroup">Comercial</option>
+                            </Input>
+                          </FormGroup>
+                          </Col>
+                          </Row>
+                        </div>
+                      }
+                      return <div>
+                        <FormGroup>
+                          <Label className="label">CEP *</Label>
+                          <Input
+                            ref="body"
+                            type="text"
+                            name="cep"
+                            id="cep"
+                            className="input"
+                            mask={masks.cep}
+                            tag={MaskedInput}
+                            onChange={this.handleChangeCep} value={this.state.cep}
+                            required
+                          />
+                        </FormGroup>
+                        <button onClick={fetch}>Pesquisar</button>
+                      </div>
+                    }}
+                  </ViaCep>
         </div>
       )
     }
