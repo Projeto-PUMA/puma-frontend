@@ -12,9 +12,9 @@ import { tokenInfo } from '../../helpers/token';
 class ViewProject extends Component {
 
 	componentWillMount() {
-		const { dispatch, location } = this.props;
+		const { dispatch, location, user } = this.props;
 		const { id } = location.state;
-		dispatch(loadProjectById(id));
+		dispatch(loadProjectById(id, user.token));
 	}
 
 	renderStatus(project) {
@@ -39,11 +39,11 @@ class ViewProject extends Component {
 	}
 
 	updateProject(projeto, status) {
-		const { dispatch } = this.props;
+		const { dispatch, user } = this.props;
 		dispatch(updateProject({
 			id: projeto.id,
 			projeto_status_id: status,
-		}));
+		}, user.token));
 	}
 
 	renderJudge(projeto) {
@@ -96,11 +96,13 @@ class ViewProject extends Component {
 }
 
 ViewProject.propTypes = {
+	user: PropTypes.object,
 	project_by_id: PropTypes.object,
 	loading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
+	user: state.user,
 	project_by_id: state.project.project_by_id,
 	loading: state.meta.syncOperation.isLoading,
 });

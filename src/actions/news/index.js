@@ -30,9 +30,9 @@ export const getNews = (id) => (dispatch) => {
       });
 };
 
-export const updateNews = (news) => (dispatch) => {
+export const updateNews = (news, token) => (dispatch) => {
   dispatch(MetaAC.syncOperationLoading());
-  newsApi.updateNews(news)
+  newsApi.updateNews(news, token)
       .then((result) => {
         browserHistory.push('/gerenciarnoticias');
         if(result.status === 200) {
@@ -48,7 +48,7 @@ export const updateNews = (news) => (dispatch) => {
       });
 }
 
-export const createNews = (title, subtitle, body, author, image, category) => (dispatch) => {
+export const createNews = (title, subtitle, body, author, image, category, token) => (dispatch) => {
   const thenCallback = (result) => {
     dispatch(MetaAC.syncOperationFinished(result));
     dispatch(loadNews());
@@ -65,12 +65,12 @@ export const createNews = (title, subtitle, body, author, image, category) => (d
   };
 
   dispatch(MetaAC.syncOperationLoading());
-  newsApi.postNews(title, subtitle, body, author, image, category)
+  newsApi.postNews(title, subtitle, body, author, image, category, token)
       .then(thenCallback)
       .catch(catchCallback);
 };
 
-export const deleteNews = (id) => (dispatch) => {
+export const deleteNews = (id, token) => (dispatch) => {
   const thenCallback = (result) => {
     dispatch(MetaAC.syncOperationFinished(result));
     dispatch(loadNews());
@@ -86,7 +86,7 @@ export const deleteNews = (id) => (dispatch) => {
   };
 
   dispatch(MetaAC.syncOperationLoading());
-  newsApi.deleteNews(id)
+  newsApi.deleteNews(id, token)
       .then(thenCallback)
       .catch(catchCallback);
 };

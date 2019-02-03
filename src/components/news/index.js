@@ -33,8 +33,8 @@ class News extends Component {
 	}
 
 	deleteNews(id) {
-		const { dispatch } = this.props;
-		dispatch(deleteNews(id));
+		const { dispatch, user } = this.props;
+		dispatch(deleteNews(id, user.token));
 	}
 
 	renderTableLine(d, idx) {
@@ -93,11 +93,13 @@ class News extends Component {
 
 News.propTypes = {
 	news: PropTypes.object.isRequired,
+	user: PropTypes.object,
 	loading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
 	news: state.news,
+	user: state.user,
 	loading: state.meta.syncOperation.isLoading,
 });
 

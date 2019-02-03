@@ -10,8 +10,8 @@ import { loadProjects } from '../../actions/projects';
 class Projects extends Component {
 
 	componentWillMount() {
-		const { dispatch } = this.props;
-		dispatch(loadProjects());
+		const { dispatch, user } = this.props;
+		dispatch(loadProjects(user.token));
 	}
   
   viewProject(id) {
@@ -73,11 +73,13 @@ class Projects extends Component {
 }
 
 Projects.propTypes = {
+	user: PropTypes.object,
 	projects: PropTypes.object.isRequired,
 	loading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
+	user: state.user,
 	projects: state.project.projects,
 	loading: state.meta.syncOperation.isLoading,
 });

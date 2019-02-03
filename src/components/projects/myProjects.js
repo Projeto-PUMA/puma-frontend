@@ -10,8 +10,8 @@ import Loading from '../../helpers/loading';
 class MyProjects extends Component {
 
 	componentWillMount() {
-		const { dispatch } = this.props;
-		dispatch(loadMyProjects(tokenInfo().id));
+		const { dispatch, user } = this.props;
+		dispatch(loadMyProjects(tokenInfo().id, user.token));
 	}
 	
 	viewProject(id) {
@@ -73,11 +73,13 @@ class MyProjects extends Component {
 }
 
 MyProjects.propTypes = {
+	user: PropTypes.object,
 	my_projects: PropTypes.object.isRequired,
 	loading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
+	user: state.user,
 	my_projects: state.project.my_projects,
 	loading: state.meta.syncOperation.isLoading,
 });

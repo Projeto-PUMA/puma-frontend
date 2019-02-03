@@ -1,24 +1,24 @@
 import PumaApi from './puma';
-import { auth } from '../helpers/token';
+import { authToken } from '../helpers/token';
 
 export default {
-  getProjects: () => {
-    return PumaApi.get(`/projeto`, auth);
+  getProjects: (token) => {
+    return PumaApi.get(`/projeto`, authToken(token));
   },
 
-  getProjectById: (id) => {
-    return PumaApi.get(`/projeto/${id}`, auth);
+  getProjectById: (id, token) => {
+    return PumaApi.get(`/projeto/${id}`, authToken(token));
   },
 
-  getMyProjects: (id) => {
-    return PumaApi.get(`/usuario/${id}/projeto`, auth);
+  getMyProjects: (id, token) => {
+    return PumaApi.get(`/usuario/${id}/projeto`, authToken(token));
   },
 
-  updateProject: (projeto) => {
-    return PumaApi.patch(`/projeto/${projeto.id}`, projeto, auth);
+  updateProject: (projeto, token) => {
+    return PumaApi.patch(`/projeto/${projeto.id}`, projeto, authToken(token));
   },
 
-  newProject: (projeto) => {
-    return PumaApi.post('/projeto', projeto, auth);
+  newProject: (projeto, token) => {
+    return PumaApi.post('/projeto', projeto, authToken(token));
   }
 };

@@ -25,4 +25,8 @@ export default {
     };
     return PumaApi.post('/usuario', data);
   },
+
+  login: (user) => {
+    return PumaApi.post('/auth/login', user);
+  }
 };

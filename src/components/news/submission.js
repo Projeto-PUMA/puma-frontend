@@ -50,7 +50,9 @@ class NewsSubmission extends Component {
 
     const data = new FormData(e.target);
     const { editorState, category } = this.state;
-    const { dispatch, news_by_id } = this.props;
+    const { dispatch, news_by_id, user } = this.props;
+
+    console.log(user);
 
     news_by_id ?
       dispatch(updateNews({
@@ -61,7 +63,7 @@ class NewsSubmission extends Component {
         usuario_id: tokenInfo().id,
         url_thumbnail: data.get('image'),
         categoria: category,
-      })) : dispatch(createNews(data.get('title'), '', draftToHtml(convertToRaw(editorState.getCurrentContent())), tokenInfo().id, data.get('image'), category));
+      }, user.token)) : dispatch(createNews(data.get('title'), '', draftToHtml(convertToRaw(editorState.getCurrentContent())), tokenInfo().id, data.get('image'), category, user.token));
   }
 
   render() {
@@ -147,11 +149,13 @@ class NewsSubmission extends Component {
 NewsSubmission.propTypes = {
   loading: PropTypes.bool.isRequired,
   news_by_id: PropTypes.object,
+  user: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
   loading: state.meta.syncOperation.isLoading,
   news_by_id: state.news.news_by_id,
+  user: state.user,
 });
 
 

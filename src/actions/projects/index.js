@@ -3,9 +3,9 @@ import { browserHistory } from 'react-router';
 import * as ProjectsAC from './actionCreators';
 import * as MetaAC from '../meta/actionCreators';
 
-export const loadProjects = () => (dispatch) => {
+export const loadProjects = (token) => (dispatch) => {
   dispatch(MetaAC.syncOperationLoading());
-  projectsApi.getProjects()
+  projectsApi.getProjects(token)
     .then((result) => {
       const projects = result.data;
       dispatch(ProjectsAC.fetchProjects(projects));
@@ -18,9 +18,9 @@ export const loadProjects = () => (dispatch) => {
     });
 };
 
-export const loadMyProjects = (id) => (dispatch) => {
+export const loadMyProjects = (id, token) => (dispatch) => {
   dispatch(MetaAC.syncOperationLoading());
-  projectsApi.getMyProjects(id)
+  projectsApi.getMyProjects(id, token)
     .then((result) => {
       const projects = result.data;
       dispatch(ProjectsAC.fetchMyProjects(projects));
@@ -33,7 +33,7 @@ export const loadMyProjects = (id) => (dispatch) => {
     });
 };
 
-export const createProject = (projeto) => (dispatch) => {
+export const createProject = (projeto, token) => (dispatch) => {
   const thenCallback = (result) => {
     dispatch(MetaAC.syncOperationFinished(result));
     dispatch(loadProjects());
@@ -50,14 +50,14 @@ export const createProject = (projeto) => (dispatch) => {
   };
 
   dispatch(MetaAC.syncOperationLoading());
-  projectsApi.newProject(projeto)
+  projectsApi.newProject(projeto, token)
       .then(thenCallback)
       .catch(catchCallback);
 };
 
-export const loadProjectById = (id) => (dispatch) => {
+export const loadProjectById = (id, token) => (dispatch) => {
   dispatch(MetaAC.syncOperationLoading());
-  projectsApi.getProjectById(id)
+  projectsApi.getProjectById(id, token)
     .then((result) => {
       const project = result.data;
       dispatch(ProjectsAC.fetchProjectById(project));
@@ -70,7 +70,7 @@ export const loadProjectById = (id) => (dispatch) => {
     });
 };
 
-export const updateProject = (projeto) => (dispatch) => {
+export const updateProject = (projeto, token) => (dispatch) => {
   const thenCallback = (result) => {
     dispatch(MetaAC.syncOperationFinished(result));
     dispatch(loadProjectById(projeto.id));
@@ -86,7 +86,7 @@ export const updateProject = (projeto) => (dispatch) => {
   };
 
   dispatch(MetaAC.syncOperationLoading());
-  projectsApi.updateProject(projeto)
+  projectsApi.updateProject(projeto, token)
       .then(thenCallback)
       .catch(catchCallback);
 };

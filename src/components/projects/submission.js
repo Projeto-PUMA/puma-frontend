@@ -59,7 +59,7 @@ class ProjectSubmission extends Component {
     e.preventDefault();
     var data = new FormData(e.target);
 
-    const { dispatch } = this.props;
+    const { dispatch, user } = this.props;
     const { showJuridic } = this.state;
 
     var project = {
@@ -90,7 +90,7 @@ class ProjectSubmission extends Component {
 
     if(showJuridic) project.empresa = empresa;
 
-    dispatch(createProject(project));
+    dispatch(createProject(project, user.token));
   }
 
   renderJuridic() {
@@ -453,11 +453,13 @@ class ProjectSubmission extends Component {
 }
 
 ProjectSubmission.propTypes = {
+  user: PropTypes.object,
 	project_by_id: PropTypes.object.isRequired,
 	loading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
+  user: state.user,
 	project_by_id: state.project.project_by_id,
 	loading: state.meta.syncOperation.isLoading,
 });
