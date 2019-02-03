@@ -1,4 +1,5 @@
 import projectsApi from '../../api/projects';
+import { browserHistory } from 'react-router';
 import * as ProjectsAC from './actionCreators';
 import * as MetaAC from '../meta/actionCreators';
 
@@ -37,6 +38,7 @@ export const createProject = (projeto) => (dispatch) => {
     dispatch(MetaAC.syncOperationFinished(result));
     dispatch(loadProjects());
     if (result.status === 200) {
+      browserHistory.push('/meusprojetos');
       alert('Projeto criado com sucesso!');
     }
   };
