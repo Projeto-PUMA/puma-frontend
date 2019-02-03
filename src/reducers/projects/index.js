@@ -1,14 +1,11 @@
-const projects = (state = {}, action) => {
-  switch (action.type) {
-    case 'FETCH_PROJECTS':
-      if (action.projects === null || action.projects.status === 0) {
-        return state;
-      }
-      return action.projects;
+import { combineReducers } from 'redux';
 
-    default:
-      return state;
-  }
-};
+import projects from './projects';
+import project_by_id from './project';
 
-export default projects;
+const project = combineReducers({
+  projects,
+  project_by_id,
+});
+
+export default project;
