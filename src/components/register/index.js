@@ -5,7 +5,7 @@ import Autocomplete from '../../helpers/autoComplete';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MaskedInput from 'react-text-mask'
 import { Card, CardBody, Form, Label, Input, Row, Col, Button, FormGroup } from 'reactstrap';
-import ViaCep from 'react-via-cep';
+import ViaCep from '../../lib/react-via-cep/dist/index';
 import { loadOccupations } from '../../actions/occupations';
 import { createUser } from '../../actions/user';
 import  { validateUser, masks }  from "../../helpers/validations";
