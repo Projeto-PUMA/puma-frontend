@@ -6,7 +6,13 @@ export default {
     return PumaApi.get(`/projeto`, auth);
   },
 
-  getProjectId: (id) => PumaApi.get(`/projeto/${id}`),
+  getProjectById: (id) => {
+    return PumaApi.get(`/projeto/${id}`, auth);
+  },
 
   getMyProjects: (id) => PumaApi.get(`/projeto/${id}`),
+
+  updateProject: (projeto) => {
+    return PumaApi.patch(`/projeto/${projeto.id}`, projeto, auth);
+  },
 };

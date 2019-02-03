@@ -78,7 +78,7 @@ Projects.propTypes = {
 };
 
 const mapStateToProps = state => ({
-	projects: state.projects,
+	projects: state.project.projects,
 	loading: state.meta.syncOperation.isLoading,
 });
 

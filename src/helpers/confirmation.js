@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 export default class Confirmation extends Component {
   render() {
     const { location } = this.props;
-    console.log(location.state);
     return (
       <div style={{ height: '300px', width: '100%', justifyContent: 'center', alignItems: 'center', textAlign: 'center', verticalAlign: 'center', marginTop: 100 }}>
         <h1 style={{ alignSelf: 'center' }}>Usuário cadastrado com sucesso!</h1>
