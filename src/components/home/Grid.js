@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import CarouselApp from '../carousel/index.js';
 import {
-  Card, CardText, CardBody, CardLink,
+  Card, CardBody, CardLink,
   CardTitle, CardSubtitle, CardImg, Button
 } from 'reactstrap';
 import { browserHistory } from 'react-router';
