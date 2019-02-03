@@ -95,7 +95,8 @@ td, th {
 
 th, thead{
 	border-color: black;
-	color: aliceblue;
+  color: aliceblue;
+  text-align: center;
 	background-color: darkslateblue;
 }
 
