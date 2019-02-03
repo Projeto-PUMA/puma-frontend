@@ -320,6 +320,11 @@ class ProjectSubmission extends Component {
   
   render() {
     const { showJuridic } = this.state;
+    const { loading } = this.props;
+
+    if (loading) {
+      return <Loading />;
+    }
 
     return (
       <div>
