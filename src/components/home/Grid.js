@@ -33,29 +33,19 @@ class Grid extends Component {
     );
   }
 
-  filterNews(value) {
-    return value.noticiaCategoriaId === 3;
-  }
-
-  filterHighlights(value) {
-    return value.noticiaCategoriaId === 2;
-  }
-
-  filterBestProjects(value) {
-    return value.noticiaCategoriaId === 1;
+  filterNews(category) {
+    return (value) => {
+      return value.noticiaCategoriaId === category;
+    };
   }
 
   render() {
     const { data } = this.props;
 
-    var filteredNews = data.filter(this.filterNews);
-    var filtererdBestProjects = data.filter(this.filterBestProjects);
-    var filtererdHighlights = data.filter(this.filterHighlights);
-
     return (
       <div id='content' style={{ width: '100%', height: '100%' }}>
         <div style={{ marginTop: 40, width: '100%', align: 'center', marginBottom: 20 }}>
-          { data.length > 1 ? <CarouselApp data={filtererdHighlights} /> : null }
+          { data.length > 1 ? <CarouselApp data={data.filter(this.filterNews(2))} /> : null }
         </div>
         <div style={{ textAlign: 'center', marginTop: 50 }}>
           <h1>PROJETO DE SISTEMAS DE PRODUÇÃO (PSP)</h1>
@@ -83,11 +73,11 @@ class Grid extends Component {
         <div style={{ flexDirection: 'row', align: 'center', width: '100%' }}>
           <div style={{ minWidth: '30%', maxWidth: '30%', float: 'left', margin: 120, marginTop: 0 }}>
             <h2 style={{ marginLeft: 20 }}>Notícias</h2>
-            { filteredNews.map((d, idx) => this.renderCards(d, idx)) }
+            { data.filter(this.filterNews(3)).map((d, idx) => this.renderCards(d, idx)) }
           </div>
           <div style={{ minWidth: '30%', maxWidth: '30%', float: 'right', margin: 120, marginTop: 0 }}>
             <h2 style={{ marginLeft: 20 }}>Projetos</h2>
-            { filtererdBestProjects.map((d, idx) => this.renderCards(d, idx)) }
+            { data.filter(this.filterNews(1)).map((d, idx) => this.renderCards(d, idx)) }
           </div>
         </div>
       </div>
