@@ -1,10 +1,18 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {browserHistory} from 'react-router';
-import axios from "axios";
-import * as jwt_decode from "jwt-decode";
-import * as Store from "../../store";
-import {Button,Col,Row,Card,CardBody,Form,Label,Input} from "reactstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
+import axios from 'axios';
+import * as Store from '../../store';
+import {
+  Button,
+  Col,
+  Row,
+  Card,
+  CardBody,
+  Form,
+  Label,
+  Input
+} from 'reactstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 class Login extends Component {
@@ -37,70 +45,8 @@ class Login extends Component {
 
   setLogin(response) {
     if (response.status === 200) {
-      console.log("Login Bem Sucedido");
-      localStorage.setItem(
-        "currentUser",
-        JSON.stringify({ token: response.data.token })
-      );
-      console.log(JSON.stringify({ token: response.data.token }));
-      let tokenInfo = this.getDecodedAccessToken(this.getToken());
-      console.log("tokenInfo = "+tokenInfo.papel)
-      localStorage.setItem(
-        "authorities",
-        JSON.stringify(tokenInfo.papel)
-      );
-      // browserhistory to redirect
+      localStorage.setItem('currentUser', JSON.stringify({ token: response.data.token }));
       browserHistory.push('/submeterprojeto');
-    }
-  }
-
-  getToken() {
-    var currentUser = JSON.parse(localStorage.getItem("currentUser"));
-    var token = currentUser && currentUser.token;
-    return token ? token : null;
-  }
-
-  getDecodedAccessToken(token) {
-    try {
-      console.log(jwt_decode(token))
-      console.log(token)
-      return jwt_decode(token);
-    } catch (Error) {
-      return null;
-    }
-  }
-
-  getUserId() {
-    try {
-      let token = this.getToken();
-      let tokenInfo = jwt_decode(token);
-      return tokenInfo.id;
-    } catch (Error) {
-      return null;
-    }
-  }
-
-  isAuthenticated() {
-    // get the auth token from localStorage
-    let token = localStorage.getItem("currentUser");
-    // check if token is set, then...
-    if (token) {
-      return true;
-    }
-    return false;
-  }
-
-  logout() {
-    try {
-      if (localStorage.getItem("currentUser")) {
-        localStorage.removeItem("authorities");
-        localStorage.removeItem("currentUser");
-        return true;
-      } else {
-        return false;
-      }
-    } catch (Error) {
-      return false;
     }
   }
 

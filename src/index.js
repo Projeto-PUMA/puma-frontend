@@ -27,7 +27,23 @@ import MyProjects from './components/projects/myProjects';
 import ProjectUpdate from './components/projectUpdate/index';
 import Confirmation from './helpers/confirmation';
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const localStorageMiddleware = ({ getState }) => {
+	return (next) => (action) => {
+		const result = next(action);
+		localStorage.setItem('reduxState', JSON.stringify(
+			getState()
+		));
+		return result;
+	};
+};
+
+const reHydrateStore = () => {
+	if (localStorage.getItem('reduxState') !== null) {
+		return JSON.parse(localStorage.getItem('reduxState'));
+	}
+}
+
+const store = createStore(rootReducer, reHydrateStore(), applyMiddleware(thunk, localStorageMiddleware));
 
 ReactDOM.render(
 	<Provider store={store}>

@@ -10,6 +10,7 @@ import stack from '../../images/stack-of-paper-outline.png';
 import exit from '../../images/exit.png';
 import addUser from '../../images/add-user.png';
 import login from '../../images/login.png';
+import { tokenInfo, token } from '../../helpers/token';
 
 const styles = {
   sidebar: {
@@ -42,8 +43,8 @@ const SidebarContent = props => {
     : styles.sidebar;
 
   function logout() {
-    try{
-      if(localStorage.getItem('currentUser')){
+    try {
+      if (localStorage.getItem('currentUser')) {
         localStorage.removeItem('authorities');
         localStorage.removeItem('currentUser');
         return true;
@@ -52,55 +53,53 @@ const SidebarContent = props => {
         return false;
       }
     }
-    catch(Error){
+    catch (Error) {
       return false;
     }
   }
 
   const unloggedLinks = [];
-  unloggedLinks.push(<Link to='/login' key="6" style={styles.sidebarLink}><img className="img-responsive" src={login} alt="login" style={{height: 25, marginRight: 7, marginTop:-2}}/>Entrar</Link>);
-  unloggedLinks.push(<Link to='/cadastro' key="8" style={styles.sidebarLink}><img className="img-responsive" src={addUser} alt="addUser" style={{height: 25, marginRight: 7, marginTop:-2}}/>Registrar-se</Link>);
+  unloggedLinks.push(<Link to='/login' key="6" style={styles.sidebarLink}><img className="img-responsive" src={login} alt="login" style={{ height: 25, marginRight: 7, marginTop: -2 }} />Entrar</Link>);
+  unloggedLinks.push(<Link to='/cadastro' key="8" style={styles.sidebarLink}><img className="img-responsive" src={addUser} alt="addUser" style={{ height: 25, marginRight: 7, marginTop: -2 }} />Registrar-se</Link>);
 
   var logged = false;
   var adm = false;
   var user = false;
 
-  var role = JSON.parse(localStorage.getItem('authorities'));
-  if(role) {
-    for(var i=0; i<role.length; i++) {
-      if(role[i].includes("ADMIN")) {
+  if (tokenInfo()) {
+    var role = tokenInfo().papel;
+    for (var i = 0; i < role.length; i++) {
+      if (role[i].includes("ADMIN")) {
         adm = true;
       }
-      if(role[i].includes("USUARIO")) {
+      if (role[i].includes("USUARIO")) {
         user = true;
       }
     }
   }
 
-  var currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  var token = currentUser && currentUser.token;
-  if(token) {
+  if (token()) {
     logged = true;
   }
 
-  const logOut = <Link to='/' key="7" onClick={logout} style={styles.sidebarLink}><img className="img-responsive" src={exit} alt="exit" style={{height: 25, marginRight: 7, marginTop:-2}}/>Sair</Link>;
+  const logOut = <Link to='/' key="7" onClick={logout} style={styles.sidebarLink}><img className="img-responsive" src={exit} alt="exit" style={{ height: 25, marginRight: 7, marginTop: -2 }} />Sair</Link>;
 
   const admLinks = [];
   const userLinks = [];
-  userLinks.push(<Link to='submeterprojeto' key="1" style={styles.sidebarLink}><img className="img-responsive" src={page} alt="page" style={{height: 25, marginRight: 7, marginTop:-2}}/> Submeter Projeto</Link>);
-  userLinks.push(<Link to='/meusprojetos' key="2" style={styles.sidebarLink}><img className="img-responsive" src={stack} alt="stack" style={{height: 25, marginRight: 7, marginTop:-2}}/>Meus Projetos</Link>);
-  admLinks.push(<Link to='/gerenciarprojetos' key="3" style={styles.sidebarLink}><img className="img-responsive" src={shop} alt="shop" style={{height: 25, marginRight: 7, marginTop:-2}}/>Gerenciar Projetos</Link>);
-  admLinks.push(<Link to='/submeternoticia' key="4" style={styles.sidebarLink}><img className="img-responsive" src={news} alt="news" style={{height: 25, marginRight: 7, marginTop:-2}}/>Submeter Notícia</Link>);
-  admLinks.push(<Link to='/gerenciarnoticias' key="5" style={styles.sidebarLink}><img className="img-responsive" src={graph} alt="graph" style={{height: 25, marginRight: 7, marginTop:-2}}/>Gerenciar Notícias</Link>);
+  userLinks.push(<Link to='submeterprojeto' key="1" style={styles.sidebarLink}><img className="img-responsive" src={page} alt="page" style={{ height: 25, marginRight: 7, marginTop: -2 }} /> Submeter Projeto</Link>);
+  userLinks.push(<Link to='/meusprojetos' key="2" style={styles.sidebarLink}><img className="img-responsive" src={stack} alt="stack" style={{ height: 25, marginRight: 7, marginTop: -2 }} />Meus Projetos</Link>);
+  admLinks.push(<Link to='/gerenciarprojetos' key="3" style={styles.sidebarLink}><img className="img-responsive" src={shop} alt="shop" style={{ height: 25, marginRight: 7, marginTop: -2 }} />Gerenciar Projetos</Link>);
+  admLinks.push(<Link to='/submeternoticia' key="4" style={styles.sidebarLink}><img className="img-responsive" src={news} alt="news" style={{ height: 25, marginRight: 7, marginTop: -2 }} />Submeter Notícia</Link>);
+  admLinks.push(<Link to='/gerenciarnoticias' key="5" style={styles.sidebarLink}><img className="img-responsive" src={graph} alt="graph" style={{ height: 25, marginRight: 7, marginTop: -2 }} />Gerenciar Notícias</Link>);
 
   return (
     <MaterialTitlePanel title="Menu" style={style}>
       <div style={styles.content}>
         {/* <Link to='/' key="0" style={styles.sidebarLink}><img className="img-responsive" src={page} alt="page" style={{height: 25, marginRight: 7, marginTop:-2}}/> Página Inicial</Link> */}
-        { logged ? logOut : unloggedLinks }
+        {logged ? logOut : unloggedLinks}
         <div style={styles.divider} />
-        { user ? userLinks : null }
-        { adm ? [userLinks, admLinks] : null }
+        {user ? userLinks : null}
+        {adm ? [userLinks, admLinks] : null}
       </div>
     </MaterialTitlePanel>
   );
