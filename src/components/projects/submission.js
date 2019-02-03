@@ -52,6 +52,7 @@ class ProjectSubmission extends Component {
         rua: 'Rua 10',
         numero: '123',
         complemento: null,
+        cep: data.get('cep'),
         endereco_categoria_id: 2,
       },
     };
@@ -193,7 +194,7 @@ class ProjectSubmission extends Component {
           <FormGroup>
             <Label>CEP *</Label>
             <Input
-              ref='title'
+              ref='cep'
               type='text'
               name='cep'
               id='cep'

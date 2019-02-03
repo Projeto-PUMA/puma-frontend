@@ -19,10 +19,11 @@ import News from './components/news/index';
 import ViewNews from './components/news/show';
 import NewsSubmission from './components/news/submission';
 
-import MyProjects from './components/myProjects';
-import ProjectSubmission from './components/projects/submission';
-import Projects from './components/projects';
+import Projects from './components/projects/index';
 import ViewProject from './components/projects/show';
+import ProjectSubmission from './components/projects/submission';
+import MyProjects from './components/projects/myProjects';
+
 import ProjectUpdate from './components/projectUpdate/index';
 import Confirmation from './helpers/confirmation';
 

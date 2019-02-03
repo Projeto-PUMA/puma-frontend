@@ -17,6 +17,21 @@ export const loadProjects = () => (dispatch) => {
     });
 };
 
+export const loadMyProjects = (id) => (dispatch) => {
+  dispatch(MetaAC.syncOperationLoading());
+  projectsApi.getMyProjects(id)
+    .then((result) => {
+      const projects = result.data;
+      dispatch(ProjectsAC.fetchMyProjects(projects));
+      dispatch(MetaAC.syncOperationFinished(result));
+    })
+    .catch((error) => {
+      console.log(error);
+      alert('Ocorreu um erro ao carregar os projetos!');
+      dispatch(MetaAC.syncOperationFinished(error));
+    });
+};
+
 export const createProject = (projeto) => (dispatch) => {
   const thenCallback = (result) => {
     dispatch(MetaAC.syncOperationFinished(result));

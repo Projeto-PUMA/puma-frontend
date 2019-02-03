@@ -10,7 +10,9 @@ export default {
     return PumaApi.get(`/projeto/${id}`, auth);
   },
 
-  getMyProjects: (id) => PumaApi.get(`/projeto/${id}`),
+  getMyProjects: (id) => {
+    return PumaApi.get(`/usuario/${id}/projeto`, auth);
+  },
 
   updateProject: (projeto) => {
     return PumaApi.patch(`/projeto/${projeto.id}`, projeto, auth);

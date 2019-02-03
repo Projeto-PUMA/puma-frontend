@@ -3,52 +3,52 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Table } from 'reactstrap';
 import { browserHistory } from 'react-router';
-
+import { tokenInfo } from '../../helpers/token';
+import { loadMyProjects } from '../../actions/projects';
 import Loading from '../../helpers/loading';
-import { loadProjects } from '../../actions/projects';
 
-class Projects extends Component {
+class MyProjects extends Component {
 
 	componentWillMount() {
 		const { dispatch } = this.props;
-		dispatch(loadProjects());
+		dispatch(loadMyProjects(tokenInfo().id));
 	}
-  
-  viewProject(id) {
+	
+	viewProject(id) {
     browserHistory.push({
       pathname: '/projeto',
       state: {
         id: id,
       },
-    });
-	}
+    }); 
+  }
 
 	renderStatus(statusCode) {
 		if (statusCode===1) {
-			return <i style={{color: 'black'}} className="fas fa-ellipsis-h"></i>;
-		} else if (statusCode===3) {
-			return <i style={{color: 'red'}} className="fas fa-ban"></i>;
+			return <td bgcolor="#FAFAE6">Pendente</td>;
 		} else if (statusCode===2) {
-			return <i style={{color: 'green'}} className="fas fa-check"></i>;
+			return <td bgcolor="#90EE90">Aceito</td>;
+		} else if (statusCode===3) {
+			return <td bgcolor="#FF6961">Rejeitado</td>;
 		}
 	}
 
 	renderTableLine(d, idx) {
-		return (<tr key={idx}><td>{d.titulo}</td><td>{d.problematica.substring(0, 30)}</td><td>{this.renderStatus(d.projetoStatusId)}</td><td><i className="fas fa-eye" onClick={() => this.viewProject(d.id)}></i></td></tr>);
+		return (<tr key={idx}><td>{d.titulo}</td><td>{d.objetivo.substring(0, 30)}</td>{this.renderStatus(d.projetoStatusId)}<td><i className="fas fa-eye" onClick={() => this.viewProject(d.id)}></i></td></tr>);
 	}
 
   render() {
-		const { projects, loading } = this.props;
+		const { my_projects, loading } = this.props;
 
-    if (loading || !projects) {
+    if (loading || !my_projects) {
       return <Loading />;
     }
 
     const data = [];
-    for (var key in projects) {
+    for (var key in my_projects) {
 			if(!isNaN(key)) {
-				projects[key].key = key;
-      	data.push(projects[key]);
+				my_projects[key].key = key;
+      	data.push(my_projects[key]);
 			}
 		}
 
@@ -72,14 +72,14 @@ class Projects extends Component {
   }
 }
 
-Projects.propTypes = {
-	projects: PropTypes.object.isRequired,
+MyProjects.propTypes = {
+	my_projects: PropTypes.object.isRequired,
 	loading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
-	projects: state.project.projects,
+	my_projects: state.project.my_projects,
 	loading: state.meta.syncOperation.isLoading,
 });
 
-export default connect(mapStateToProps)(Projects);
+export default connect(mapStateToProps)(MyProjects);
