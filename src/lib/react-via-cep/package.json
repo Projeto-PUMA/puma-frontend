@@ -1,0 +1,71 @@
+{
+  "_from": "react-via-cep",
+  "_id": "react-via-cep@2.0.0",
+  "_inBundle": false,
+  "_integrity": "sha512-iBuhDXNiEdD18fFh0gJjcH0BW5fdi1FOshOiyvFJqpYL9958Bc9gpfyeHY9e5jd3dbaSXHY8DMy/PDGBCr9oeg==",
+  "_location": "/react-via-cep",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "react-via-cep",
+    "name": "react-via-cep",
+    "escapedName": "react-via-cep",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/react-via-cep/-/react-via-cep-2.0.0.tgz",
+  "_shasum": "c18e4dc52b131b9b2ccf706881376ca455b64b7c",
+  "_spec": "react-via-cep",
+  "_where": "/Users/guilherme/Desktop/UnB/PUMA/puma-frontend",
+  "author": {
+    "name": "Arthur Ribeiro",
+    "email": "devarthurribeiro@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/devarthurribeiro/react-via-cep/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "simple integration for https://viacep.com.br",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^1.0.0",
+    "html-webpack-plugin": "^3.2.0",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "style-loader": "^0.23.0",
+    "webpack": "^4.17.1",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.7"
+  },
+  "homepage": "https://github.com/devarthurribeiro/react-via-cep#readme",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "name": "react-via-cep",
+  "peerDependencies": {
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devarthurribeiro/react-via-cep.git"
+  },
+  "scripts": {
+    "build": "webpack --mode production",
+    "prepublishOnly": "npm run transpile",
+    "start": "webpack-dev-server --mode development",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "transpile": "babel src -d dist --copy-files"
+  },
+  "version": "2.0.0"
+}
