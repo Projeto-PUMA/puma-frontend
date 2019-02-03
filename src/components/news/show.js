@@ -13,7 +13,6 @@ class ViewNews extends Component {
 	}
   
 	render() {
-
 		const { news_by_id } = this.props;
 
     if (!news_by_id) {
@@ -23,6 +22,7 @@ class ViewNews extends Component {
 		return (
 			<div style={{ margin: 50, marginTop: 120 }}>
 				<h2>{news_by_id.titulo}</h2>
+				<img src={news_by_id.urlThumbnail} alt={news_by_id.titulo} style={{ marginLeft: '26vw', height: '50vh', borderRadius: 20,backgroundColor: '#00BCD4', justifyContent: 'center',alignItems: 'center', resizeMode: 'cover'}} />
         <div style={{ marginTop: 30 }} dangerouslySetInnerHTML={{ __html: news_by_id.texto }} />
 			</div>
 		);
