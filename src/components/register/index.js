@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Autocomplete from '../../helpers/autoComplete';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { AvForm, AvField } from 'availity-reactstrap-validation';
 import MaskedInput from 'react-text-mask'
 import { Card, CardBody, Form, Label, Input, Row, Col, Button, FormGroup } from 'reactstrap';
 import ViaCep from 'react-via-cep';
@@ -15,7 +14,7 @@ class Register extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = { cep: '', uf: '', localidade: '', bairro: '', logradouro: '', occupation: '' };
+    this.state = { cep: '', uf: '', localidade: '', bairro: '', logradouro: '', occupation: ''};
     this.handleChangeCep = this.handleChangeCep.bind(this);
     this.handleSuccess = this.handleSuccess.bind(this);
     this.changeUf = this.changeUf.bind(this);
@@ -389,31 +388,28 @@ class Register extends Component {
                       changeOccupation={this.changeOccupation.bind(this)}
                     />
                   </FormGroup>
-                  <AvForm name="formSenha">
-                    <AvField
+                  <FormGroup>
+                  <Label className="label">Senha *</Label>
+                    <Input
+                      ref="title"
                       name="senha"
                       label="Senha *"
                       type="password"
                       id="senha"
                       required
-                      errorMessage="Digite uma senha entre 6 e 16 digitos!"
-                      validate={{
-                        required: { value: true }, minLength: { value: 6 },
-                        maxLength: { value: 16 }
-                      }}
                     />
-                    <AvField
+                  </FormGroup>
+                  <FormGroup>
+                  <Label className="label">Confirme sua senha *</Label>
+                    <Input
+                      ref="title"
                       name="senhaConf"
                       label="Confirme sua senha *"
                       type="password"
+                      id="senhaConf"
                       required
-                      errorMessage="Suas senhas não conferem!"
-                      validate={{
-                        match: { value: "senha" }, required: { value: true }, minLength: { value: 6 },
-                        maxLength: { value: 16 }
-                      }}
                     />
-                  </AvForm>
+                  </FormGroup>
                   <FormGroup>
                     <Button
                       type="submit"
