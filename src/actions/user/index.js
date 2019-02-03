@@ -4,8 +4,13 @@ import { browserHistory } from 'react-router';
 export const createUser = (name, email, password, cpf, scholarity, cep, state, city, neighborhood, street, number, addendum, address_category_id, occupation_id, phone) => (dispatch) => {
   const thenCallback = (result) => {
     if (result.status === 200) {
-      alert('Usuário cadastrado com sucesso!');
-      browserHistory.push('/login');
+      console.log(result);
+      browserHistory.push({
+        pathname: '/confirmacao',
+        state: {
+          email: result.data.email,
+        },
+      });
     }
   };
 

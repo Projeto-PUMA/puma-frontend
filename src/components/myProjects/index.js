@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import * as jwt_decode from "jwt-decode";
 import * as Store from '../../store';
-import './style.css';
 import {Table} from 'reactstrap';
 import {browserHistory} from 'react-router';
 

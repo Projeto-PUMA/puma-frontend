@@ -15,6 +15,7 @@ import News from './components/news/index';
 import ViewNews from './components/news/show';
 import ViewProject from './components/projects/viewProject';
 import ProjectUpdate from './components/projectUpdate/index';
+import Confirmation from './helpers/confirmation';
 
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
@@ -30,6 +31,7 @@ ReactDOM.render(
 				<IndexRoute component={Home} />
 				<Route path='/login' component={Login} />
 				<Route path='/cadastro' component={Register} />
+				<Route path='/confirmacao' component={Confirmation} />
 				<Route path='/meusprojetos' component={MyProjects} />
 				<Route path='/projeto' component={ViewProject} />
 				<Route path='/submeterprojeto' component={ProjectSubmission} />
