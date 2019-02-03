@@ -15,4 +15,8 @@ export default {
   updateProject: (projeto) => {
     return PumaApi.patch(`/projeto/${projeto.id}`, projeto, auth);
   },
+
+  newProject: (projeto) => {
+    return PumaApi.post('/projeto', projeto, auth);
+  }
 };

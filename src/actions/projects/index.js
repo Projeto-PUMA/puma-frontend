@@ -17,11 +17,31 @@ export const loadProjects = () => (dispatch) => {
     });
 };
 
+export const createProject = (projeto) => (dispatch) => {
+  const thenCallback = (result) => {
+    dispatch(MetaAC.syncOperationFinished(result));
+    dispatch(loadProjects());
+    if (result.status === 200) {
+      alert('Projeto criado com sucesso!');
+    }
+  };
+
+  const catchCallback = (error) => {
+    alert('Não foi possível criar o projeto!');
+    console.log('create project error: ', error);
+    dispatch(MetaAC.syncOperationFinished(error));
+  };
+
+  dispatch(MetaAC.syncOperationLoading());
+  projectsApi.newProject(projeto)
+      .then(thenCallback)
+      .catch(catchCallback);
+};
+
 export const loadProjectById = (id) => (dispatch) => {
   dispatch(MetaAC.syncOperationLoading());
   projectsApi.getProjectById(id)
     .then((result) => {
-      console.log(result.data);
       const project = result.data;
       dispatch(ProjectsAC.fetchProjectById(project));
       dispatch(MetaAC.syncOperationFinished(result));

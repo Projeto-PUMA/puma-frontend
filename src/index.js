@@ -1,26 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import Home from '../src/components/home/index';
-import Login from '../src/components/login/index';
 import registerServiceWorker from './registerServiceWorker';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
-import Register from './components/register';
-import MyProjects from './components/myProjects';
-import ProjectSubmission from './components/projectSubmission';
-import Projects from './components/projects';
-import NewsSubmission from './components/news/submission';
-import News from './components/news/index';
-import ViewNews from './components/news/show';
-import ViewProject from './components/projects/show';
-import ProjectUpdate from './components/projectUpdate/index';
-import Confirmation from './helpers/confirmation';
-
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import rootReducer from './reducers';
+
+import './index.css';
+
+import App from './App';
+import Home from '../src/components/home/index';
+
+import Login from '../src/components/login/index';
+import Register from './components/register';
+
+import News from './components/news/index';
+import ViewNews from './components/news/show';
+import NewsSubmission from './components/news/submission';
+
+import MyProjects from './components/myProjects';
+import ProjectSubmission from './components/projects/submission';
+import Projects from './components/projects';
+import ViewProject from './components/projects/show';
+import ProjectUpdate from './components/projectUpdate/index';
+import Confirmation from './helpers/confirmation';
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
