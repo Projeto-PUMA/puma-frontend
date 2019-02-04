@@ -56,12 +56,12 @@ class NewsSubmission extends Component {
       dispatch(updateNews({
         id: news_by_id.id,
         titulo: data.get('title'),
-        subtitulo: '',
+        subtitulo: data.get('subtitle'),
         texto: draftToHtml(convertToRaw(editorState.getCurrentContent())),
         usuario_id: tokenInfo().id,
         url_thumbnail: data.get('image'),
         categoria: category,
-      }, user.token)) : dispatch(createNews(data.get('title'), '', draftToHtml(convertToRaw(editorState.getCurrentContent())), tokenInfo().id, data.get('image'), category, user.token));
+      }, user.token)) : dispatch(createNews(data.get('title'), data.get('subtitle'), draftToHtml(convertToRaw(editorState.getCurrentContent())), tokenInfo().id, data.get('image'), category, user.token));
   }
 
   render() {
@@ -100,6 +100,10 @@ class NewsSubmission extends Component {
                   <FormGroup>
                     <Label >Título da Notícia *</Label>
                     <Input ref='title' type='text' name='title' id='title' defaultValue={news_by_id ? news_by_id.titulo : ''} required />
+                  </FormGroup>
+                  <FormGroup>
+                    <Label >Subtítulo da Notícia *</Label>
+                    <Input ref='title' type='text' name='subtitle' id='subtitle' defaultValue={news_by_id ? news_by_id.subtitulo : ''} required />
                   </FormGroup>
                   <FormGroup>
                     <Label >URL da Imagem *</Label>

@@ -20,9 +20,10 @@ class ViewNews extends Component {
     }
 
 		return (
-			<div style={{ margin: 50, marginTop: 120 }}>
+			<div style={{ margin: 50, marginTop: 100 }}>
 				<h2>{news_by_id.titulo}</h2>
-				<img src={news_by_id.urlThumbnail} alt={news_by_id.titulo} style={{ marginLeft: '26vw', height: '50vh', borderRadius: 20,backgroundColor: '#00BCD4', justifyContent: 'center',alignItems: 'center', resizeMode: 'cover'}} />
+				<h6 style={{ marginTop:10, marginBottom: 20 }}>{news_by_id.subtitulo}</h6>
+				<img src={news_by_id.urlThumbnail} alt={news_by_id.subtitulo} style={{ marginLeft: '26vw', height: '50vh', borderRadius: 20,backgroundColor: '#00BCD4', justifyContent: 'center',alignItems: 'center', resizeMode: 'cover'}} />
         <div style={{ marginTop: 30 }} dangerouslySetInnerHTML={{ __html: news_by_id.texto }} />
 			</div>
 		);
