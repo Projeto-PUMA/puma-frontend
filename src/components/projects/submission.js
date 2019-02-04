@@ -32,7 +32,6 @@ class ProjectSubmission extends Component {
     const { location, dispatch, user } = this.props;
 
     const id = location ? (location.state ? (location.state.id ? location.state.id : null) : null) : null;
-    console.log(id)
     if (id) {
       this.setState({ ...this.state, id });
       dispatch(loadProjectById(id, user.token));
@@ -103,15 +102,15 @@ class ProjectSubmission extends Component {
     if(showJuridic) project.empresa = empresa;
 
     project_by_id ?
-    dispatch(updateProject(project = {
-      id: project_by_id.id,
-      usuario_id: tokenInfo().id,
-      titulo: data.get('title'),
-      objetivo: data.get('summary'),
-      problematica: data.get('body'),
-      psp_id: 18, // arrumar isso no dropdown ali de baixo
-      anexo: data.get('anexo'), 
-    },user.token)) : dispatch(createProject(project, user.token));
+      dispatch(updateProject(project = {
+        id: project_by_id.id,
+        usuario_id: tokenInfo().id,
+        titulo: data.get('title'),
+        objetivo: data.get('summary'),
+        problematica: data.get('body'),
+        psp_id: 18, // arrumar isso no dropdown ali de baixo
+        anexo: data.get('anexo'), 
+      },user.token)) : dispatch(createProject(project, user.token));
   }
 
   renderJuridic() {
@@ -346,7 +345,7 @@ class ProjectSubmission extends Component {
     if (loading) {
       return <Loading />;
     }
-
+    console.log(project_by_id)
     return (
       <div>
         <Row>
@@ -484,7 +483,7 @@ class ProjectSubmission extends Component {
 
 ProjectSubmission.propTypes = {
   user: PropTypes.object,
-	project_by_id: PropTypes.object.isRequired,
+	project_by_id: PropTypes.object,
 	loading: PropTypes.bool.isRequired,
 };
 

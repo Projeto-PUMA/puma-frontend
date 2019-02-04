@@ -24,7 +24,6 @@ import ViewProject from './components/projects/show';
 import ProjectSubmission from './components/projects/submission';
 import MyProjects from './components/projects/myProjects';
 
-import ProjectUpdate from './components/projectUpdate/index';
 import Confirmation from './helpers/confirmation';
 
 const localStorageMiddleware = ({ getState }) => {
@@ -60,7 +59,6 @@ ReactDOM.render(
 				<Route path='/submeternoticia' component={NewsSubmission} />
 				<Route path='/noticia' component={ViewNews} />
 				<Route path='/gerenciarnoticias' component={News} />
-				<Route path='/projeto/editar' component={ProjectUpdate} />
 			</Route>
 		</Router>
 	</Provider>
