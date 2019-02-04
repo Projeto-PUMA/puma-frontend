@@ -62,7 +62,7 @@ class ViewProject extends Component {
 
 	viewProjectToEdit(id) {
 		browserHistory.push({
-			pathname: '/projeto/editar',
+			pathname: '/submeterprojeto',
 			state: {
 				id: id,
 			},

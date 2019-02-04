@@ -8,7 +8,7 @@ import ViaCep from '../../lib/react-via-cep/dist/index';
 
 import { masks } from '../../helpers/validations';
 import { tokenInfo } from '../../helpers/token';
-import { createProject } from '../../actions/projects';
+import { createProject, loadProjectById, updateProject } from '../../actions/projects';
 import Loading from '../../helpers/loading';
 
 class ProjectSubmission extends Component {
@@ -26,6 +26,17 @@ class ProjectSubmission extends Component {
     this.changeCidade = this.changeCidade.bind(this);
     this.changeBairro = this.changeBairro.bind(this);
     this.changeLogradouro = this.changeLogradouro.bind(this);
+  }
+
+  componentWillMount() {
+    const { location, dispatch, user } = this.props;
+
+    const id = location ? (location.state ? (location.state.id ? location.state.id : null) : null) : null;
+    console.log(id)
+    if (id) {
+      this.setState({ ...this.state, id });
+      dispatch(loadProjectById(id, user.token));
+    }
   }
 
   handleChange(event){
@@ -60,7 +71,7 @@ class ProjectSubmission extends Component {
     e.preventDefault();
     var data = new FormData(e.target);
 
-    const { dispatch, user } = this.props;
+    const { dispatch, user, project_by_id } = this.props;
     const { showJuridic } = this.state;
 
     var project = {
@@ -91,7 +102,16 @@ class ProjectSubmission extends Component {
 
     if(showJuridic) project.empresa = empresa;
 
-    dispatch(createProject(project, user.token));
+    project_by_id ?
+    dispatch(updateProject(project = {
+      id: project_by_id.id,
+      usuario_id: tokenInfo().id,
+      titulo: data.get('title'),
+      objetivo: data.get('summary'),
+      problematica: data.get('body'),
+      psp_id: 18, // arrumar isso no dropdown ali de baixo
+      anexo: data.get('anexo'), 
+    },user.token)) : dispatch(createProject(project, user.token));
   }
 
   renderJuridic() {
@@ -321,7 +341,7 @@ class ProjectSubmission extends Component {
   
   render() {
     const { showJuridic } = this.state;
-    const { loading } = this.props;
+    const { loading, project_by_id } = this.props;
 
     if (loading) {
       return <Loading />;
@@ -331,7 +351,7 @@ class ProjectSubmission extends Component {
       <div>
         <Row>
         <Col sm='2' md='3' lg='4' xs='1'/>
-        <Col sm='6' md='5' lg='4' xs='10' style={{textAlign:'center', margin:'20px'}}><h2>Submissão de Projeto</h2></Col>
+        <Col sm='6' md='5' lg='4' xs='10' style={{textAlign:'center', margin:'20px'}}><h2>{project_by_id ? 'Edição' : 'Submissão'} de Projeto</h2></Col>
         </Row>
         <Row>
           <Col sm='1' md='2' lg='3' xs='1'/>
@@ -351,6 +371,7 @@ class ProjectSubmission extends Component {
                  name='title'
                  id='title'
                  maxLength="100"  
+                 defaultValue={project_by_id ? project_by_id.titulo : ''}
                  required              
                  />
               </FormGroup>
@@ -361,6 +382,7 @@ class ProjectSubmission extends Component {
                  type='textarea'
                  name='summary'
                  id='summary'
+                 defaultValue={project_by_id ? project_by_id.problematica : ''}
                  required
                  />
               </FormGroup>
@@ -371,6 +393,7 @@ class ProjectSubmission extends Component {
                  type='textarea'
                  name='body'
                  id='body'
+                 defaultValue={project_by_id ? project_by_id.objetivo : ''}
                  required
                  />
               </FormGroup>
@@ -423,6 +446,7 @@ class ProjectSubmission extends Component {
                  name='anexo'
                  id='anexo'
                  maxLength="500"  
+                 defaultValue={project_by_id ? project_by_id.anexo : ''}
                  required              
                  />
               </FormGroup>
