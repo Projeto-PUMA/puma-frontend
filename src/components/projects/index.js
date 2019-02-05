@@ -34,7 +34,7 @@ class Projects extends Component {
 	}
 
 	renderTableLine(d, idx) {
-		return (<tr key={idx}><td>{d.titulo}</td><td>{d.problematica.substring(0, 30)}</td><td>{this.renderStatus(d.projetoStatusId)}</td><td><i className="fas fa-eye" onClick={() => this.viewProject(d.id)}></i></td></tr>);
+		return (<tr key={idx}><td>{d.titulo}</td><td>{d.problematica.substring(0, 30)}</td><td>{this.renderStatus(d.projetoStatusId)}</td><td>{d.usuario.nome}</td><td><i className="fas fa-eye" onClick={() => this.viewProject(d.id)}></i></td></tr>);
 	}
 
   render() {
@@ -60,6 +60,7 @@ class Projects extends Component {
 							<th>Título</th>
 							<th>Descrição</th>
 							<th>Status</th>
+							<th>Autor</th>
 							<th></th>
 						</tr>
 					</thead>
