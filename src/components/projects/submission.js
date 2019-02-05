@@ -28,6 +28,10 @@ class ProjectSubmission extends Component {
     this.changeLogradouro = this.changeLogradouro.bind(this);
   }
 
+  state = {
+    psp_id: 0,
+  }
+
   componentWillMount() {
     const { location, dispatch, user } = this.props;
 
@@ -39,7 +43,7 @@ class ProjectSubmission extends Component {
   }
 
   handleChange(event){
-    this.setState({value: event.target.value});
+    this.setState({value: event.target.value, psp_id: event.target.value});
   }
   
   handleChangeCep(event) {
@@ -71,14 +75,14 @@ class ProjectSubmission extends Component {
     var data = new FormData(e.target);
 
     const { dispatch, user, project_by_id } = this.props;
-    const { showJuridic } = this.state;
+    const { showJuridic, psp_id } = this.state;
 
     var project = {
       usuario_id: tokenInfo().id,
       titulo: data.get('title'),
       objetivo: data.get('summary'),
       problematica: data.get('body'),
-      psp_id: 18, // arrumar isso no dropdown ali de baixo
+      psp_id: psp_id, // arrumar isso no dropdown ali de baixo
       anexo: data.get('anexo'),
     };
 
@@ -108,7 +112,7 @@ class ProjectSubmission extends Component {
         titulo: data.get('title'),
         objetivo: data.get('summary'),
         problematica: data.get('body'),
-        psp_id: 18, // arrumar isso no dropdown ali de baixo
+        psp_id: psp_id, // arrumar isso no dropdown ali de baixo
         anexo: data.get('anexo'), 
       },user.token)) : dispatch(createProject(project, user.token));
   }
@@ -401,40 +405,40 @@ class ProjectSubmission extends Component {
                  <Input
                  ref='area'
                  type='select'
-                 name='area'
-                 id='area'
+                 name='psp_id'
+                 id='psp_id'
                  required
-                 value={this.state.value}
+                 value={project_by_id ? project_by_id.psp_id : this.state.psp_id}
                  onChange={this.handleChange}
                  >            
                  <option ref="0" value="" disabled defaultValue >Selecionar Área</option>
-                 <option ref="1" value={"PSP1"} className="optionGroup" disabled>PSP1 - Probabilidade e Estatística</option>
-                  <option ref="1.1"value={"PSP1-ABD"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Análise de Banco de Dados</option>
-                  <option ref="1.2"value={"PSP1-CQP"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Criação de Questionários de Pesquisa</option>
-                  <option ref="1.3"value={"PSP1-OTHERS"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Outras</option>
-                 <option ref="2"value={"PSP2"} className="optionGroup" disabled>PSP2 - Sistemas de Informação</option>
-                   <option ref="2.1"value={"PSP2-PSI"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Projeto de Sistemas de Informação</option>
-                   <option ref="2.2"value={"PSP2-OTHERS"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Outras</option>
-                 <option ref="3"value={"PSP3"} className="optionGroup" disabled>PSP3 - Livre</option>
-                    <option ref="3.1"value={"PSP3-OTHERS"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Outras</option>
-                 <option ref="4"value={"PSP4"} className="optionGroup" disabled>PSP4 - Planejamento e Controle da Produção</option>
-                   <option ref="4.1"value={"PSP4-PDD"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Previsão de Demanda</option>
-                   <option ref="4.2"value={"PSP4-GDE"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gestão de Estoques</option>
-                   <option ref="4.3"value={"PSP4-CFA"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Criação de Ferramentas de Apoio ao Planejamento e Controle da Produção</option>
-                   <option ref="4.4"value={"PSP4-OTHERS"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Outras</option>
-                 <option ref="5"value={"PSP5"} className="optionGroup" disabled>PSP5 - Gestão da Qualidade</option>
-                   <option ref="5.1"value={"PSP5-MDP"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mapeamento de Processos</option>
-                   <option ref="5.2"value={"PSP5-CDV"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cadeia de Valor</option>
-                   <option ref="5.3"value={"PSP5-MCP"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Melhoria Contínua de Processos</option>
-                   <option ref="5.4"value={"PSP5-OTHERS"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Outras</option>
-                 <option ref="6"value={"PSP6"} className="optionGroup" disabled>PSP6 - Engenharia do Produto</option>
-                   <option ref="6.1"value={"PSP6-EPC"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Elaboração de Projeto Conceitual de Produto</option>
-                   <option ref="6.2"value={"PSP6-OTHERS"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Outras</option>
-                 <option ref="7"value={"PSP7"} className="optionGroup" disabled>PSP7 - Gestão Estratégica</option>
-                   <option ref="7.1"value={"PSP7-DOE"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Definição de Objetivos Estratégicos</option>
-                   <option ref="7.2"value={"PSP7-VBE"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Viabilidade Econômica</option>
-                   <option ref="7.3"value={"PSP7-DDM"} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Desdobramento de Metas</option>
-                 <option ref="8"value={"UNDEF"} className="optionGroup">Não sei em qual categoria meu projeto se encaixa</option>
+                 <option ref="1" value={1} className="optionGroup" disabled>PSP1 - Probabilidade e Estatística</option>
+                  <option ref="1.1"value={9} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Análise de Banco de Dados</option>
+                  <option ref="1.2"value={10} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Criação de Questionários de Pesquisa</option>
+                  <option ref="1.3"value={11} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Outras</option>
+                 <option ref="2"value={2} className="optionGroup" disabled>PSP2 - Sistemas de Informação</option>
+                   <option ref="2.1"value={12} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Projeto de Sistemas de Informação</option>
+                   <option ref="2.2"value={13} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Outras</option>
+                 <option ref="3"value={3} className="optionGroup" disabled>PSP3 - Livre</option>
+                    <option ref="3.1"value={14} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Outras</option>
+                 <option ref="4"value={4} className="optionGroup" disabled>PSP4 - Planejamento e Controle da Produção</option>
+                   <option ref="4.1"value={15} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Previsão de Demanda</option>
+                   <option ref="4.2"value={16} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gestão de Estoques</option>
+                   <option ref="4.3"value={17} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Criação de Ferramentas de Apoio ao Planejamento e Controle da Produção</option>
+                   <option ref="4.4"value={18} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Outras</option>
+                 <option ref="5"value={5} className="optionGroup" disabled>PSP5 - Gestão da Qualidade</option>
+                   <option ref="5.1"value={19} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mapeamento de Processos</option>
+                   <option ref="5.2"value={20} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Melhoria Contínua de Processos</option>
+                   <option ref="5.3"value={21} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cadeia de Valor</option>
+                   <option ref="5.4"value={22} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Outras</option>
+                 <option ref="6"value={6} className="optionGroup" disabled>PSP6 - Engenharia do Produto</option>
+                   <option ref="6.1"value={23} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Elaboração de Projeto Conceitual de Produto</option>
+                   <option ref="6.2"value={24} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Outras</option>
+                 <option ref="7"value={7} className="optionGroup" disabled>PSP7 - Gestão Estratégica</option>
+                   <option ref="7.1"value={25} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Definição de Objetivos Estratégicos</option>
+                   <option ref="7.2"value={26} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Viabilidade Econômica</option>
+                   <option ref="7.3"value={27} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Desdobramento de Metas</option>
+                 <option ref="8"value={28} className="optionGroup">Não sei em qual categoria meu projeto se encaixa</option>
                  </Input>
               </FormGroup>
               <FormGroup>
