@@ -349,7 +349,7 @@ class ProjectSubmission extends Component {
     if (loading) {
       return <Loading />;
     }
-    console.log(project_by_id)
+
     return (
       <div>
         <Row>

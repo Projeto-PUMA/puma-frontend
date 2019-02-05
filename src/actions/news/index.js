@@ -38,9 +38,6 @@ export const updateNews = (news, token) => (dispatch) => {
         if(result.status === 200) {
           alert('Notícia atualizada com sucesso!');
         }
-        if (result.status === 401) {
-          alert('Atualize a página e tente novamente!');
-        }
         dispatch(MetaAC.syncOperationFinished(result));
         dispatch(loadNews());
       })
@@ -58,9 +55,6 @@ export const createNews = (title, subtitle, body, author, image, category, token
     browserHistory.push('/gerenciarnoticias');
     if (result.status === 200) {
       alert('Notícia criada com sucesso!');
-    }
-    if (result.status === 401) {
-      alert('Atualize a página e tente novamente!');
     }
   };
 
@@ -82,9 +76,6 @@ export const deleteNews = (id, token) => (dispatch) => {
     dispatch(loadNews());
     if (result.status === 200) {
       alert('Notícia deletada com sucesso!');
-    }
-    if (result.status === 401) {
-      alert('Atualize a página e tente novamente!');
     }
   };
 

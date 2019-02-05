@@ -11,9 +11,6 @@ export const loadProjects = (token) => (dispatch) => {
         const projects = result.data;
         dispatch(ProjectsAC.fetchProjects(projects));
       }
-      if (result.status === 401) {
-        alert('Atualize a página e tente novamente!');
-      }
       dispatch(MetaAC.syncOperationFinished(result));
     })
     .catch((error) => {
@@ -31,9 +28,6 @@ export const loadMyProjects = (id, token) => (dispatch) => {
         const projects = result.data;
         dispatch(ProjectsAC.fetchMyProjects(projects));
       }
-      if (result.status === 401) {
-        alert('Atualize a página e tente novamente!');
-      }
       dispatch(MetaAC.syncOperationFinished(result));
     })
     .catch((error) => {
@@ -50,9 +44,6 @@ export const createProject = (projeto, token) => (dispatch) => {
     if (result.status === 200) {
       browserHistory.push('/meusprojetos');
       alert('Projeto criado com sucesso!');
-    }
-    if (result.status === 401) {
-      alert('Atualize a página e tente novamente!');
     }
   };
 
@@ -76,9 +67,6 @@ export const loadProjectById = (id, token) => (dispatch) => {
         const project = result.data;
         dispatch(ProjectsAC.fetchProjectById(project));
       }
-      if (result.status === 401) {
-        alert('Atualize a página e tente novamente!');
-      }
       dispatch(MetaAC.syncOperationFinished(result));
     })
     .catch((error) => {
@@ -92,11 +80,10 @@ export const updateProject = (projeto, token) => (dispatch) => {
   const thenCallback = (result) => {
     dispatch(MetaAC.syncOperationFinished(result));
     if (result.status === 200) {
-      dispatch(loadProjectById(projeto.id));
+      dispatch(ProjectsAC.fetchProjectById(null));
+      dispatch(loadMyProjects(result.data.usuarioId, token));
+      browserHistory.push('/meusprojetos');
       alert('Projeto atualizado com sucesso!');
-    }
-    if (result.status === 401) {
-      alert('Atualize a página e tente novamente!');
     }
   };
 
