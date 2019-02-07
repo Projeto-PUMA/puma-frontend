@@ -77,7 +77,7 @@ class ProjectSubmission extends Component {
     var data = new FormData(e.target);
 
     const { dispatch, user, project_by_id } = this.props;
-    const { showJuridic, psp_id } = this.state;
+    const { showJuridic, psp_id, id } = this.state;
 
     var project = {
       usuario_id: tokenInfo().id,
@@ -107,7 +107,7 @@ class ProjectSubmission extends Component {
 
     if(showJuridic) project.empresa = empresa;
 
-    project_by_id ?
+    this.hasProject(project_by_id, id) ?
       dispatch(updateProject(project = {
         id: project_by_id.id,
         usuario_id: tokenInfo().id,
