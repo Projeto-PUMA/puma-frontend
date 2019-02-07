@@ -1,4 +1,4 @@
-const project_by_id = (state = {}, action) => {
+const project_by_id = (state = null, action) => {
   switch (action.type) {
     case 'FETCH_PROJECT_BY_ID':
       if (action.project_by_id === null) return null;

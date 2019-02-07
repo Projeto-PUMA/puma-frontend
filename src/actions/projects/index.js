@@ -39,6 +39,7 @@ export const loadMyProjects = (id, token) => (dispatch) => {
 
 export const createProject = (projeto, token) => (dispatch) => {
   const thenCallback = (result) => {
+    dispatch(ProjectsAC.fetchProjectById(null));
     dispatch(MetaAC.syncOperationFinished(result));
     dispatch(loadProjects());
     if (result.status === 200) {

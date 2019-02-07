@@ -72,7 +72,7 @@ class ViewProject extends Component {
 	render() {
 		const { project_by_id, loading } = this.props;
 
-		if (loading) {
+		if (loading || project_by_id === null) {
 			return <Loading />;
 		}
 
