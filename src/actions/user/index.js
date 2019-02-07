@@ -29,10 +29,15 @@ export const setUser = (user) => (dispatch) => {
   dispatch(MetaAC.syncOperationLoading());
   userApi.login(user)
     .then((result) => {
-      localStorage.setItem('currentUser', JSON.stringify({ token: result.data.token }));
-      dispatch(UserAC.setUser(result.data));      
-      dispatch(MetaAC.syncOperationFinished(result));
-      browserHistory.push('/submeterprojeto');
+      if (result.status === 200) {
+        localStorage.setItem('currentUser', JSON.stringify({ token: result.data.token }));
+        dispatch(UserAC.setUser(result.data));
+        dispatch(MetaAC.syncOperationFinished(result));
+        browserHistory.push('/submeterprojeto');
+      } else {
+        console.log('login error: ', result.error);
+        alert(result.error);
+      }
     })
     .catch((error) => {
       dispatch(MetaAC.syncOperationFinished(error));

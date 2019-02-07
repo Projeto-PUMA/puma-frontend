@@ -15,7 +15,7 @@ class ProjectSubmission extends Component {
 
 	constructor(props) {
     super(props);
-    this.state = { value: '', showJuridic: false, cep: '', uf: '', localidade: '', bairro: '', logradouro: '' };
+    this.state = { value: '', showJuridic: false, cep: '', uf: '', localidade: '', bairro: '', logradouro: '', id: -1 };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleProject = this.handleProject.bind(this);
@@ -39,6 +39,8 @@ class ProjectSubmission extends Component {
     if (id) {
       this.setState({ ...this.state, id });
       dispatch(loadProjectById(id, user.token));
+    } else {
+      this.setState({ ...this.state, id: -1 });
     }
   }
 
@@ -341,9 +343,13 @@ class ProjectSubmission extends Component {
   handleRadio(event) {
     this.setState({ showJuridic: event.currentTarget.value === 'pj' ? true: false });
   }
+
+  hasProject(project, id) {
+    return id !== -1 && project;
+  }
   
   render() {
-    const { showJuridic } = this.state;
+    const { showJuridic, id } = this.state;
     const { loading, project_by_id } = this.props;
 
     if (loading) {
@@ -354,7 +360,7 @@ class ProjectSubmission extends Component {
       <div>
         <Row>
         <Col sm='2' md='3' lg='4' xs='1'/>
-        <Col sm='6' md='5' lg='4' xs='10' style={{textAlign:'center', margin:'20px'}}><h2>{project_by_id ? 'Edição' : 'Submissão'} de Projeto</h2></Col>
+        <Col sm='6' md='5' lg='4' xs='10' style={{textAlign:'center', margin:'20px'}}><h2>{this.hasProject(project_by_id, id) ? 'Edição' : 'Submissão'} de Projeto</h2></Col>
         </Row>
         <Row>
           <Col sm='1' md='2' lg='3' xs='1'/>
@@ -374,7 +380,7 @@ class ProjectSubmission extends Component {
                  name='title'
                  id='title'
                  maxLength="100"  
-                 defaultValue={project_by_id ? project_by_id.titulo : ''}
+                 defaultValue={this.hasProject(project_by_id, id) ? project_by_id.titulo : ''}
                  required              
                  />
               </FormGroup>
@@ -385,7 +391,7 @@ class ProjectSubmission extends Component {
                  type='textarea'
                  name='summary'
                  id='summary'
-                 defaultValue={project_by_id ? project_by_id.problematica : ''}
+                 defaultValue={this.hasProject(project_by_id, id) ? project_by_id.problematica : ''}
                  required
                  />
               </FormGroup>
@@ -396,7 +402,7 @@ class ProjectSubmission extends Component {
                  type='textarea'
                  name='body'
                  id='body'
-                 defaultValue={project_by_id ? project_by_id.objetivo : ''}
+                 defaultValue={this.hasProject(project_by_id, id) ? project_by_id.objetivo : ''}
                  required
                  />
               </FormGroup>
@@ -408,7 +414,7 @@ class ProjectSubmission extends Component {
                  name='psp_id'
                  id='psp_id'
                  required
-                 value={project_by_id ? project_by_id.psp_id : this.state.psp_id}
+                 value={this.hasProject(project_by_id, id) ? project_by_id.psp_id : this.state.psp_id}
                  onChange={this.handleChange}
                  >            
                  <option ref="0" value="" disabled defaultValue >Selecionar Área</option>
@@ -449,7 +455,7 @@ class ProjectSubmission extends Component {
                  name='anexo'
                  id='anexo'
                  maxLength="500"  
-                 defaultValue={project_by_id ? project_by_id.anexo : ''}
+                 defaultValue={this.hasProject(project_by_id, id) ? project_by_id.anexo : ''}
                  required              
                  />
               </FormGroup>
