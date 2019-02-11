@@ -65,10 +65,10 @@ class Example extends Component {
           onExited={this.onExited}
           key={item.id}
         >
-        <div key={idx} className="image-carousel" onClick={() => this.viewNews(item.id)} style={{ height: 500, cursor: 'pointer' }}>
-          <img src={'http://www.legacyschoolne.com/wp-content/uploads/2018/09/PBL-Header.png'} alt={item.title} style={{ width: '100%', height: 500 }} />
+        <div key={idx} className="image-carousel" onClick={() => this.viewNews(item.id)} style={{ height: 700, cursor: 'pointer' }}>
+          <img src={item.urlThumbnail && item.urlThumbnail !== '' ? item.urlThumbnail : 'http://vanguardacomunicacao.com.br/santoremedio/wp-content/uploads/2018/07/img.jpg'} alt={item.titulo} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         </div>
-          <CarouselCaption captionText={''} captionHeader={item.title} />
+          <CarouselCaption captionText={''} captionHeader={item.titulo} />
         </CarouselItem>
       );
     });

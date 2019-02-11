@@ -1,26 +1,9 @@
-const initialState = {
-  isLoading: false,
-  result: {},
-};
+import { combineReducers } from 'redux';
 
-const syncOperation = (state = initialState, action) => {
-  switch (action.type) {
-    case 'SYNC_OPERATION_LOADING':
-      return {
-        ...state,
-        isLoading: true,
-      };
+import syncOperation from './syncOperation';
 
-    case 'SYNC_OPERATION_FINISHED':
-      return {
-        ...state,
-        isLoading: false,
-        result: action.result,
-      };
+const meta = combineReducers({
+  syncOperation,
+});
 
-    default:
-      return state;
-  }
-};
-
-export default syncOperation;
+export default meta;

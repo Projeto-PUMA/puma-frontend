@@ -1,76 +1,38 @@
-import React, { Component } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { AvForm, AvField } from "availity-reactstrap-validation";
-import axios from "axios";
-// eslint-disable-next-line
-import * as Store from "../../store";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import Autocomplete from '../../helpers/autoComplete';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import MaskedInput from 'react-text-mask'
 import { Card, CardBody, Form, Label, Input, Row, Col, Button, FormGroup } from 'reactstrap';
-import { browserHistory } from 'react-router';
-import ViaCep from 'react-via-cep';
+import ViaCep from '../../lib/react-via-cep/dist/index';
+import { loadOccupations } from '../../actions/occupations';
+import { createUser } from '../../actions/user';
+import  { validateUser, masks }  from "../../helpers/validations";
 
 class Register extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = { cep: '', address: '' };
-
+    this.state = { cep: '', uf: '', localidade: '', bairro: '', logradouro: '', occupation: ''};
     this.handleChangeCep = this.handleChangeCep.bind(this);
     this.handleSuccess = this.handleSuccess.bind(this);
-    this.changeAddress = this.changeAddress.bind(this);
+    this.changeUf = this.changeUf.bind(this);
+    this.changeCidade = this.changeCidade.bind(this);
+    this.changeBairro = this.changeBairro.bind(this);
+    this.changeLogradouro = this.changeLogradouro.bind(this);
   }
 
-  cpfmask = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/];
-  cellphonemask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
-  phonemask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
-  cepmask = [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/];
-
-  validateCPF(strCPF) {
-    var Soma;
-    var Resto;
-    Soma = 0;
-    if (strCPF === "00000000000")
-      return false;
-
-    for (var i = 1; i <= 9; i++) {
-      Soma = Soma + parseInt(strCPF.substring(i - 1, i), 10) * (11 - i);
-    }
-    Resto = (Soma * 10) % 11;
-
-    if ((Resto === 10) || (Resto === 11)) {
-      Resto = 0;
-    }
-    if (Resto !== parseInt(strCPF.substring(9, 10), 10))
-      return false;
-
-    Soma = 0;
-    for (i = 1; i <= 10; i++) {
-      Soma = Soma + parseInt(strCPF.substring(i - 1, i), 10) * (12 - i);
-    }
-    Resto = (Soma * 10) % 11;
-
-    if ((Resto === 10) || (Resto === 11))
-      Resto = 0;
-    if (Resto !== parseInt(strCPF.substring(10, 11), 10))
-      return false;
-
-    return true;
+  componentWillMount() {
+    const { dispatch } = this.props;
+    dispatch(loadOccupations());
   }
 
-  validateCEP(strCEP) {
-    if (strCEP.length < 8) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  validateMainPhone(strPhone) {
-    if (strPhone.length < 11) {
-      return false;
-    } else {
-      return true;
-    }
+  changeOccupation(occupation) {
+    this.setState({
+      ...this.state,
+      occupation,
+    });
   }
 
   handleChangeCep(event) {
@@ -78,66 +40,83 @@ class Register extends Component {
   }
 
   handleSuccess(data) {
-    this.setState({ ...this.state, address: data.logradouro + [' '] + data.bairro + [' '] + data.localidade + [' '] + data.uf });
+    this.setState({ ...this.state, uf: data.uf, localidade: data.localidade, bairro: data.bairro, logradouro: data.logradouro });
   }
 
-  changeAddress(event) {
-    this.setState({ address: event.target.value });
+  changeUf(event) {
+    this.setState({ uf: event.target.value });
+  }
+
+  changeCidade(event) {
+    this.setState({ localidade: event.target.value });
+  }
+
+  changeBairro(event) {
+    this.setState({ bairro: event.target.value });
+  }
+
+  changeLogradouro(event) {
+    this.setState({ logradouro: event.target.value });
+  }
+
+  getOccupationId() {
+    const { occupations } = this.props;
+    const { occupation } = this.state;
+
+    const occupationsArray = [];
+    for (var key in occupations) {
+      occupationsArray.push(occupations[key]);
+    }
+    const occ = occupationsArray.find(x => x.termo === occupation);
+
+    return occ.id;
   }
 
   handleSubmit(event) {
+    const { dispatch } = this.props;
     event.preventDefault();
     const data = new FormData(event.target);
 
-    if (!this.validateCPF(data.get('cpf').replace(/\D+/g, ''))) {
-      alert('CPF inválido!');
+    const valid = validateUser({
+      cpf: data.get('cpf'),
+      cep: data.get('cep'),
+      telefoneCel: data.get('telefoneCel'),
+      senha: document.getElementById("senha").value,
+      senhaConf: document.getElementById("senhaConf").value,
+    });
+      
+    if(valid.invalid) {
+      alert(valid.message);
       return;
     }
-
-    if (!this.validateCEP(data.get('cep').replace(/\D+/g, ''))) {
-      alert('CEP inválido');
-      return;
-    }
-
-    if (!this.validateMainPhone(data.get('telefoneCel').replace(/\D+/g, ''))) {
-      alert('Telefone principal inválido');
-      return;
-    }
-
-    if (document.getElementById("senha").value !== document.getElementById("senhaConf").value) {
-      alert('A senha de confirmação não coincide!');
-      return;
-    }
-
-    const path = Store["backend"].path; // This is backend path
-    axios
-      .post(path + "/register", {
-        name: data.get("nome"),
-        username: data.get("cpf").replace(/\D+/g, ''),
-        cep: data.get("cep").replace(/\D+/g, ''),
-        fullAddress: data.get("endereco"),
-        phonePrincipal: data.get("telefoneCel").replace(/\D+/g, ''),
-        phoneAlternative: data.get("telefoneFix").replace(/\D+/g, ''),
-        education: data.get("escolaridade"),
-        profession: data.get("profissao"),
-        password: document.getElementById("senha").value,
-        email: data.get("email")
-      })
-      .then(() => {
-        alert("Usuário cadastrado com sucesso!");
-        browserHistory.push('/login');
-      })
-      .catch(function (error) {
-        if (error) {
-          console.log(error);
-          console.log(data.get(["formSenha"]["senha"]));
-          alert("Erro ao cadastrar! CPF já cadastrado.");
-        }
-      });
-    // } else return alert("Erro ao cadastrar!");
+    
+    dispatch(createUser(
+      data.get("nome"),
+      data.get("email"),
+      document.getElementById("senha").value,
+      data.get("cpf").replace(/\D+/g, ''),
+      data.get("escolaridade"),
+      data.get("cep").replace(/\D+/g, ''),
+      data.get("uf"),
+      data.get("localidade"),
+      data.get("bairro"),
+      data.get("logradouro"),
+      data.get("numero"),
+      data.get("complemento"),
+      data.get("categoria"),
+      this.getOccupationId(),
+      data.get("telefoneCel").replace(/\D+/g, ''),
+    ));
   }
 
   render() {
+    const { occupations } = this.props;
+
+    const occupationsTermos = [];
+    for (var key in occupations) {
+      occupationsTermos.push(occupations[key].termo.toString());
+    }
+
     return (
       <div className="container">
         <Row>
@@ -174,7 +153,7 @@ class Register extends Component {
                       name="cpf"
                       id="cpf"
                       className="input"
-                      mask={this.cpfmask}
+                      mask={masks.cpf}
                       tag={MaskedInput}
                       required
                     />
@@ -198,7 +177,7 @@ class Register extends Component {
                                 name="cep"
                                 id="cep"
                                 className="input"
-                                mask={this.cepmask}
+                                mask={masks.cep}
                                 tag={MaskedInput}
                                 onChange={this.handleChangeCep} value={this.state.cep}
                                 required
@@ -209,32 +188,118 @@ class Register extends Component {
                           </div>
                         }
                         return <div>
+                          <Row>
+                            <Col xs="auto">
+                              <FormGroup>
+                                <Label className="label">CEP *</Label>
+                                <Input
+                                  ref="body"
+                                  type="text"
+                                  name="cep"
+                                  id="cep"
+                                  className="input"
+                                  mask={masks.cep}
+                                  tag={MaskedInput}
+                                  value={data.cep}
+                                  style={{ width: '150px' }}
+                                  required
+                                />
+                              </FormGroup>
+                            </Col>
+                            <Col xs="auto">
+                              <FormGroup>
+                                <Label className="label">Cidade *</Label>
+                                <Input
+                                  ref="title"
+                                  type="text"
+                                  name="localidade"
+                                  id="localidade"
+                                  className="input"
+                                  required
+                                  value={this.state.localidade}
+                                  onChange={this.changeCidade}
+                                  style={{ width: '150px' }}
+                                />
+                              </FormGroup>
+                            </Col>
+                            <Col xs="auto">
+                              <FormGroup>
+                                <Label className="label">Estado *</Label>
+                                <Input
+                                  ref="title"
+                                  type="text"
+                                  name="uf"
+                                  id="uf"
+                                  className="input"
+                                  required
+                                  value={this.state.uf}
+                                  onChange={this.changeUf}
+                                  style={{ width: '50px' }}
+                                />
+                              </FormGroup>
+                            </Col>
+                          </Row>
                           <FormGroup>
-                            <Label className="label">CEP *</Label>
+                            <Label className="label">Bairro *</Label>
                             <Input
-                              ref="body"
+                              ref="title"
                               type="text"
-                              name="cep"
-                              id="cep"
+                              name="bairro"
+                              id="bairro"
                               className="input"
-                              mask={this.cepmask}
-                              tag={MaskedInput}
-                              value={data.cep}
+                              required
+                              value={this.state.bairro}
+                              onChange={this.changeBairro}
+                            />
+                          </FormGroup>
+                          <FormGroup>
+                            <Label className="label">Logradouro *</Label>
+                            <Input
+                              ref="title"
+                              type="text"
+                              name="logradouro"
+                              id="logradouro"
+                              className="input"
+                              required
+                              value={this.state.logradouro}
+                              onChange={this.changeLogradouro}
+                            />
+                          </FormGroup>
+                          <FormGroup>
+                            <Label className="label">Número *</Label>
+                            <Input
+                              ref="title"
+                              type="text"
+                              name="numero"
+                              id="numero"
+                              className="input"
                               required
                             />
                           </FormGroup>
                           <FormGroup>
-                            <Label className="label">Endereço *</Label>
+                            <Label className="label">Complemento</Label>
                             <Input
                               ref="title"
                               type="text"
-                              name="endereco"
-                              id="endereco"
+                              name="complemento"
+                              id="complemento"
                               className="input"
-                              required
-                              value={this.state.address}
-                              onChange={this.changeAddress}
                             />
+                          </FormGroup>
+                          <FormGroup>
+                            <Label>Categoria *</Label>
+                            <Input
+                              ref='title'
+                              type='select'
+                              name='categoria'
+                              id='categoria'
+                              maxLength="50"
+                              style={{ width: '300px' }}
+                              required
+                            >
+                              <option ref="1" value={1} className="optionGroup">Residencial</option>
+                              <option ref="2" value={2} className="optionGroup">Comercial</option>
+                            </Input>
                           </FormGroup>
                         </div>
                       }
@@ -247,7 +312,7 @@ class Register extends Component {
                             name="cep"
                             id="cep"
                             className="input"
-                            mask={this.cepmask}
+                            mask={masks.cep}
                             tag={MaskedInput}
                             onChange={this.handleChangeCep} value={this.state.cep}
                             required
@@ -265,7 +330,7 @@ class Register extends Component {
                       name="telefoneCel"
                       id="telefoneCel"
                       className="input"
-                      mask={this.cellphonemask}
+                      mask={masks.cellphone}
                       tag={MaskedInput}
                       required
                     />
@@ -278,7 +343,7 @@ class Register extends Component {
                       name="telefoneFix"
                       id="telefoneFix"
                       className="input"
-                      mask={this.phonemask}
+                      mask={masks.phone}
                       tag={MaskedInput}
                     />
                   </FormGroup>
@@ -302,24 +367,12 @@ class Register extends Component {
                       className="escolaridade"
                       required
                     >
-                      <option value="Ensino Fundamental Incompleto">
-                        Ensino Fundamental Incompleto
-                  </option>
-                      <option value="Ensino Fundamental Completo">
-                        Ensino Fundamental Completo
-                  </option>
-                      <option value="Ensino Médio Incompleto">
-                        Ensino Médio Incompleto
-                  </option>
-                      <option value="Ensino Médio Completo">
-                        Ensino Médio Completo
-                  </option>
-                      <option value="Ensino Superior Incompleto">
-                        Ensino Superior Incompleto
-                  </option>
-                      <option value="Ensino Superior Completo">
-                        Ensino Superior Completo
-                  </option>
+                      <option value="Ensino Fundamental Incompleto">Ensino Fundamental Incompleto</option>
+                      <option value="Ensino Fundamental Completo">Ensino Fundamental Completo</option>
+                      <option value="Ensino Médio Incompleto">Ensino Médio Incompleto</option>
+                      <option value="Ensino Médio Completo">Ensino Médio Completo</option>
+                      <option value="Ensino Superior Incompleto">Ensino Superior Incompleto</option>
+                      <option value="Ensino Superior Completo">Ensino Superior Completo</option>
                       <option value="Mestrando(a)">Mestrando(a)</option>
                       <option value="Mestre(a)">Mestre(a)</option>
                       <option value="Doutorando(a)">Doutorando(a)</option>
@@ -329,40 +382,34 @@ class Register extends Component {
                   </FormGroup>
                   <FormGroup>
                     <Label className="label">Profissão *</Label>
-                    <Input
-                      name="profissao"
-                      id="profissao"
-                      type="text"
-                      className="input"
-                      maxLength="35"
-                      required
+                    <br/>
+                    <Autocomplete
+                      suggestions={occupationsTermos}
+                      changeOccupation={this.changeOccupation.bind(this)}
                     />
                   </FormGroup>
-                  <AvForm name="formSenha">
-                    <AvField
+                  <FormGroup>
+                  <Label className="label">Senha *</Label>
+                    <Input
+                      ref="title"
                       name="senha"
                       label="Senha *"
                       type="password"
                       id="senha"
                       required
-                      errorMessage="Digite uma senha entre 6 e 16 digitos!"
-                      validate={{
-                        required: { value: true }, minLength: { value: 6 },
-                        maxLength: { value: 16 }
-                      }}
                     />
-                    <AvField
+                  </FormGroup>
+                  <FormGroup>
+                  <Label className="label">Confirme sua senha *</Label>
+                    <Input
+                      ref="title"
                       name="senhaConf"
                       label="Confirme sua senha *"
                       type="password"
+                      id="senhaConf"
                       required
-                      errorMessage="Suas senhas não conferem!"
-                      validate={{
-                        match: { value: "senha" }, required: { value: true }, minLength: { value: 6 },
-                        maxLength: { value: 16 }
-                      }}
                     />
-                  </AvForm>
+                  </FormGroup>
                   <FormGroup>
                     <Button
                       type="submit"
@@ -392,4 +439,12 @@ class Register extends Component {
   }
 }
 
-export default Register;
+Register.propTypes = {
+  occupations: PropTypes.object,
+};
+
+const mapStateToProps = ({ occupations }) => ({
+  occupations,
+});
+
+export default connect(mapStateToProps)(Register);

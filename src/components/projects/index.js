@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import * as jwt_decode from "jwt-decode";
-import * as Store from '../../store';
-import {Table} from 'reactstrap';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Table } from 'reactstrap';
 import { browserHistory } from 'react-router';
+
+import Loading from '../../helpers/loading';
+import { loadProjects } from '../../actions/projects';
 
 class Projects extends Component {
 
-	constructor(props) {
-		super(props);
-		this.state = {projects: []};
-  }
+	componentWillMount() {
+		const { dispatch, user } = this.props;
+		dispatch(loadProjects(user.token));
+	}
   
   viewProject(id) {
     browserHistory.push({
@@ -21,56 +23,35 @@ class Projects extends Component {
     });
 	}
 
-	componentWillMount() {
-		const data = {};
-    for (const field in this.refs) {
-      data[field] = this.refs[field].value;
-		}
-		
-		var currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    var token = currentUser && currentUser.token;
-    axios.defaults.headers.common['Authorization'] = "Bearer " + token;
-    axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
-
-    const path = Store['backend'].path; // This is backend path
-    axios.get(path + '/sec/project/listAll')
-			.then(response => { this.setProjects(response) })
-			.catch(() => { alert('Erro ao processar projetos!') });
-	}
-
-	setProjects(response) {
-		for(var i=0; i<response.data.length; i++) {
-			this.setState({ 
-				projects: this.state.projects.concat(response.data[i])
-			})
-		}
-	}
-
-	getDecodedAccessToken(token) {
-    try {
-      return jwt_decode(token);
-    }
-    catch(Error){
-      return null;
-    }
-	}
-
 	renderStatus(statusCode) {
 		if (statusCode===1) {
 			return <i style={{color: 'black'}} className="fas fa-ellipsis-h"></i>;
-		} else if (statusCode===2) {
-			return <i style={{color: 'red'}} className="fas fa-ban"></i>;
 		} else if (statusCode===3) {
+			return <i style={{color: 'red'}} className="fas fa-ban"></i>;
+		} else if (statusCode===2) {
 			return <i style={{color: 'green'}} className="fas fa-check"></i>;
 		}
 	}
 
 	renderTableLine(d, idx) {
-		return (<tr key={idx}><td>{d.title}</td><td>{d.body.substring(0, 30)}</td><td>{this.renderStatus(d.projectStatus.id)}</td><td><i className="fas fa-eye" onClick={() => this.viewProject(d.id)}></i></td></tr>);
+		return (<tr key={idx}><td>{d.titulo}</td><td>{d.problematica.substring(0, 30)}</td><td>{this.renderStatus(d.projetoStatusId)}</td><td>{d.usuario.nome}</td><td><i className="fas fa-eye" onClick={() => this.viewProject(d.id)}></i></td></tr>);
 	}
 
   render() {
-		const data = this.state.projects;
+		const { projects, loading } = this.props;
+
+    if (loading || !projects) {
+      return <Loading />;
+    }
+
+    const data = [];
+    for (var key in projects) {
+			if(!isNaN(key)) {
+				projects[key].key = key;
+      	data.push(projects[key]);
+			}
+		}
+
     return (
 			<div style={{margin:50, marginTop: 100}}>
 				<Table id="newsTable" hover responsive>
@@ -79,6 +60,7 @@ class Projects extends Component {
 							<th>Título</th>
 							<th>Descrição</th>
 							<th>Status</th>
+							<th>Autor</th>
 							<th></th>
 						</tr>
 					</thead>
@@ -91,4 +73,16 @@ class Projects extends Component {
   }
 }
 
-export default Projects;
+Projects.propTypes = {
+	user: PropTypes.object,
+	projects: PropTypes.object.isRequired,
+	loading: PropTypes.bool.isRequired,
+};
+
+const mapStateToProps = state => ({
+	user: state.user,
+	projects: state.project.projects,
+	loading: state.meta.syncOperation.isLoading,
+});
+
+export default connect(mapStateToProps)(Projects);

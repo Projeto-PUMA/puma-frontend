@@ -1,11 +1,19 @@
-import React, { Component } from "react";
-import {browserHistory} from 'react-router';
-import axios from "axios";
-import * as jwt_decode from "jwt-decode";
-import * as Store from "../../store";
-import {Button,Col,Row,Card,CardBody,Form,Label,Input} from "reactstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
-
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import {
+  Button,
+  Col,
+  Row,
+  Card,
+  CardBody,
+  Form,
+  Label,
+  Input
+} from 'reactstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { setUser } from '../../actions/user';
+import Loading from '../../helpers/loading';
 
 class Login extends Component {
   constructor(props) {
@@ -15,92 +23,25 @@ class Login extends Component {
 
   handleLogin(e) {
     e.preventDefault();
-
     var data = new FormData(e.target);
 
-    const path = Store["backend"].path; // This is backend path
-    axios
-      .post(path + "/auth", {
-        username: data.get("username"),
-        password: data.get("password")
-      })
-      .then(response => {
-        this.setLogin(response);
-      })
-      .catch(function(error) {
-        if (error) {
-          alert("Usuário ou senha incorreto!");
-        }
-      });
-  }
+    const { dispatch } = this.props;
 
-  setLogin(response) {
-    if (response.status === 200) {
-      localStorage.setItem(
-        "currentUser",
-        JSON.stringify({ token: response.data.token })
-      );
-      let tokenInfo = this.getDecodedAccessToken(this.getToken());
-      localStorage.setItem(
-        "authorities",
-        JSON.stringify(tokenInfo.authorities)
-      );
-      // browserhistory to redirect
-      browserHistory.push('/submeterprojeto');
-    }
-  }
-
-  getToken() {
-    var currentUser = JSON.parse(localStorage.getItem("currentUser"));
-    var token = currentUser && currentUser.token;
-    return token ? token : null;
-  }
-
-  getDecodedAccessToken(token) {
-    try {
-      return jwt_decode(token);
-    } catch (Error) {
-      return null;
-    }
-  }
-
-  getUserId() {
-    try {
-      let token = this.getToken();
-      let tokenInfo = jwt_decode(token);
-      return tokenInfo.id;
-    } catch (Error) {
-      return null;
-    }
-  }
-
-  isAuthenticated() {
-    // get the auth token from localStorage
-    let token = localStorage.getItem("currentUser");
-    // check if token is set, then...
-    if (token) {
-      return true;
-    }
-    return false;
-  }
-
-  logout() {
-    try {
-      if (localStorage.getItem("currentUser")) {
-        localStorage.removeItem("authorities");
-        localStorage.removeItem("currentUser");
-        return true;
-      } else {
-        return false;
-      }
-    } catch (Error) {
-      return false;
-    }
+    dispatch(setUser({
+      cpf: data.get("username"),
+      senha: data.get("password")
+    }));
   }
 
   render() {
+    const { loading } = this.props;
+
+    if (loading) {
+      return <Loading />;
+    }
+
     return (
-      <div /*style={{height: "100vh"}}*/>
+      <div>
         <Row>
           <Col sm='2' md='3' lg='4' xs='1'/>
           <Col sm='7' md='7' lg='7' xs='10'><h2 style={{display:'inline-block',}}>Acesse sua Conta</h2></Col>
@@ -150,4 +91,12 @@ class Login extends Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+	loading: PropTypes.bool.isRequired,
+};
+
+const mapStateToProps = state => ({
+	loading: state.meta.syncOperation.isLoading,
+});
+
+export default connect(mapStateToProps)(Login);
