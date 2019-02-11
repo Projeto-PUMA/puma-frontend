@@ -20,4 +20,4 @@ CMD if [ ${APP_ENV} = production ]; \
 	npm run start; \
 	fi
 
-EXPOSE 3000
+EXPOSE 3001
