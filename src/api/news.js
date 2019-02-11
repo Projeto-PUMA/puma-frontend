@@ -1,16 +1,28 @@
 import PumaApi from './puma';
-import { auth } from '../helpers/token';
+import { authToken } from '../helpers/token';
 
 export default {
-  getNews: () => PumaApi.get(`/blog/listAll`),
+  getNews: () => PumaApi.get(`/noticia`),
 
-  postNews: (author, title, body) => {
+  getNewsId: (id) => PumaApi.get(`/noticia/${id}`),
+
+  postNews: (title, subtitle, body, author, image, category, token) => {
     const data = {
-      author: author,
-      title: title,
-      body: body,
+      titulo: title,
+      subtitulo: subtitle,
+      texto: body,
+      usuario_id: author,
+      url_thumbnail: image,
+      noticia_categoria_id: category,
     };
-    console.log('data', data);
-    return PumaApi.post('/sec/post/new', data, auth);
+    return PumaApi.post('/noticia', data, authToken(token));
   },
+
+  deleteNews: (id, token) => {
+    return PumaApi.delete(`/noticia/${id}`, authToken(token));
+  },
+
+  updateNews: (news, token) => {
+    return PumaApi.patch(`/noticia/${news.id}`, news, authToken(token));
+  }
 };

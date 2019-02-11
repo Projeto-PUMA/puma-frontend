@@ -1,3 +1,3 @@
 export const backend = {
-  path: "https://backend-puma.herokuapp.com",
+  path: "https://pumarestapi.herokuapp.com/api",
 };

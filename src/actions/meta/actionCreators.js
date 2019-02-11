@@ -4,5 +4,5 @@ export const syncOperationLoading = () => ({
 
 export const syncOperationFinished = result => ({
   type: 'SYNC_OPERATION_FINISHED',
-  result: result,
+  result,
 });

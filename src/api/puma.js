@@ -21,16 +21,9 @@ const formatApiResult = (result) => {
 };
 
 const createAxiosService = () => {
-  const timeout = 14000;
+  const timeout = 140000;
 
-  const baseURL = 'http://backend-puma.herokuapp.com';
-
-  var currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  var token = currentUser && currentUser.token;
-  if (token) {
-    axios.defaults.headers.common['Authorization'] = "Bearer " + token;
-    axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
-  }
+  const baseURL = 'https://pumarestapi.herokuapp.com/api';
 
   const axiosService = axios.create({ baseURL, timeout });
   

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import CarouselApp from '../carousel/index.js';
 import {
-  Card, CardText, CardBody, CardLink,
+  Card, CardBody, CardLink,
   CardTitle, CardSubtitle, CardImg, Button
 } from 'reactstrap';
 import { browserHistory } from 'react-router';
@@ -18,21 +18,13 @@ class Grid extends Component {
     });
   }
 
-  renderCard(d, idx) {
-    var linkImage = "";
-    if (idx === 0) {
-      linkImage = "http://www.legacyschoolne.com/wp-content/uploads/2018/09/PBL-Header.png"
-    } else if (idx === 1) {
-      linkImage = "https://imgs.dm.com.br/resized/872//2018/09/Cassiano-Maschio.jpg";
-    }
+  renderCards(d, idx) {
     return (
       <div key={idx}>
-        <Card onClick={() => this.viewNews(d.id)} style={{ margin: 10, marginBottom: 20 }}>
-          <CardImg top width="100%" height="240px" src={linkImage} alt="Card image cap" />
+        <Card onClick={() => this.viewNews(d.id)} style={{ margin: 16, marginBottom: 20 }}>
+          <CardImg top width="100%" height="240px" src={d.urlThumbnail && d.urlThumbnail !== '' ? d.urlThumbnail : 'http://vanguardacomunicacao.com.br/santoremedio/wp-content/uploads/2018/07/img.jpg'} alt="Card image cap" />
           <CardBody>
-            <CardTitle>{d.title}</CardTitle>
-          </CardBody>
-          <CardBody>
+            <CardTitle>{d.titulo}</CardTitle>
             <CardLink style={{ color: 'blue' }}>Ler mais...</CardLink>
           </CardBody>
         </Card>
@@ -40,15 +32,19 @@ class Grid extends Component {
     );
   }
 
+  filterNews(category) {
+    return (value) => {
+      return value.noticiaCategoriaId === category;
+    };
+  }
+
   render() {
     const { data } = this.props;
 
-    const items = data.slice(data.length - 3, data.length);
-    
     return (
       <div id='content' style={{ width: '100%', height: '100%' }}>
         <div style={{ marginTop: 40, width: '100%', align: 'center', marginBottom: 20 }}>
-          { data.length > 1 ? <CarouselApp data={items} /> : null }
+          { data.length > 1 ? <CarouselApp data={data.filter(this.filterNews(1)).slice(0, 3)} /> : null }
         </div>
         <div style={{ textAlign: 'center', marginTop: 50 }}>
           <h1>PROJETO DE SISTEMAS DE PRODUÇÃO (PSP)</h1>
@@ -76,40 +72,11 @@ class Grid extends Component {
         <div style={{ flexDirection: 'row', align: 'center', width: '100%' }}>
           <div style={{ minWidth: '30%', maxWidth: '30%', float: 'left', margin: 120, marginTop: 0 }}>
             <h2 style={{ marginLeft: 20 }}>Notícias</h2>
-            { items.map((d, idx) => this.renderCard(d, idx)) }
+            { data.filter(this.filterNews(2)).slice(0, 3).map((d, idx) => this.renderCards(d, idx)) }
           </div>
           <div style={{ minWidth: '30%', maxWidth: '30%', float: 'right', margin: 120, marginTop: 0 }}>
             <h2 style={{ marginLeft: 20 }}>Projetos</h2>
-            <Card style={{ margin: 10, marginBottom: 20 }}>
-            <CardImg top width="100%" height="240px" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
-              <CardBody>
-                <CardTitle>{'Projeto 1'}</CardTitle>
-              </CardBody>
-              <CardBody>
-                <CardText>{'Descrição do Projeto 1'}</CardText>
-                <CardLink href="#">Ler mais...</CardLink>
-              </CardBody>
-            </Card>
-            <Card style={{ margin: 10, marginBottom: 20 }}>
-            <CardImg top width="100%" height="240px" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
-              <CardBody>
-                <CardTitle>{'Projeto 2'}</CardTitle>
-              </CardBody>
-              <CardBody>
-                <CardText>{'Descrição do Projeto 2'}</CardText>
-                <CardLink href="#">Ler mais...</CardLink>
-              </CardBody>
-            </Card>
-            <Card style={{ margin: 10, marginBottom: 20 }}>
-            <CardImg top width="100%" height="240px" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
-              <CardBody>
-                <CardTitle>{'Projeto 3'}</CardTitle>
-              </CardBody>
-              <CardBody>
-                <CardText>{'Descrição do Projeto 3'}</CardText>
-                <CardLink href="#">Ler mais...</CardLink>
-              </CardBody>
-            </Card>
+            { data.filter(this.filterNews(3)).slice(0, 3).map((d, idx) => this.renderCards(d, idx)) }
           </div>
         </div>
       </div>
