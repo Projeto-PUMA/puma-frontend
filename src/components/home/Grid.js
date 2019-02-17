@@ -45,7 +45,7 @@ class Grid extends Component {
     const { data } = this.props;
 
     return (
-      <div id='content' style={{ width: '100%', height: '100%' }}>
+      <div id='content' style={{marginTop: -8, width: '100%', height: '100%' }}>
         <div style={{ marginTop: 40, width: '100%', align: 'center', marginBottom: 20 }}>
           { data.length > 1 ? <CarouselApp data={data.filter(this.filterNews(1)).slice(0, 3)} /> : null }
         </div>
