@@ -20,7 +20,7 @@ const styles = {
   sidebarLink: {
     display: "block",
     padding: "16px 0px",
-    color: "#757575",
+    color: "#09545e",
     fontSize: 16,
     backgroundColor: 'transparent',
     border: 'none',
@@ -28,7 +28,7 @@ const styles = {
   divider: {
     margin: "8px 0",
     height: 1,
-    backgroundColor: "#757575"
+    backgroundColor: "#09545e"
   },
   content: {
     padding: "16px",

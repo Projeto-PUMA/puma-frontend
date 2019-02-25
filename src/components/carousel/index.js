@@ -5,7 +5,6 @@ import {
   CarouselItem,
   CarouselControl,
   CarouselIndicators,
-  CarouselCaption
 } from 'reactstrap';
 import { browserHistory } from 'react-router';
 
@@ -65,10 +64,15 @@ class Example extends Component {
           onExited={this.onExited}
           key={item.id}
         >
-        <div key={idx} className="image-carousel" onClick={() => this.viewNews(item.id)} style={{ height: 700, cursor: 'pointer' }}>
+        <div key={idx} className="image-carousel" onClick={() => this.viewNews(item.id)} style={{ height: 500, cursor: 'pointer' }}>
           <img src={item.urlThumbnail && item.urlThumbnail !== '' ? item.urlThumbnail : 'http://vanguardacomunicacao.com.br/santoremedio/wp-content/uploads/2018/07/img.jpg'} alt={item.titulo} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         </div>
-          <CarouselCaption captionText={''} captionHeader={item.titulo} />
+          <div class="container">
+              <div class="carousel-caption text-left" style={{marginBottom: "30px",marginLeft: "45px", height:"30vh", backgroundColor: "rgba(0,0,0,.7)", padding: "20px;"}}>
+                <h1 style={{marginLeft: "20px"}}>{item.titulo}</h1>
+                <p style={{marginLeft: "40px"}}>{item.subtitulo}</p>
+              </div>
+            </div>
         </CarouselItem>
       );
     });

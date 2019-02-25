@@ -4,10 +4,12 @@ import Sidebar from "./sidebar";
 import MaterialTitlePanel from "./materialTitlePanel";
 import SidebarContent from "./sidebarContent";
 import { browserHistory } from 'react-router';
+import logounb from '../../images/logounb.png';
+import logopuma from '../../images/logopuma.png';
 
 const styles = {
   contentHeaderMenuLink: {
-    fontSize: 20,
+    fontSize: 18,
     color: "white",
     backgroundColor: 'transparent',
     border: 'none',
@@ -63,7 +65,10 @@ export default class Index extends React.Component {
             =
           </button>
         )}
-        <span onClick={() => this.redirectHome()}> PUMA</span>
+        <span onClick={() => this.redirectHome()}><img src={logopuma} alt="PUMA"/></span>
+        <span onClick={() => this.redirectHome()}> PUMA / </span>
+        <span onClick={() => "http://www.epr.unb.br/"}><img src={logounb} alt="UnB"/></span>
+        <span > UnB </span>
       </span>
     );
 
