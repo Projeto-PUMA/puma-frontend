@@ -77,6 +77,13 @@ export const validateUser = (user) => {
 		}
 	}
 
+	if (user.senha.length < 6) {
+		return {
+			invalid: true,
+			message: "A senha deve ter mais de 6 caracteres",
+		}
+	}
+	
 	if (user.senha !== user.senhaConf) {
 		return {
 			invalid: true,
