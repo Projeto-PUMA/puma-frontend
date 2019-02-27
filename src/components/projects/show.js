@@ -86,6 +86,7 @@ class ViewProject extends Component {
 						<li style={{ fontSize: "20px", fontWeight: "bold", margin: 5 }} id="area">Área: </li> <p style={{ marginLeft: 33, marginTop: 8 }}>{project_by_id.psp ? project_by_id.psp.nome : ''}</p>
 						<li style={{ fontSize: "20px", fontWeight: "bold", margin: 5 }}>Autor: </li> <p style={{ marginLeft: 33, marginTop: 8 }}>{project_by_id.usuario ? project_by_id.usuario.nome : ''}</p>
 						<li style={{ fontSize: "20px", fontWeight: "bold", margin: 5 }} id="answerShow">Resposta: </li> <p style={{ marginLeft: 33, marginTop: 8 }}>{project_by_id.status ? project_by_id.status.status : ''}</p>
+						<li style={{ fontSize: "20px", fontWeight: "bold", margin: 5 }}>Anexo: </li> <a style={{ marginLeft: 33, marginTop: 8 }}>{project_by_id.anexo}</a>
 						<div id="status">{this.renderStatus(project_by_id)}</div>
 						{this.judgeable(project_by_id.projetoStatusId) ? this.renderJudge(project_by_id) : null}
 					</CardBody>

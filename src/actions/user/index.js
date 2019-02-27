@@ -31,6 +31,7 @@ export const setUser = (user) => (dispatch) => {
     .then((result) => {
       if (result.status === 200) {
         localStorage.setItem('currentUser', JSON.stringify({ token: result.data.token }));
+        console.log(result.data.token)
         dispatch(UserAC.setUser(result.data));
         dispatch(MetaAC.syncOperationFinished(result));
         browserHistory.push('/submeterprojeto');
