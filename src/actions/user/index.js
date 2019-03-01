@@ -12,6 +12,8 @@ export const createUser = (name, email, password, cpf, scholarity, cep, state, c
           email: result.data.email,
         },
       });
+    } else if (result.status === 400) {
+      alert('Erro ao cadastrar! CPF já cadastrado ou e-mail já cadastrado.');
     }
   };
 
