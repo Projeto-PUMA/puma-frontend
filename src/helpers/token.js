@@ -12,7 +12,6 @@ export const tokenInfo = () => {
 export const token = () => {
   var currentUser = JSON.parse(localStorage.getItem('currentUser'));
   var token = currentUser && currentUser.token;
-
   return token;
 }
 

@@ -32,7 +32,6 @@ const localStorageMiddleware = ({ getState }) => {
 		localStorage.setItem('reduxState', JSON.stringify(
 			getState()
 		));
-		console.log(result);
 		return result;
 	};
 };
