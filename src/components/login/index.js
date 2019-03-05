@@ -32,7 +32,7 @@ class Login extends Component {
       senha: data.get("password")
     }));
   }
-
+  
   render() {
     const { loading } = this.props;
 
@@ -79,9 +79,7 @@ class Login extends Component {
           </Button>
           </Form> 
         </CardBody>
-        <footer>
-            <p>* Campo Obrigatório</p>
-          </footer>
+          <a style={{textAlign: "center"}} href={'/esqueciminhasenha'}>Esqueci minha senha</a> 
       </Card>
       </Col>
       </Row>
