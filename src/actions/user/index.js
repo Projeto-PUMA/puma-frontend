@@ -12,6 +12,8 @@ export const createUser = (name, email, password, cpf, scholarity, cep, state, c
           email: result.data.email,
         },
       });
+    } else if (result.status === 400) {
+      alert('Erro ao cadastrar! CPF já cadastrado ou e-mail já cadastrado.');
     }
   };
 
@@ -31,6 +33,7 @@ export const setUser = (user) => (dispatch) => {
     .then((result) => {
       if (result.status === 200) {
         localStorage.setItem('currentUser', JSON.stringify({ token: result.data.token }));
+        console.log(result.data.token)
         dispatch(UserAC.setUser(result.data));
         dispatch(MetaAC.syncOperationFinished(result));
         browserHistory.push('/submeterprojeto');
