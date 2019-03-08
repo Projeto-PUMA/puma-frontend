@@ -93,7 +93,7 @@ class NewsSubmission extends Component {
         </Row>
         <Row>
           <Col sm='1' md='2' lg='3' xs='1' />
-          <Col sm='8' md='7' lg='6' xs='10'>
+          <Col sm='8' md='7' lg='6' xs='10'> 
             <Card>
               <CardBody>
                 <Form id='projectSubmissionForm' name='projectSubmissionForm' onSubmit={this.handleNews}>
@@ -111,11 +111,11 @@ class NewsSubmission extends Component {
                   </FormGroup>
                   <FormGroup>
                     <Label for='title'>Categoria da Notícia *</Label>
-                    <Input ref='title' type='select' name='category' id='category' value={news_by_id ? news_by_id.category : this.state.category} onChange={this.handleChange} required>
-                      <option ref="0" value={0} disabled>Selecionar Categoria</option>
-                      <option ref="1" value={1} className="optionGroup">Destaque</option>
-                      <option ref="2" value={2} className="optionGroup">Normal</option>
-                      <option ref="3" value={3} className="optionGroup">Melhores Projetos</option>
+                    <Input ref='title' type='select' name='category' id='category' value={news_by_id ? news_by_id.noticiaCategoriaId : this.state.category} onChange={this.handleChange} required>
+                      <option ref="0" value={0} placeholder selected={news_by_id === ''} disabled>Selecionar Categoria</option>
+                      <option ref="1" value={1} className="optionGroup" selected={this.state.category === 1}>Destaque</option>
+                      <option ref="2" value={2} className="optionGroup" selected={this.state.category === 2}>Normal</option>
+                      <option ref="3" value={3} className="optionGroup" selected={this.state.category === 3}>Melhores Projetos</option>
                     </Input>
                   </FormGroup>
                   <FormGroup>
