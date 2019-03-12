@@ -11,6 +11,14 @@ import { tokenInfo } from '../../helpers/token';
 
 class ViewProject extends Component {
 
+	constructor(props) {
+		super(props)
+		
+		this.state = {
+		  value: ''
+		}
+	  }
+
 	componentWillMount() {
 		const { dispatch, location, user } = this.props;
 		const { id } = location.state;
@@ -38,11 +46,18 @@ class ViewProject extends Component {
 		return admin && statusCode === 1 ? true : false;
 	}
 
+	handle(e){
+		this.setState({value: e.target.value})
+	}
+
 	updateProject(projeto, status) {
 		const { dispatch, user } = this.props;
+		const answer = this.state.value;
+
 		dispatch(updateProject({
 			id: projeto.id,
 			projeto_status_id: status,
+			resposta: answer
 		}, user.token));
 	}
 
@@ -55,7 +70,7 @@ class ViewProject extends Component {
 				<label style={{ display: "inline-block", verticalAlign: "center" }}>
 					Resposta:
 				</label>
-				<textarea style={{ verticalAlign: "middle", margin: 5, width: "500px", height: "150px" }} type='text' id="answer" required />
+				<textarea style={{ verticalAlign: "middle", margin: 5, width: "500px", height: "150px" }} type='text' id="answer" onChange={this.handle.bind(this)} required />
 			</div>
 		);
 	}
@@ -85,7 +100,7 @@ class ViewProject extends Component {
 						<li style={{ fontSize: "20px", fontWeight: "bold", margin: 5 }}>Problema a ser resolvido: </li> <p style={{ marginLeft: 33, marginTop: 8 }}>{project_by_id.problematica}</p>
 						<li style={{ fontSize: "20px", fontWeight: "bold", margin: 5 }} id="area">Área: </li> <p style={{ marginLeft: 33, marginTop: 8 }}>{project_by_id.psp ? project_by_id.psp.nome : ''}</p>
 						<li style={{ fontSize: "20px", fontWeight: "bold", margin: 5 }}>Autor: </li> <p style={{ marginLeft: 33, marginTop: 8 }}>{project_by_id.usuario ? project_by_id.usuario.nome : ''}</p>
-						<li style={{ fontSize: "20px", fontWeight: "bold", margin: 5 }} id="answerShow">Resposta: </li> <p style={{ marginLeft: 33, marginTop: 8 }}>{project_by_id.status ? project_by_id.status.status : ''}</p>
+						<li style={{ fontSize: "20px", fontWeight: "bold", margin: 5 }} id="answerShow">Resposta: </li> <p style={{ marginLeft: 33, marginTop: 8 }}>{project_by_id.status ? project_by_id.status.status : ''}</p><li style={{marginLeft: 33, marginTop: 8, fontWeight: "bold"}}>Justificativa: </li><div style={{marginLeft: 33, marginTop: 8}}>{project_by_id.resposta}</div>
 						<li style={{ fontSize: "20px", fontWeight: "bold", margin: 5 }}>Anexo: </li> <a style={{ marginLeft: 33, marginTop: 8 }}>{project_by_id.anexo}</a>
 						<div id="status">{this.renderStatus(project_by_id)}</div>
 						{this.judgeable(project_by_id.projetoStatusId) ? this.renderJudge(project_by_id) : null}
