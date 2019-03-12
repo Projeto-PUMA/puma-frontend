@@ -13,6 +13,7 @@ import App from './App';
 import Home from '../src/components/home/index';
 
 import Login from '../src/components/login/index';
+import ResetPassword from '../src/components/login/resetPassword';
 import Register from './components/register';
 
 import News from './components/news/index';
@@ -59,6 +60,7 @@ ReactDOM.render(
 				<Route path='/submeternoticia' component={NewsSubmission} />
 				<Route path='/noticia' component={ViewNews} />
 				<Route path='/gerenciarnoticias' component={News} />
+				<Route path='/esqueciminhasenha'component={ResetPassword} />
 			</Route>
 		</Router>
 	</Provider>
