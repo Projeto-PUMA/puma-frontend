@@ -80,7 +80,7 @@ class Grid extends Component {
             <div class="card-header">
             </div>
             <div class="card-body">
-              <h5 class="card-title">Aberto Edital 02/2018</h5>
+              <h5 class="card-title">Aberto Edital 01/2019</h5>
               <p class="card-text">A fim de alcançar esse objetivo global o Plano Político Pedagógico do Curso de Engenharia de Produção da UnB foi criado com base no método conhecido como PBL - “Problem Based Learning”, (Aprendizagem Baseada em Problemas).</p>
               <a class="btn btn-primary" href="http://pumaunb.herokuapp.com/Edital.pdf" target="_blank" rel="noopener noreferrer" style={{backgroundColor:  '#09545e'}}>Baixe Aqui</a>
             </div>
