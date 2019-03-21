@@ -26,6 +26,7 @@ import ProjectSubmission from './components/projects/submission';
 import MyProjects from './components/projects/myProjects';
 
 import Confirmation from './helpers/confirmation';
+import Token from './helpers/tokenConfirmation';
 
 const localStorageMiddleware = ({ getState }) => {
 	return (next) => (action) => {
@@ -53,6 +54,7 @@ ReactDOM.render(
 				<Route path='/login' component={Login} />
 				<Route path='/cadastro' component={Register} />
 				<Route path='/confirmacao' component={Confirmation} />
+				<Route path='/token/:token' component={Token} />
 				<Route path='/meusprojetos' component={MyProjects} />
 				<Route path='/projeto' component={ViewProject} />
 				<Route path='/submeterprojeto' component={ProjectSubmission} />
