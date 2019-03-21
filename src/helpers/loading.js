@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
+const LoadingAnimation = require('../lib/react-loading-animation/index');
+
 export default class Loading extends Component {
   render() {
     return (
-      <div style={{ height: '100%', width: '100%', justifyContent: 'center', alignItems: 'center' }}>
-        <h1 style={{ alignSelf: 'center' }}>Carregando...</h1>
-      </div>
+      <LoadingAnimation style={{ marginTop: 30 }} />
     );
   }
 };

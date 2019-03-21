@@ -17,16 +17,17 @@ class Home extends Component {
     const { news, loading } = this.props;
 
     if (loading) {
-      console.log('loading');
       return <Loading />;
     }
 
     const data = [];
     for (var key in news) {
-      news[key].key = key;
-      data.push(news[key]);
+      if (!isNaN(key)) {
+        news[key].key = key;
+        data.push(news[key]);
+      }
     }
-    
+
     return (
       <Grid data={data} />
     );
@@ -40,7 +41,7 @@ Home.propTypes = {
 
 const mapStateToProps = state => ({
   news: state.news,
-  loading: state.syncOperation.isLoading,
+  loading: state.meta.syncOperation.isLoading,
 });
 
 export default connect(mapStateToProps)(Home);
