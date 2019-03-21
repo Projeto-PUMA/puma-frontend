@@ -112,7 +112,7 @@ class NewsSubmission extends Component {
                   <FormGroup>
                     <Label for='title'>Categoria da Notícia *</Label>
                     <Input ref='title' type='select' name='category' id='category' value={news_by_id ? news_by_id.noticiaCategoriaId : this.state.category} onChange={this.handleChange} required>
-                      <option ref="0" value={0} placeholder selected={news_by_id === ''} disabled>Selecionar Categoria</option>
+                      <option ref="0" value={0} selected={news_by_id === ''} disabled>Selecionar Categoria</option>
                       <option ref="1" value={1} className="optionGroup" selected={this.state.category === 1}>Destaque</option>
                       <option ref="2" value={2} className="optionGroup" selected={this.state.category === 2}>Normal</option>
                       <option ref="3" value={3} className="optionGroup" selected={this.state.category === 3}>Melhores Projetos</option>
