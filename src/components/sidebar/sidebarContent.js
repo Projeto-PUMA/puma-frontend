@@ -68,12 +68,14 @@ const SidebarContent = props => {
 
   if (tokenInfo()) {
     var role = tokenInfo().papel;
-    for (var i = 0; i < role.length; i++) {
-      if (role[i].includes("ADMIN")) {
-        adm = true;
-      }
-      if (role[i].includes("USUARIO")) {
-        user = true;
+    if (role) {
+      for (var i = 0; i < role.length; i++) {
+        if (role[i].includes("ADMIN")) {
+          adm = true;
+        }
+        if (role[i].includes("USUARIO")) {
+          user = true;
+        }
       }
     }
   }
