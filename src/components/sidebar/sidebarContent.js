@@ -80,7 +80,7 @@ const SidebarContent = props => {
     }
   }
 
-  if (token()) {
+  if (token() && tokenInfo().papel) {
     logged = true;
   }
 
