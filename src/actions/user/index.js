@@ -45,3 +45,21 @@ export const setUser = (user) => (dispatch) => {
       console.log('login error: ', error);
     });
 };
+
+export const tokenConfirm = (token) => (dispatch) => {
+  dispatch(MetaAC.syncOperationLoading());
+  userApi.confirmation(token)
+    .then((result) => {
+      if (result.status === 200) {
+        dispatch(MetaAC.syncOperationFinished(result));
+      } else {
+        console.log('confirmation error: ', result.error);
+        dispatch(MetaAC.syncOperationFinished(result));
+        alert(result.error);
+      }
+    })
+    .catch((error) => {
+      dispatch(MetaAC.syncOperationFinished(error));
+      console.log('confirmation error: ', error);
+    });
+};
