@@ -81,7 +81,6 @@ class Peer extends Component {
             type="text"
             name='name'
             id='name'
-            maxLength="11"
             required
             style={{ width: 360, marginBottom: 12 }}
             />
