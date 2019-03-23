@@ -24,6 +24,7 @@ import Projects from './components/projects/index';
 import ViewProject from './components/projects/show';
 import ProjectSubmission from './components/projects/submission';
 import MyProjects from './components/projects/myProjects';
+import Peer from './components/peer/index';
 
 import Confirmation from './helpers/confirmation';
 import Token from './helpers/tokenConfirmation';
@@ -63,6 +64,7 @@ ReactDOM.render(
 				<Route path='/noticia' component={ViewNews} />
 				<Route path='/gerenciarnoticias' component={News} />
 				<Route path='/esqueciminhasenha'component={ResetPassword} />
+				<Route path='/manterpeer' component={Peer} />
 			</Route>
 		</Router>
 	</Provider>
