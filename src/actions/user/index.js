@@ -38,8 +38,9 @@ export const setUser = (user) => (dispatch) => {
         dispatch(MetaAC.syncOperationFinished(result));
         browserHistory.push('/submeterprojeto');
       } else {
-        console.log('login error: ', result.error);
-        alert(result.error);
+        dispatch(MetaAC.syncOperationFinished(result.data.error));
+        console.log('login error: ', result.data);
+        alert(result.data.error === 'Not Found' ? 'CPF não encontrado!' : result.data.error);
       }
     })
     .catch((error) => {
