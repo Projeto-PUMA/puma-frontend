@@ -53,7 +53,7 @@ class Peer extends Component {
   renderItemsTable() {
 
     return (
-      <div style={{ marginTop: 40 }}>
+      <div style={{ marginTop: 40, padding: 16 }}>
         <Table hover responsive>
           <thead>
             <tr>
@@ -73,7 +73,7 @@ class Peer extends Component {
           id='loginForm'
           name='loginForm'
           onSubmit={this.handleLogin}
-          style={{ padding: 100, justifyContent: 'flex-start' }}
+          style={{ padding: 100, paddingLeft: 0, textAlign: 'left' }}
           >
             <Label>Novo Sub-item</Label>
             <Input
@@ -83,6 +83,7 @@ class Peer extends Component {
             id='name'
             maxLength="11"
             required
+            style={{ width: 360, marginBottom: 12 }}
             />
             <Label>Descrição</Label>
             <Input
@@ -91,6 +92,7 @@ class Peer extends Component {
             name='description'
             id='description'
             required
+            style={{ width: 360, marginBottom: 12 }}
             />
             <Label>Peso</Label>
             <Input
@@ -99,8 +101,9 @@ class Peer extends Component {
             name='weight'
             id='weight'
             required
+            style={{ width: 360, marginBottom: 12 }}
             />
-          <Button type="submit" value ="submit" color="primary" style={{ display: "block",margin: "0 auto", marginTop: 30 }}>
+          <Button type="submit" value="submit" color="primary" style={{ marginTop: 30 }}>
           Adicionar
           </Button>
           </Form> 
@@ -115,7 +118,7 @@ class Peer extends Component {
     return (
       <tr key={idx}>
         <td style={{ width: 30 }}><input type="checkbox" style={{ margin: 0, padding: 0, width: 14 }} /></td>
-        <td>
+        <td style={{ textAlign: 'left' }}>
           {d.usuario.nome}
           { this.state.subitems ? this.renderItemsTable() : null }
         </td>
