@@ -18,7 +18,7 @@ class Peer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      subitems: false,
+      opened: null,
     };
   }
 
@@ -120,14 +120,14 @@ class Peer extends Component {
         <td style={{ width: 30 }}><input type="checkbox" style={{ margin: 0, padding: 0, width: 14 }} /></td>
         <td style={{ textAlign: 'left' }}>
           {d.usuario.nome}
-          { this.state.subitems ? this.renderItemsTable() : null }
+          {this.state.opened === idx ? this.renderItemsTable() : null}
         </td>
         <td style={{ width: 62 }}>
           <i className="fas fa-trash" onClick={() => { this.deleteNews(d.id, idx) }}></i>
           <i className="fas fa-edit" style={{ marginLeft: 8 }} onClick={() => this.viewNewsToEdit(d.id)}></i>
         </td>
         <td style={{ width: 36 }}>
-          <i className="fas fa-eye" onClick={() => this.state.subitems ? this.setState({ subitems: false }) : this.setState({ subitems: true})}></i>
+          <i className="fas fa-eye" onClick={() => this.state.opened === idx ? this.setState({ opened: null }) : this.setState({ opened: idx })}></i>
         </td>
       </tr>
     );
