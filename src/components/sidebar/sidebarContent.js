@@ -65,9 +65,15 @@ const SidebarContent = props => {
   var logged = false;
   var adm = false;
   var user = false;
+  var coordinator = false;
+  var professor = false;
+  var student = false;
+  var monitor = false;
+  var secretary = false;
 
   if (tokenInfo()) {
     var role = tokenInfo().papel;
+    console.log(role);
     if (role) {
       for (var i = 0; i < role.length; i++) {
         if (role[i].includes("ADMIN")) {
@@ -75,6 +81,21 @@ const SidebarContent = props => {
         }
         if (role[i].includes("USUARIO")) {
           user = true;
+        }
+        if (role[i].includes("COORDENADOR")) {
+          coordinator = true;
+        }
+        if (role[i].includes("PROFESSOR")) {
+          professor = true;
+        }
+        if (role[i].includes("ALUNO")) {
+          student = true;
+        }
+        if (role[i].includes("MONITOR")) {
+          monitor = true;
+        }
+        if (role[i].includes("SECRETARIA")) {
+          secretary = true;
         }
       }
     }
@@ -102,6 +123,11 @@ const SidebarContent = props => {
         <div style={styles.divider} />
         {user ? userLinks : null}
         {adm ? [userLinks, admLinks] : null}
+        {coordinator ? [userLinks, admLinks] : null}
+        {professor ? [userLinks] : null}
+        {student ? [userLinks] : null}
+        {monitor ? [userLinks, admLinks] : null}
+        {secretary ? [userLinks, admLinks] : null}
       </div>
     </MaterialTitlePanel>
   );
