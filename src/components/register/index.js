@@ -149,6 +149,7 @@ class Register extends Component {
                       type="text"
                       name="nome"
                       id="nome"
+                      maxLength="50"
                       className="input"
                       required
                     />
