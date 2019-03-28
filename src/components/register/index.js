@@ -14,7 +14,7 @@ class Register extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = { cep: '', uf: '', localidade: '', bairro: '', logradouro: '', occupation: ''};
+    this.state = { cep: '', uf: '', localidade: '', bairro: '', logradouro: '', occupation: '', searched: false, submitted: false };
     this.handleChangeCep = this.handleChangeCep.bind(this);
     this.handleSuccess = this.handleSuccess.bind(this);
     this.changeUf = this.changeUf.bind(this);
@@ -40,7 +40,7 @@ class Register extends Component {
   }
 
   handleSuccess(data) {
-    this.setState({ ...this.state, uf: data.uf, localidade: data.localidade, bairro: data.bairro, logradouro: data.logradouro });
+    this.setState({ ...this.state, uf: data.uf, localidade: data.localidade, bairro: data.bairro, logradouro: data.logradouro, searched: true });
   }
 
   changeUf(event) {
@@ -89,24 +89,32 @@ class Register extends Component {
       alert(valid.message);
       return;
     }
+
+    if(!this.state.searched) {
+      alert('Por favor pesquise seu CEP');
+      return;
+    }
     
-    dispatch(createUser(
-      data.get("nome"),
-      data.get("email"),
-      document.getElementById("senha").value,
-      data.get("cpf").replace(/\D+/g, ''),
-      data.get("escolaridade"),
-      data.get("cep").replace(/\D+/g, ''),
-      data.get("uf"),
-      data.get("localidade"),
-      data.get("bairro"),
-      data.get("logradouro"),
-      data.get("numero"),
-      data.get("complemento"),
-      data.get("categoria"),
-      this.getOccupationId(),
-      data.get("telefoneCel").replace(/\D+/g, ''),
-    ));
+    if(!this.state.submitted) {
+      dispatch(createUser(
+        data.get("nome"),
+        data.get("email"),
+        document.getElementById("senha").value,
+        data.get("cpf").replace(/\D+/g, ''),
+        data.get("escolaridade"),
+        data.get("cep").replace(/\D+/g, ''),
+        data.get("uf"),
+        data.get("localidade"),
+        data.get("bairro"),
+        data.get("logradouro"),
+        data.get("numero"),
+        data.get("complemento"),
+        data.get("categoria"),
+        this.getOccupationId(),
+        data.get("telefoneCel").replace(/\D+/g, ''),
+      ));
+      this.setState({ ...this.state, submitted: true });
+    }
   }
 
   render() {
@@ -411,7 +419,7 @@ class Register extends Component {
                     />
                   </FormGroup>
                   <FormGroup>
-                    <Button
+                    { this.state.submitted ? <h4>Carregando..</h4> : <Button
                       type="submit"
                       onClick={this.handleSubmission}
                       value="Submit"
@@ -424,7 +432,7 @@ class Register extends Component {
                       }}
                     >
                       Cadastrar
-                </Button>
+                    </Button> }
                   </FormGroup>
                 </Form>
               </CardBody>

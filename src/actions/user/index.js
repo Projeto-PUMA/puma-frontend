@@ -3,7 +3,8 @@ import userApi from '../../api/user';
 import * as UserAC from './actionCreators';
 import * as MetaAC from '../meta/actionCreators';
 
-export const createUser = (name, email, password, cpf, scholarity, cep, state, city, neighborhood, street, number, addendum, address_category_id, occupation_id, phone) => () => {
+export const createUser = (name, email, password, cpf, scholarity, cep, state, city, neighborhood, street, number, addendum, address_category_id, occupation_id, phone) => (dispatch) => {
+  dispatch(MetaAC.syncOperationLoading());
   const thenCallback = (result) => {
     if (result.status === 200) {
       browserHistory.push({
@@ -15,10 +16,12 @@ export const createUser = (name, email, password, cpf, scholarity, cep, state, c
     } else if (result.status === 400) {
       alert('Erro ao cadastrar! CPF já cadastrado ou e-mail já cadastrado.');
     }
+    dispatch(MetaAC.syncOperationFinished(result));
   };
 
   const catchCallback = (error) => {
     alert('Erro ao cadastrar! CPF já cadastrado.');
+    dispatch(MetaAC.syncOperationFinished(error));
     console.log('create user error: ', error);
   };
 
