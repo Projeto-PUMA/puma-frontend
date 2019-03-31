@@ -6,6 +6,7 @@ import Loading from '../../helpers/loading';
 import { Table } from 'reactstrap';
 import { browserHistory } from 'react-router';
 import { deleteNews } from '../../actions/news';
+import { tokenInfo } from '../../helpers/token';
 
 class News extends Component {
 
@@ -38,56 +39,102 @@ class News extends Component {
 	}
 
 	renderTableLine(d, idx) {
-		return (
-			<tr key={idx}>
-				<td>{d.titulo}</td>
-				<td>{d.usuario.nome}</td>
-				<td>
-					<i className="fas fa-trash" onClick={() => { this.deleteNews(d.id, idx) }}></i>
-				</td>
-				<td>
-					<i className="fas fa-edit" onClick={() => this.viewNewsToEdit(d.id)}></i>
-				</td>
-				<td>
-					<i className="fas fa-eye" onClick={() => this.viewNews(d.id)}></i>
-				</td>
-			</tr>
-		);
+		var role = tokenInfo().papel;
+
+		if (role) {
+			for (var i = 0; i < role.length; i++) {
+				if (role[i].includes("ADMIN") || role[i].includes("COORDENADOR")) {
+					return (
+						<tr key={idx}>
+							<td>{d.titulo}</td>
+							<td>{d.usuario.nome}</td>
+							<td>
+								<i className="fas fa-trash" onClick={() => { this.deleteNews(d.id, idx) }}></i>
+							</td>
+							<td>
+								<i className="fas fa-edit" onClick={() => this.viewNewsToEdit(d.id)}></i>
+							</td>
+							<td>
+								<i className="fas fa-eye" onClick={() => this.viewNews(d.id)}></i>
+							</td>
+						</tr>
+					);
+				}
+
+				if (role[i].includes("SECRETARIA") || role[i].includes("MONITOR")) {
+					return (
+						<tr key={idx}>
+							<td>{d.titulo}</td>
+							<td>{d.usuario.nome}</td>
+							<td>
+								<i className="fas fa-eye" onClick={() => this.viewNews(d.id)}></i>
+							</td>
+						</tr>
+					);
+				}
+			}
+		}
 	}
 
 	render() {
 		const { news, loading } = this.props;
 
-    if (loading || !news) {
-      return <Loading />;
-    }
+		if (loading || !news) {
+			return <Loading />;
+		}
 
-    const data = [];
-    for (var key in news) {
-			if(!isNaN(key)) {
+		const data = [];
+		for (var key in news) {
+			if (!isNaN(key)) {
 				news[key].key = key;
-      	data.push(news[key]);
+				data.push(news[key]);
 			}
 		}
 
-		return (
-			<div style={{margin:50, marginTop: 100}}>
-				<Table id="newsTable" hover responsive>
-					<thead >
-						<tr>
-							<th>Título</th>
-							<th>Autor</th>
-							<th></th>
-		          <th></th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-						{data.map((d, idx) => this.renderTableLine(d, idx))}
-					</tbody>
-				</Table>
-			</div>
-		);
+		var role = tokenInfo().papel;
+
+		if (role) {
+			for (var i = 0; i < role.length; i++) {
+				if (role[i].includes("ADMIN") || role[i].includes("COORDENADOR")) {
+					return (
+						<div style={{ margin: 50, marginTop: 100 }}>
+							<Table id="newsTable" hover responsive>
+								<thead >
+									<tr>
+										<th>Título</th>
+										<th>Autor</th>
+										<th></th>
+										<th></th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									{data.map((d, idx) => this.renderTableLine(d, idx))}
+								</tbody>
+							</Table>
+						</div>
+					);
+				}
+				if (role[i].includes("SECRETARIA") || role[i].includes("MONITOR")) {
+					return (
+						<div style={{ margin: 50, marginTop: 100 }}>
+							<Table id="newsTable" hover responsive>
+								<thead >
+									<tr>
+										<th>Título</th>
+										<th>Autor</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									{data.map((d, idx) => this.renderTableLine(d, idx))}
+								</tbody>
+							</Table>
+						</div>
+					);
+				}
+			}
+		}
 	}
 }
 
