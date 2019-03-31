@@ -65,9 +65,15 @@ const SidebarContent = props => {
   var logged = false;
   var adm = false;
   var user = false;
+  var coordinator = false;
+  var professor = false;
+  var student = false;
+  var monitor = false;
+  var secretary = false;
 
   if (tokenInfo()) {
     var role = tokenInfo().papel;
+    console.log(role);
     if (role) {
       for (var i = 0; i < role.length; i++) {
         if (role[i].includes("ADMIN")) {
@@ -75,6 +81,21 @@ const SidebarContent = props => {
         }
         if (role[i].includes("USUARIO")) {
           user = true;
+        }
+        if (role[i].includes("COORDENADOR")) {
+          coordinator = true;
+        }
+        if (role[i].includes("PROFESSOR")) {
+          professor = true;
+        }
+        if (role[i].includes("ALUNO")) {
+          student = true;
+        }
+        if (role[i].includes("MONITOR")) {
+          monitor = true;
+        }
+        if (role[i].includes("SECRETARIA")) {
+          secretary = true;
         }
       }
     }
@@ -88,12 +109,21 @@ const SidebarContent = props => {
 
   const admLinks = [];
   const userLinks = [];
+  const profLinks = [];
+  const studentLinks = [];
+  const monitorLinks = [];
+
   userLinks.push(<Link to='submeterprojeto' key="1" style={styles.sidebarLink}><img className="img-responsive" src={page} alt="page" style={{ height: 25, marginRight: 7, marginTop: -2 }} /> Submeter Projeto</Link>);
   userLinks.push(<Link to='/meusprojetos' key="2" style={styles.sidebarLink}><img className="img-responsive" src={stack} alt="stack" style={{ height: 25, marginRight: 7, marginTop: -2 }} />Meus Projetos</Link>);
   admLinks.push(<Link to='/gerenciarprojetos' key="3" style={styles.sidebarLink}><img className="img-responsive" src={shop} alt="shop" style={{ height: 25, marginRight: 7, marginTop: -2 }} />Gerenciar Projetos</Link>);
   admLinks.push(<Link to='/submeternoticia' key="4" style={styles.sidebarLink}><img className="img-responsive" src={news} alt="news" style={{ height: 25, marginRight: 7, marginTop: -2 }} />Submeter Notícia</Link>);
   admLinks.push(<Link to='/gerenciarnoticias' key="5" style={styles.sidebarLink}><img className="img-responsive" src={graph} alt="graph" style={{ height: 25, marginRight: 7, marginTop: -2 }} />Gerenciar Notícias</Link>);
+  profLinks.push(<Link to='/gerenciarprojetos' key="6" style={styles.sidebarLink}><img className="img-responsive" src={shop} alt="shop" style={{ height: 25, marginRight: 7, marginTop: -2 }} />Gerenciar Projetos</Link>);
+  studentLinks.push(<Link to='/gerenciarprojetos' key="7" style={styles.sidebarLink}><img className="img-responsive" src={shop} alt="shop" style={{ height: 25, marginRight: 7, marginTop: -2 }} />Projetos</Link>)
+  monitorLinks.push(<Link to='/gerenciarnoticias' key="8" style={styles.sidebarLink}><img className="img-responsive" src={shop} alt="shop" style={{ height: 25, marginRight: 7, marginTop: -2 }} />Notícias</Link>)
+  monitorLinks.push(<Link to='/gerenciarprojetos' key="9" style={styles.sidebarLink}><img className="img-responsive" src={shop} alt="shop" style={{ height: 25, marginRight: 7, marginTop: -2 }} />Gerenciar Projetos</Link>);
 
+  
   return (
     <MaterialTitlePanel title="Menu" style={style}>
       <div style={styles.content}>
@@ -102,6 +132,11 @@ const SidebarContent = props => {
         <div style={styles.divider} />
         {user ? userLinks : null}
         {adm ? [userLinks, admLinks] : null}
+        {coordinator ? [userLinks, admLinks] : null}
+        {professor ? [profLinks, userLinks] : null}
+        {student ? [userLinks, studentLinks] : null}
+        {monitor ? [userLinks, monitorLinks] : null}
+        {secretary ? [userLinks, studentLinks] : null}
       </div>
     </MaterialTitlePanel>
   );
