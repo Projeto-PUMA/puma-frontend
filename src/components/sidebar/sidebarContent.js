@@ -10,6 +10,7 @@ import stack from '../../images/stack-of-paper-outline.png';
 import exit from '../../images/exit.png';
 import addUser from '../../images/add-user.png';
 import login from '../../images/login.png';
+import userIcon from '../../images/add-user.png'
 import { tokenInfo, token } from '../../helpers/token';
 
 const styles = {
@@ -113,8 +114,9 @@ const SidebarContent = props => {
   const studentLinks = [];
   const monitorLinks = [];
 
-  userLinks.push(<Link to='submeterprojeto' key="1" style={styles.sidebarLink}><img className="img-responsive" src={page} alt="page" style={{ height: 25, marginRight: 7, marginTop: -2 }} /> Submeter Projeto</Link>);
+  userLinks.push(<Link to='/submeterprojeto' key="1" style={styles.sidebarLink}><img className="img-responsive" src={page} alt="page" style={{ height: 25, marginRight: 7, marginTop: -2 }} /> Submeter Projeto</Link>);
   userLinks.push(<Link to='/meusprojetos' key="2" style={styles.sidebarLink}><img className="img-responsive" src={stack} alt="stack" style={{ height: 25, marginRight: 7, marginTop: -2 }} />Meus Projetos</Link>);
+  admLinks.push(<Link to='/gerenciarusuarios' key="10" style={styles.sidebarLink}><img className="img-responsive" src={userIcon} alt="users" style={{ height: 25, marginRight: 7, marginTop: -2 }} />Gerenciar Usuários</Link>)
   admLinks.push(<Link to='/gerenciarprojetos' key="3" style={styles.sidebarLink}><img className="img-responsive" src={shop} alt="shop" style={{ height: 25, marginRight: 7, marginTop: -2 }} />Gerenciar Projetos</Link>);
   admLinks.push(<Link to='/submeternoticia' key="4" style={styles.sidebarLink}><img className="img-responsive" src={news} alt="news" style={{ height: 25, marginRight: 7, marginTop: -2 }} />Submeter Notícia</Link>);
   admLinks.push(<Link to='/gerenciarnoticias' key="5" style={styles.sidebarLink}><img className="img-responsive" src={graph} alt="graph" style={{ height: 25, marginRight: 7, marginTop: -2 }} />Gerenciar Notícias</Link>);

@@ -6,6 +6,12 @@ const user = (state = {}, action) => {
       }
       return action.user;
 
+      case 'FETCH_USERS':
+      if (action.users === null || action.users === 0) {
+        return state;
+      }
+      return action.users;
+
     default:
       return state;
   }

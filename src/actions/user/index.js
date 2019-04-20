@@ -70,3 +70,21 @@ export const tokenConfirm = (token) => (dispatch) => {
       console.log('confirmation error: ', error);
     });
 };
+
+export const loadUsers = (token) => (dispatch) => {
+  dispatch(MetaAC.syncOperationLoading());
+  userApi.getUsers(token)
+    .then((result) => {
+      if (result.status === 200) {
+        const users = result.data;
+        console.log(users)
+        dispatch(UserAC.fetchUsers(users));
+      }
+      dispatch(MetaAC.syncOperationFinished(result));
+    })
+    .catch((error) => {
+      console.log(error);
+      alert('Ocorreu um erro ao carregar os projetos!');
+      dispatch(MetaAC.syncOperationFinished(error));
+    });
+};

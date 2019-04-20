@@ -25,6 +25,7 @@ import ViewProject from './components/projects/show';
 import ProjectSubmission from './components/projects/submission';
 import MyProjects from './components/projects/myProjects';
 import Peer from './components/peer/index';
+import Users from './components/users/index'
 
 import Confirmation from './helpers/confirmation';
 import Token from './helpers/tokenConfirmation';
@@ -60,6 +61,7 @@ ReactDOM.render(
 				<Route path='/projeto' component={ViewProject} />
 				<Route path='/submeterprojeto' component={ProjectSubmission} />
 				<Route path='/gerenciarprojetos' component={Projects} />
+				<Route path='/gerenciarusuarios' component={Users} />
 				<Route path='/submeternoticia' component={NewsSubmission} />
 				<Route path='/noticia' component={ViewNews} />
 				<Route path='/gerenciarnoticias' component={News} />
