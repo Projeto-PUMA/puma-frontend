@@ -35,6 +35,11 @@ export default {
     return PumaApi.get(`/usuario/${id}`, authToken(token));
   },
 
+  updateUser: (user, token) => {
+    console.log("%o",user)
+    return PumaApi.patch(`/usuario/${user.id}`,user, authToken(token));
+  },
+
   login: (user) => PumaApi.post('/auth/login', user),
 
   confirmation: (token) => PumaApi.get(`/auth/tokenConfirmacao/${token}`),

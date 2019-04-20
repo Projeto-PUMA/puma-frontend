@@ -106,3 +106,21 @@ export const loadUserById = (id, token) => (dispatch) => {
       dispatch(MetaAC.syncOperationFinished(error));
     });
 };
+
+export const updateUser = (user_by_id, token) => (dispatch) => {
+  dispatch(MetaAC.syncOperationLoading());
+  console.log("action = ",user_by_id)
+  userApi.updateUser(user_by_id, token)
+      .then((result) => {
+        if(result.status === 200) {
+          alert('Usuário atualizado com sucesso!');
+        }
+        dispatch(MetaAC.syncOperationFinished(result));
+        dispatch(loadUsers());
+      })
+      .catch((error) => {
+        alert('Ocorreu um erro ao atualizar o usuário!');
+        console.log('update user error: ', error);
+        dispatch(MetaAC.syncOperationFinished(error));
+      });
+}
