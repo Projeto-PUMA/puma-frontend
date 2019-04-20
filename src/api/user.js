@@ -31,6 +31,10 @@ export default {
     return PumaApi.get(`/usuario`, authToken(token));
   },
 
+  getUserById: (id, token) => {
+    return PumaApi.get(`/usuario/${id}`, authToken(token));
+  },
+
   login: (user) => PumaApi.post('/auth/login', user),
 
   confirmation: (token) => PumaApi.get(`/auth/tokenConfirmacao/${token}`),

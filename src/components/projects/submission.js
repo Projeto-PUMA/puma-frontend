@@ -498,7 +498,7 @@ ProjectSubmission.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  user: state.user,
+  user: state.user.setUser,
 	project_by_id: state.project.project_by_id,
 	loading: state.meta.syncOperation.isLoading,
 });

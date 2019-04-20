@@ -79,7 +79,7 @@ MyProjects.propTypes = {
 };
 
 const mapStateToProps = state => ({
-	user: state.user,
+	user: state.user.setUser,
 	my_projects: state.project.my_projects,
 	loading: state.meta.syncOperation.isLoading,
 });

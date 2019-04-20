@@ -175,7 +175,7 @@ Peer.propTypes = {
 
 const mapStateToProps = state => ({
   news: state.news,
-  user: state.user,
+  user: state.user.setUser,
   loading: state.meta.syncOperation.isLoading,
 });
 

@@ -86,7 +86,6 @@ class ViewProject extends Component {
 
 	render() {
 		const { project_by_id, loading } = this.props;
-
 		if (loading || project_by_id === null) {
 			return <Loading />;
 		}
@@ -118,7 +117,7 @@ ViewProject.propTypes = {
 };
 
 const mapStateToProps = state => ({
-	user: state.user,
+	user: state.user.setUser,
 	project_by_id: state.project.project_by_id,
 	loading: state.meta.syncOperation.isLoading,
 });

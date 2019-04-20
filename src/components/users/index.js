@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Table } from 'reactstrap';
+import { browserHistory } from 'react-router';
 
 import Loading from '../../helpers/loading';
 import { loadUsers } from '../../actions/user/index';
@@ -9,16 +10,9 @@ import { loadUsers } from '../../actions/user/index';
 
 class Users extends Component {
 
-	// constructor(props) {
-	// 	super(props)
-		
-	// 	this.state = {
-	// 	  value: ''
-	// 	}
-	//   }
-
 	componentWillMount() {
 		const { dispatch, user } = this.props;
+		console.log("token = ",user)
 		dispatch(loadUsers(user.token));
 	}
 
@@ -26,9 +20,17 @@ class Users extends Component {
 		this.setState({value: e.target.value})
 	}
 	
+	viewUser(id) {
+    browserHistory.push({
+      pathname: '/usuario',
+      state: {
+        id: id,
+      },
+    });
+	}
+
 	renderTableLine(d, idx) {
-		// console.log("nome "+d.nome + "papel "+JSON.stringify(d.papel))
-		return (<tr key={idx}><td>{d.nome}</td><td>{d.papel.nome}</td></tr>);
+		return (<tr key={idx}><td>{d.nome}</td><td>{d.papel[0].nome}</td><td><i className="fas fa-eye" onClick={() => this.viewUser(d.id)}></i></td></tr>);
 	}
 
 	render() {
@@ -53,6 +55,7 @@ class Users extends Component {
 						<tr>
 							<th>Nome</th>
 							<th>Papel</th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -71,8 +74,8 @@ Users.propTypes = {
 };
 
 const mapStateToProps = state => ({
-	user: state.user,
-	users: state.user,
+	user: state.user.setUser,
+	users: state.user.users,
 	loading: state.meta.syncOperation.isLoading,
 });
 

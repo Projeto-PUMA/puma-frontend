@@ -77,14 +77,32 @@ export const loadUsers = (token) => (dispatch) => {
     .then((result) => {
       if (result.status === 200) {
         const users = result.data;
-        console.log(users)
         dispatch(UserAC.fetchUsers(users));
       }
       dispatch(MetaAC.syncOperationFinished(result));
     })
     .catch((error) => {
       console.log(error);
-      alert('Ocorreu um erro ao carregar os projetos!');
+      alert('Ocorreu um erro ao carregar os usuários!');
+      dispatch(MetaAC.syncOperationFinished(error));
+    });
+};
+
+export const loadUserById = (id, token) => (dispatch) => {
+  dispatch(MetaAC.syncOperationLoading());
+  userApi.getUserById(id, token)
+    .then((result) => {
+      console.log(result);
+      if (result.status === 200) {
+        const user_by_id = result.data;
+        console.log("user by id ",user_by_id);
+        dispatch(UserAC.fetchUserById(user_by_id));
+      }
+      dispatch(MetaAC.syncOperationFinished(result));
+    })
+    .catch((error) => {
+      console.log(error);
+      alert('Ocorreu um erro ao carregar o usuário!');
       dispatch(MetaAC.syncOperationFinished(error));
     });
 };
