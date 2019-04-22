@@ -15,4 +15,4 @@ deploy:
   on:
     repo: Projeto-PUMA/puma-frontend
 on:
-  branch: master
+  branch: development
