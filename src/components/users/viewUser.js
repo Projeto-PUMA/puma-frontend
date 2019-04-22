@@ -31,24 +31,19 @@ class ViewUser extends Component {
 
 	handleUpdate(e){
         e.preventDefault();
-        const { dispatch, user_by_id, user } = this.props;
+        const { dispatch, user, user_by_id } = this.props;
         const { category } = this.state;
         // this.setState({value: e.target.value})
-        console.log("categoria = ",category)
-        console.log(user_by_id)
-        dispatch(updateUser({
-			// id: user_by_id.id,
+        dispatch(updateUser(user_by_id.id ,{
             papel: [{
-                    id: category
+                id: category
             }]
 		}, user.token));
 
     }
 
     handleChange(event) {
-        console.log("change")
         this.setState({ category: event.target.value });
-        console.log(event.target.value)
       }
       
 	render() {

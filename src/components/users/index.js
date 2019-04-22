@@ -12,7 +12,6 @@ class Users extends Component {
 
 	componentWillMount() {
 		const { dispatch, user } = this.props;
-		console.log("token = ",user)
 		dispatch(loadUsers(user.token));
 	}
 
@@ -46,7 +45,6 @@ class Users extends Component {
 				data.push(users[key]);
 			}
 		}
-		console.log(data);
 
 		return (
 			<div style={{margin:50, marginTop: 100}}>

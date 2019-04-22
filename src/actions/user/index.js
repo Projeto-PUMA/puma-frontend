@@ -36,7 +36,6 @@ export const setUser = (user) => (dispatch) => {
     .then((result) => {
       if (result.status === 200) {
         localStorage.setItem('currentUser', JSON.stringify({ token: result.data.token }));
-        console.log(result.data.token)
         dispatch(UserAC.setUser(result.data));
         dispatch(MetaAC.syncOperationFinished(result));
         browserHistory.push('/submeterprojeto');
@@ -92,10 +91,8 @@ export const loadUserById = (id, token) => (dispatch) => {
   dispatch(MetaAC.syncOperationLoading());
   userApi.getUserById(id, token)
     .then((result) => {
-      console.log(result);
       if (result.status === 200) {
         const user_by_id = result.data;
-        console.log("user by id ",user_by_id);
         dispatch(UserAC.fetchUserById(user_by_id));
       }
       dispatch(MetaAC.syncOperationFinished(result));
@@ -107,12 +104,11 @@ export const loadUserById = (id, token) => (dispatch) => {
     });
 };
 
-export const updateUser = (user_by_id, token) => (dispatch) => {
+export const updateUser = (id, user_by_id, token) => (dispatch) => {
   dispatch(MetaAC.syncOperationLoading());
-  console.log("action = ",user_by_id)
-  userApi.updateUser(user_by_id, token)
+  userApi.updateUser(id, user_by_id, token)
       .then((result) => {
-        if(result.status === 200) {
+        if(result.status >= 200 && result.status <= 300) {
           alert('Usuário atualizado com sucesso!');
         }
         dispatch(MetaAC.syncOperationFinished(result));

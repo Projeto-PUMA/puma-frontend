@@ -74,7 +74,6 @@ const SidebarContent = props => {
 
   if (tokenInfo()) {
     var role = tokenInfo().papel;
-    console.log(role);
     if (role) {
       for (var i = 0; i < role.length; i++) {
         if (role[i].includes("ADMIN")) {
