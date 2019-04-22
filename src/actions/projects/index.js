@@ -64,7 +64,6 @@ export const loadProjectById = (id, token) => (dispatch) => {
   dispatch(MetaAC.syncOperationLoading());
   projectsApi.getProjectById(id, token)
     .then((result) => {
-      console.log(result);
       if (result.status === 200) {
         const project = result.data;
         dispatch(ProjectsAC.fetchProjectById(project));

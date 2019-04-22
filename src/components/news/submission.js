@@ -157,7 +157,7 @@ NewsSubmission.propTypes = {
 const mapStateToProps = state => ({
   loading: state.meta.syncOperation.isLoading,
   news_by_id: state.news.news_by_id,
-  user: state.user,
+  user: state.user.setUser,
 });
 
 
