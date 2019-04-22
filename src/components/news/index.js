@@ -92,7 +92,6 @@ class News extends Component {
 		}
 
 		var role = tokenInfo().papel;
-
 		if (role) {
 			for (var i = 0; i < role.length; i++) {
 				if (role[i].includes("ADMIN") || role[i].includes("COORDENADOR")) {
@@ -146,7 +145,7 @@ News.propTypes = {
 
 const mapStateToProps = state => ({
 	news: state.news,
-	user: state.user,
+	user: state.user.setUser,
 	loading: state.meta.syncOperation.isLoading,
 });
 

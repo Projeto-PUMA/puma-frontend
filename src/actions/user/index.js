@@ -36,7 +36,6 @@ export const setUser = (user) => (dispatch) => {
     .then((result) => {
       if (result.status === 200) {
         localStorage.setItem('currentUser', JSON.stringify({ token: result.data.token }));
-        console.log(result.data.token)
         dispatch(UserAC.setUser(result.data));
         dispatch(MetaAC.syncOperationFinished(result));
         browserHistory.push('/submeterprojeto');
@@ -70,3 +69,54 @@ export const tokenConfirm = (token) => (dispatch) => {
       console.log('confirmation error: ', error);
     });
 };
+
+export const loadUsers = (token) => (dispatch) => {
+  dispatch(MetaAC.syncOperationLoading());
+  userApi.getUsers(token)
+    .then((result) => {
+      if (result.status === 200) {
+        const users = result.data;
+        dispatch(UserAC.fetchUsers(users));
+      }
+      dispatch(MetaAC.syncOperationFinished(result));
+    })
+    .catch((error) => {
+      console.log(error);
+      alert('Ocorreu um erro ao carregar os usuários!');
+      dispatch(MetaAC.syncOperationFinished(error));
+    });
+};
+
+export const loadUserById = (id, token) => (dispatch) => {
+  dispatch(MetaAC.syncOperationLoading());
+  userApi.getUserById(id, token)
+    .then((result) => {
+      if (result.status === 200) {
+        const user_by_id = result.data;
+        dispatch(UserAC.fetchUserById(user_by_id));
+      }
+      dispatch(MetaAC.syncOperationFinished(result));
+    })
+    .catch((error) => {
+      console.log(error);
+      alert('Ocorreu um erro ao carregar o usuário!');
+      dispatch(MetaAC.syncOperationFinished(error));
+    });
+};
+
+export const updateUser = (id, user_by_id, token) => (dispatch) => {
+  dispatch(MetaAC.syncOperationLoading());
+  userApi.updateUser(id, user_by_id, token)
+      .then((result) => {
+        if(result.status >= 200 && result.status <= 300) {
+          alert('Usuário atualizado com sucesso!');
+        }
+        dispatch(MetaAC.syncOperationFinished(result));
+        dispatch(loadUsers());
+      })
+      .catch((error) => {
+        alert('Ocorreu um erro ao atualizar o usuário!');
+        console.log('update user error: ', error);
+        dispatch(MetaAC.syncOperationFinished(error));
+      });
+}

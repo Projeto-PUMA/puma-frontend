@@ -1,14 +1,13 @@
-const user = (state = {}, action) => {
-  switch (action.type) {
-    case 'SET_USER':
-      if (action.user === null || action.user === 0) {
-        return state;
-      }
-      return action.user;
+import { combineReducers } from 'redux';
 
-    default:
-      return state;
-  }
-};
+import setUser from './setUser';
+import user_by_id from './userById';
+import users from './users';
+
+const user = combineReducers({
+  setUser,
+  user_by_id,
+  users,
+});
 
 export default user;
