@@ -7,11 +7,9 @@ import {
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { loadNews } from '../../actions/news/index';
+import { loadPeers, createPeer, deletePeer } from '../../actions/peer/index';
 import Loading from '../../helpers/loading';
 import { Table } from 'reactstrap';
-import { browserHistory } from 'react-router';
-import { deleteNews } from '../../actions/news';
 
 class Peer extends Component {
 
@@ -19,39 +17,23 @@ class Peer extends Component {
     super(props);
     this.state = {
       opened: null,
+      id: null,
     };
+    this.handlePeer = this.handlePeer.bind(this);
+    this.handlePeerFather = this.handlePeerFather.bind(this);
   }
 
   componentWillMount() {
     const { dispatch } = this.props;
-    dispatch(loadNews());
+    dispatch(loadPeers());
   }
 
-  viewNews(id) {
-    browserHistory.push({
-      pathname: '/noticia',
-      state: {
-        id: id,
-      },
-    });
+  deletePeer = (id) => {
+    const { dispatch } = this.props;
+    dispatch(deletePeer(id));
   }
 
-  viewNewsToEdit(id) {
-    browserHistory.push({
-      pathname: '/submeternoticia',
-      state: {
-        id: id,
-      },
-    });
-  }
-
-  deleteNews(id) {
-    const { dispatch, user } = this.props;
-    dispatch(deleteNews(id, user.token));
-  }
-
-  renderItemsTable() {
-
+  renderItemsTable(filho) {
     return (
       <div style={{ marginTop: 40, padding: 16 }}>
         <Table hover responsive>
@@ -61,91 +43,89 @@ class Peer extends Component {
               <th>Sub-itens</th>
               <th>Descrição</th>
               <th>Ação</th>
-              <th>Pesos</th>
             </tr>
           </thead>
-          {/* <tbody>
-            {data.map((d, idx) => this.renderTableLine(d, idx))}
-          </tbody> */}
+          <tbody>
+            {(filho || []).map((d, idx) => this.renderTableLine(d, idx))}
+          </tbody>
         </Table>
         <div>
-        <Form
-          id='loginForm'
-          name='loginForm'
-          onSubmit={this.handleLogin}
-          style={{ padding: 100, paddingLeft: 0, textAlign: 'left' }}
+          <Form
+            id='peerForm'
+            name='peerForm'
+            onSubmit={this.handlePeer}
+            style={{ padding: 100, paddingLeft: 0, textAlign: 'left' }}
           >
             <Label>Novo Sub-item</Label>
             <Input
-            ref="name"
-            type="text"
-            name='name'
-            id='name'
-            required
-            style={{ width: 360, marginBottom: 12 }}
+              ref="name"
+              type="text"
+              name='name'
+              id='name'
+              required
+              style={{ width: 360, marginBottom: 12 }}
             />
             <Label>Descrição</Label>
             <Input
-            ref="description"
-            type="text"
-            name='description'
-            id='description'
-            required
-            style={{ width: 360, marginBottom: 12 }}
+              ref="description"
+              type="text"
+              name='description'
+              id='description'
+              required
+              style={{ width: 360, marginBottom: 12 }}
             />
-            <Label>Peso</Label>
-            <Input
-            ref="weight"
-            type="number"
-            name='weight'
-            id='weight'
-            required
-            style={{ width: 360, marginBottom: 12 }}
-            />
-          <Button type="submit" value="submit" color="primary" style={{ marginTop: 30 }}>
-          Adicionar
+            <Button type="submit" value="submit" color="primary" style={{ marginTop: 30 }}>
+              Adicionar
           </Button>
-          </Form> 
+          </Form>
         </div>
       </div>
     );
   }
 
+  handlePeer(e) {
+    e.preventDefault();
+    var data = new FormData(e.target);
+    const { dispatch } = this.props;
+    dispatch(createPeer(data.get('name'), data.get('description'), this.state.id));
+    return false;
+  }
 
+  handlePeerFather(e) {
+    e.preventDefault();
+    var data = new FormData(e.target);
+    const { dispatch } = this.props;
+    dispatch(createPeer(data.get('name'), data.get('description'), null));
+    return false;
+  }
 
   renderTableLine(d, idx) {
     return (
       <tr key={idx}>
         <td style={{ width: 30 }}><input type="checkbox" style={{ margin: 0, padding: 0, width: 14 }} /></td>
         <td style={{ textAlign: 'left' }}>
-          {d.usuario.nome}
-          {this.state.opened === idx ? this.renderItemsTable() : null}
+          {d.nome}
+          {this.state.opened === idx && d.competenciaPaiId === null ? this.renderItemsTable(Object.values(d.filho)) : null}
         </td>
         <td style={{ width: 62 }}>
-          <i className="fas fa-trash" onClick={() => { this.deleteNews(d.id, idx) }}></i>
-          <i className="fas fa-edit" style={{ marginLeft: 8 }} onClick={() => this.viewNewsToEdit(d.id)}></i>
+          <i className="fas fa-trash" onClick={() => this.deletePeer(d.id)}></i>
+          <i className="fas fa-edit" style={{ marginLeft: 8 }} onClick={() => { }}></i>
         </td>
         <td style={{ width: 36 }}>
-          <i className="fas fa-eye" onClick={() => this.state.opened === idx ? this.setState({ opened: null }) : this.setState({ opened: idx })}></i>
+          <i className="fas fa-eye" onClick={() => this.state.opened === idx ? this.setState({ opened: null, id: null }) : this.setState({ opened: idx, id: d.id })}></i>
         </td>
       </tr>
     );
   }
 
   render() {
-    const { news, loading } = this.props;
+    const { peers, loading } = this.props;
 
-    if (loading || !news) {
+    if (loading) {
       return <Loading />;
     }
 
-    const data = [];
-    for (var key in news) {
-      if (!isNaN(key)) {
-        news[key].key = key;
-        data.push(news[key]);
-      }
-    }
+    const p = (peers || []).filter(x => x.competenciaPaiId === null);
 
     return (
       <div style={{ margin: 50, marginTop: 100 }}>
@@ -159,22 +139,52 @@ class Peer extends Component {
             </tr>
           </thead>
           <tbody>
-            {data.map((d, idx) => this.renderTableLine(d, idx))}
+            {p.map((d, idx) => this.renderTableLine(d, idx))}
           </tbody>
         </Table>
+        <div>
+          <Form
+            id='peerForm'
+            name='peerForm'
+            onSubmit={this.handlePeerFather}
+            style={{ padding: 100, paddingLeft: 0, textAlign: 'left' }}
+          >
+            <Label>Novo Item</Label>
+            <Input
+              ref="name"
+              type="text"
+              name='name'
+              id='name'
+              required
+              style={{ width: 360, marginBottom: 12 }}
+            />
+            <Label>Descrição</Label>
+            <Input
+              ref="description"
+              type="text"
+              name='description'
+              id='description'
+              required
+              style={{ width: 360, marginBottom: 12 }}
+            />
+            <Button type="submit" value="submit" color="primary" style={{ marginTop: 30 }}>
+              Adicionar
+          </Button>
+          </Form>
+        </div>
       </div>
     );
   }
 }
 
 Peer.propTypes = {
-  news: PropTypes.object.isRequired,
+  peers: PropTypes.array,
   user: PropTypes.object,
   loading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
-  news: state.news,
+  peers: state.peers,
   user: state.user.setUser,
   loading: state.meta.syncOperation.isLoading,
 });

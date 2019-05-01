@@ -117,6 +117,7 @@ const SidebarContent = props => {
   userLinks.push(<Link to='/meusprojetos' key="2" style={styles.sidebarLink}><img className="img-responsive" src={stack} alt="stack" style={{ height: 25, marginRight: 7, marginTop: -2 }} />Meus Projetos</Link>);
   admLinks.push(<Link to='/gerenciarusuarios' key="10" style={styles.sidebarLink}><img className="img-responsive" src={userIcon} alt="users" style={{ height: 25, marginRight: 7, marginTop: -2 }} />Gerenciar Usuários</Link>)
   admLinks.push(<Link to='/gerenciarprojetos' key="3" style={styles.sidebarLink}><img className="img-responsive" src={shop} alt="shop" style={{ height: 25, marginRight: 7, marginTop: -2 }} />Gerenciar Projetos</Link>);
+  admLinks.push(<Link to='/manterpeer' key="4" style={styles.sidebarLink}><img className="img-responsive" src={news} alt="news" style={{ height: 25, marginRight: 7, marginTop: -2 }} />Gerenciar Competências</Link>);
   admLinks.push(<Link to='/submeternoticia' key="4" style={styles.sidebarLink}><img className="img-responsive" src={news} alt="news" style={{ height: 25, marginRight: 7, marginTop: -2 }} />Submeter Notícia</Link>);
   admLinks.push(<Link to='/gerenciarnoticias' key="5" style={styles.sidebarLink}><img className="img-responsive" src={graph} alt="graph" style={{ height: 25, marginRight: 7, marginTop: -2 }} />Gerenciar Notícias</Link>);
   profLinks.push(<Link to='/gerenciarprojetos' key="6" style={styles.sidebarLink}><img className="img-responsive" src={shop} alt="shop" style={{ height: 25, marginRight: 7, marginTop: -2 }} />Gerenciar Projetos</Link>);

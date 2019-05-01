@@ -4,6 +4,7 @@ import project from './projects/index';
 import occupations from './occupations';
 import meta from './meta/index';
 import user from './user/index';
+import peers from './peer/index';
 
 export default combineReducers({
   news,
@@ -11,4 +12,5 @@ export default combineReducers({
   occupations,
   meta,
   user,
+  peers,
 });
