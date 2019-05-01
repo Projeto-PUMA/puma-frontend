@@ -13,6 +13,6 @@ deploy:
     secure: <your-api-key>
   app: cd-showcase
   on:
-    repo: OrencioRodolfo/cd-showcase
+    repo: Projeto-PUMA/puma-frontend
 on:
-  branch: master
+  branch: development
