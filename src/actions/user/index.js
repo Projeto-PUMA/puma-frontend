@@ -70,9 +70,9 @@ export const tokenConfirm = (token) => (dispatch) => {
     });
 };
 
-export const loadUsers = (token) => (dispatch) => {
+export const loadUsers = () => (dispatch) => {
   dispatch(MetaAC.syncOperationLoading());
-  userApi.getUsers(token)
+  userApi.getUsers()
     .then((result) => {
       if (result.status === 200) {
         const users = result.data;
@@ -87,9 +87,9 @@ export const loadUsers = (token) => (dispatch) => {
     });
 };
 
-export const loadUserById = (id, token) => (dispatch) => {
+export const loadUserById = (id) => (dispatch) => {
   dispatch(MetaAC.syncOperationLoading());
-  userApi.getUserById(id, token)
+  userApi.getUserById(id)
     .then((result) => {
       if (result.status === 200) {
         const user_by_id = result.data;
@@ -104,15 +104,16 @@ export const loadUserById = (id, token) => (dispatch) => {
     });
 };
 
-export const updateUser = (id, user_by_id, token) => (dispatch) => {
+export const updateUser = (id, user_by_id) => (dispatch) => {
   dispatch(MetaAC.syncOperationLoading());
-  userApi.updateUser(id, user_by_id, token)
+  userApi.updateUser(id, user_by_id)
       .then((result) => {
         if(result.status >= 200 && result.status <= 300) {
           alert('Usuário atualizado com sucesso!');
         }
         dispatch(MetaAC.syncOperationFinished(result));
         dispatch(loadUsers());
+        dispatch(loadUserById(id));
       })
       .catch((error) => {
         alert('Ocorreu um erro ao atualizar o usuário!');

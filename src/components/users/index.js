@@ -11,8 +11,8 @@ import { loadUsers } from '../../actions/user/index';
 class Users extends Component {
 
 	componentWillMount() {
-		const { dispatch, user } = this.props;
-		dispatch(loadUsers(user.token));
+		const { dispatch } = this.props;
+		dispatch(loadUsers());
 	}
 
     handle(e){
@@ -29,7 +29,7 @@ class Users extends Component {
 	}
 
 	renderTableLine(d, idx) {
-		return (<tr key={idx}><td>{d.nome}</td><td>{d.papel[0].nome}</td><td><i className="fas fa-eye" onClick={() => this.viewUser(d.id)}></i></td></tr>);
+		return (<tr key={d.id}><td>{d.nome}</td><td>{d.papel[0].nome}</td><td><i className="fas fa-eye" onClick={() => this.viewUser(d.id)}></i></td></tr>);
 	}
 
 	render() {

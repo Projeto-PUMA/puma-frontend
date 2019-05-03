@@ -45,7 +45,7 @@ class News extends Component {
 			for (var i = 0; i < role.length; i++) {
 				if (role[i].includes("ADMIN") || role[i].includes("COORDENADOR")) {
 					return (
-						<tr key={idx}>
+						<tr key={d.id}>
 							<td>{d.titulo}</td>
 							<td>{d.usuario.nome}</td>
 							<td>

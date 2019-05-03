@@ -64,7 +64,7 @@ class Example extends Component {
           onExited={this.onExited}
           key={item.id}
         >
-        <div key={idx} className="image-carousel" onClick={() => this.viewNews(item.id)} style={{ height: 500, cursor: 'pointer' }}>
+        <div key={item.id} className="image-carousel" onClick={() => this.viewNews(item.id)} style={{ height: 500, cursor: 'pointer' }}>
           <img src={item.urlThumbnail && item.urlThumbnail !== '' ? item.urlThumbnail : 'http://vanguardacomunicacao.com.br/santoremedio/wp-content/uploads/2018/07/img.jpg'} alt={item.titulo} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         </div>
           <div className="container">
