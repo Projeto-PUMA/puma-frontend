@@ -18,6 +18,10 @@ export const loadNews = () => (dispatch) => {
 };
 
 export const getNews = (id) => (dispatch) => {
+  if (!id) {
+    dispatch(NewsAC.getNews(null));
+    return;
+  }
   dispatch(MetaAC.syncOperationLoading());
   newsApi.getNewsId(id)
       .then((result) => {
