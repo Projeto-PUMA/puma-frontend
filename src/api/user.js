@@ -1,5 +1,5 @@
 import PumaApi from './puma';
-import { authToken } from '../helpers/token';
+import { auth } from '../helpers/token';
 
 export default {
   postUser: (name, email, password, cpf, scholarity, cep, state, city, neighborhood, street, number, addendum, address_category_id, occupation_id, phone) => {
@@ -27,15 +27,15 @@ export default {
     return PumaApi.post('/usuario', data);
   },
   
-  getUsers: (token) => {
-    return PumaApi.get(`/usuario`, authToken(token));
+  getUsers: () => {
+    return PumaApi.get(`/usuario`, auth);
   },
 
-  getUserById: (id, token) => {
-    return PumaApi.get(`/usuario/${id}`, authToken(token));
+  getUserById: (id) => {
+    return PumaApi.get(`/usuario/${id}`, auth);
   },
 
-  updateUser: (id, patch, token) => PumaApi.patch(`/usuario/${id}`, patch, authToken(token)),
+  updateUser: (id, patch) => PumaApi.patch(`/usuario/${id}`, patch, auth),
 
   login: (user) => PumaApi.post('/auth/login', user),
 

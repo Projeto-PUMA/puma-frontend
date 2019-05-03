@@ -101,7 +101,7 @@ class Peer extends Component {
 
   renderTableLine(d, idx) {
     return (
-      <tr key={idx}>
+      <tr key={d.id}>
         <td style={{ width: 30 }}><input type="checkbox" style={{ margin: 0, padding: 0, width: 14 }} /></td>
         <td style={{ textAlign: 'left' }}>
           {d.nome}
