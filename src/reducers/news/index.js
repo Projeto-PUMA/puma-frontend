@@ -8,7 +8,10 @@ const news = (state = {}, action) => {
 
     case 'GET_NEWS':
       if (action.news_by_id === null || action.news_by_id === 0) {
-        return state;
+        return {
+          ...state,
+          news_by_id: null,
+        };
       }
       return {
         ...state,

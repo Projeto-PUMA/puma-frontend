@@ -114,7 +114,7 @@ class ProjectSubmission extends Component {
         titulo: data.get('title'),
         objetivo: data.get('summary'),
         problematica: data.get('body'),
-        psp_id: psp_id, // arrumar isso no dropdown ali de baixo
+        psp_id, // arrumar isso no dropdown ali de baixo
         anexo: data.get('anexo'), 
       },user.token)) : dispatch(createProject(project, user.token));
   }
@@ -417,7 +417,7 @@ class ProjectSubmission extends Component {
                  value={this.hasProject(project_by_id, id) ? project_by_id.psp_id : this.state.psp_id}
                  onChange={this.handleChange}
                  >            
-                 <option ref="0" value="" disabled defaultValue selected >Selecionar Área</option>
+                 <option ref="0" value={0} disabled>Selecionar Área</option>
                  <option ref="1" value={1} className="optionGroup" disabled>PSP1 - Probabilidade e Estatística</option>
                   <option ref="1.1"value={9} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Análise de Banco de Dados</option>
                   <option ref="1.2"value={10} className="optionChild">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Criação de Questionários de Pesquisa</option>
