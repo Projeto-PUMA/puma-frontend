@@ -67,7 +67,7 @@ class Users extends Component {
 
 Users.propTypes = {
 	user: PropTypes.object,
-	users: PropTypes.object.isRequired,
+	users: PropTypes.object,
 	loading: PropTypes.bool.isRequired,
 };
 

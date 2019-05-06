@@ -31,23 +31,23 @@ import ViewUser from './components/users/viewUser';
 import Confirmation from './helpers/confirmation';
 import Token from './helpers/tokenConfirmation';
 
-const localStorageMiddleware = ({ getState }) => {
-	return (next) => (action) => {
-		const result = next(action);
-		localStorage.setItem('reduxState', JSON.stringify(
-			getState()
-		));
-		return result;
-	};
-};
+// const localStorageMiddleware = ({ getState }) => {
+// 	return (next) => (action) => {
+// 		const result = next(action);
+// 		localStorage.setItem('reduxState', JSON.stringify(
+// 			getState()
+// 		));
+// 		return result;
+// 	};
+// };
 
-const reHydrateStore = () => {
-	if (localStorage.getItem('reduxState') !== null) {
-		return JSON.parse(localStorage.getItem('reduxState'));
-	}
-}
+// const reHydrateStore = () => {
+// 	if (localStorage.getItem('reduxState') !== null) {
+// 		return JSON.parse(localStorage.getItem('reduxState'));
+// 	}
+// }
 
-const store = createStore(rootReducer, reHydrateStore(), applyMiddleware(thunk, localStorageMiddleware));
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 ReactDOM.render(
 	<Provider store={store}>
