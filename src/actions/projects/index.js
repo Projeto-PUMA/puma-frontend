@@ -24,9 +24,16 @@ export const loadMyProjects = (id, token) => (dispatch) => {
   dispatch(MetaAC.syncOperationLoading());
   projectsApi.getMyProjects(id, token)
     .then((result) => {
+      console.log(result);
       if (result.status === 200) {
         const projects = result.data;
         dispatch(ProjectsAC.fetchMyProjects(projects));
+      }
+      if (result.status === 401) {
+        localStorage.removeItem('authorities');
+        localStorage.removeItem('currentUser');
+        alert('Seu login expirou, faça login novamente!');
+        browserHistory.push('/login');
       }
       dispatch(MetaAC.syncOperationFinished(result));
     })
@@ -56,8 +63,8 @@ export const createProject = (projeto, token) => (dispatch) => {
 
   dispatch(MetaAC.syncOperationLoading());
   projectsApi.newProject(projeto, token)
-      .then(thenCallback)
-      .catch(catchCallback);
+    .then(thenCallback)
+    .catch(catchCallback);
 };
 
 export const loadProjectById = (id, token) => (dispatch) => {
@@ -96,6 +103,6 @@ export const updateProject = (projeto, token) => (dispatch) => {
 
   dispatch(MetaAC.syncOperationLoading());
   projectsApi.updateProject(projeto, token)
-      .then(thenCallback)
-      .catch(catchCallback);
+    .then(thenCallback)
+    .catch(catchCallback);
 };
