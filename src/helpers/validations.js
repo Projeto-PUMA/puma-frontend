@@ -30,6 +30,14 @@ export function validateCPF(strCPF) {
 	return true;
 }
 
+export function validateMatricula(strMatricula) {
+	if (strMatricula.length < 9 || (strMatricula.substring(2, 2) !== "00" && strMatricula.substring(2, 2) !== "01")) {
+		return false;
+	} else {
+		return true;
+	}
+}
+
 export function validateCEP(strCEP) {
 	if (strCEP.length < 8) {
 		return false;
@@ -48,6 +56,7 @@ export function validateMainPhone(strPhone) {
 
 export const masks = {
 	cpf: [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/],
+	matricula: [/\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/],
 	cellphone: ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
 	phone: ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
 	cep: [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/],
@@ -60,6 +69,13 @@ export const validateUser = (user) => {
 		return {
 			invalid: true,
 			message: 'CPF inválido!',
+		}
+	}
+
+	if (!validateMatricula(user.matricula.replace(/\D+/g, ''))) {
+		return {
+			invalid: true,
+			message: 'Matrícula inválida',
 		}
 	}
 

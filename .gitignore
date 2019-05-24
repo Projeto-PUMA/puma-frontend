@@ -19,3 +19,9 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+src/components/psp/manterPSPv3\.html
+
+src/components/subjects/montarturmas\.html
+
+\.npmrc

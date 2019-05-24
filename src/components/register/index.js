@@ -1,20 +1,40 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import Autocomplete from '../../helpers/autoComplete';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import MaskedInput from 'react-text-mask'
-import { Card, CardBody, Form, Label, Input, Row, Col, Button, FormGroup } from 'reactstrap';
-import ViaCep from '../../lib/react-via-cep/dist/index';
-import { loadOccupations } from '../../actions/occupations';
-import { createUser } from '../../actions/user';
-import  { validateUser, masks }  from "../../helpers/validations";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import Autocomplete from "../../helpers/autoComplete";
+import "bootstrap/dist/css/bootstrap.min.css";
+import MaskedInput from "react-text-mask";
+import {
+  Card,
+  CardBody,
+  Form,
+  Label,
+  Input,
+  Row,
+  Col,
+  Button,
+  FormGroup
+} from "reactstrap";
+import ViaCep from "../../lib/react-via-cep/dist/index";
+import { loadOccupations } from "../../actions/occupations";
+import { createUser } from "../../actions/user";
+import { validateUser, masks } from "../../helpers/validations";
 
 class Register extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = { cep: '', uf: '', localidade: '', bairro: '', logradouro: '', occupation: '', searched: false, submitted: false };
+    this.state = {
+      matricula: "",
+      cep: "",
+      uf: "",
+      localidade: "",
+      bairro: "",
+      logradouro: "",
+      occupation: "",
+      searched: false,
+      submitted: false
+    };
     this.handleChangeCep = this.handleChangeCep.bind(this);
     this.handleSuccess = this.handleSuccess.bind(this);
     this.changeUf = this.changeUf.bind(this);
@@ -31,16 +51,23 @@ class Register extends Component {
   changeOccupation(occupation) {
     this.setState({
       ...this.state,
-      occupation,
+      occupation
     });
   }
 
   handleChangeCep(event) {
-    this.setState({ ...this.state, cep: event.target.value })
+    this.setState({ ...this.state, cep: event.target.value });
   }
 
   handleSuccess(data) {
-    this.setState({ ...this.state, uf: data.uf, localidade: data.localidade, bairro: data.bairro, logradouro: data.logradouro, searched: true });
+    this.setState({
+      ...this.state,
+      uf: data.uf,
+      localidade: data.localidade,
+      bairro: data.bairro,
+      logradouro: data.logradouro,
+      searched: true
+    });
   }
 
   changeUf(event) {
@@ -78,41 +105,45 @@ class Register extends Component {
     const data = new FormData(event.target);
 
     const valid = validateUser({
-      cpf: data.get('cpf'),
-      cep: data.get('cep'),
-      telefoneCel: data.get('telefoneCel'),
+      cpf: data.get("cpf"),
+      matricula: data.get("matricula"),
+      cep: data.get("cep"),
+      telefoneCel: data.get("telefoneCel"),
       senha: document.getElementById("senha").value,
-      senhaConf: document.getElementById("senhaConf").value,
+      senhaConf: document.getElementById("senhaConf").value
     });
-      
-    if(valid.invalid) {
+
+    if (valid.invalid) {
       alert(valid.message);
       return;
     }
 
-    if(!this.state.searched) {
-      alert('Por favor pesquise seu CEP');
+    if (!this.state.searched) {
+      alert("Por favor pesquise seu CEP");
       return;
     }
-    
-    if(!this.state.submitted) {
-      dispatch(createUser(
-        data.get("nome"),
-        data.get("email"),
-        document.getElementById("senha").value,
-        data.get("cpf").replace(/\D+/g, ''),
-        data.get("escolaridade"),
-        data.get("cep").replace(/\D+/g, ''),
-        data.get("uf"),
-        data.get("localidade"),
-        data.get("bairro"),
-        data.get("logradouro"),
-        data.get("numero"),
-        data.get("complemento"),
-        data.get("categoria"),
-        this.getOccupationId(),
-        data.get("telefoneCel").replace(/\D+/g, ''),
-      ));
+
+    if (!this.state.submitted) {
+      dispatch(
+        createUser(
+          data.get("nome"),
+          data.get("email"),
+          document.getElementById("senha").value,
+          data.get("cpf").replace(/\D+/g, ""),
+          data.get("matricula").replace(/\D+/g, ""),
+          data.get("escolaridade"),
+          data.get("cep").replace(/\D+/g, ""),
+          data.get("uf"),
+          data.get("localidade"),
+          data.get("bairro"),
+          data.get("logradouro"),
+          data.get("numero"),
+          data.get("complemento"),
+          data.get("categoria"),
+          this.getOccupationId(),
+          data.get("telefoneCel").replace(/\D+/g, "")
+        )
+      );
       this.setState({ ...this.state, submitted: true });
     }
   }
@@ -122,18 +153,20 @@ class Register extends Component {
 
     const occupationsTermos = [];
     for (var key in occupations) {
-      occupationsTermos.push(occupations[key].termo.toString());
+      occupationsTermos.push(String(occupations[key].termo));
     }
 
     return (
       <div className="container">
         <Row>
-          <Col sm='2' md='3' lg='4' xs='1' />
-          <Col sm='6' md='5' lg='4' xs='10' style={{ textAlign: 'center' }}><h2>Cadastre-se</h2></Col>
+          <Col sm="2" md="3" lg="4" xs="1" />
+          <Col sm="6" md="5" lg="4" xs="10" style={{ textAlign: "center" }}>
+            <h2>Cadastre-se</h2>
+          </Col>
         </Row>
         <Row>
-          <Col sm='1' md='2' lg='3' xs='1' />
-          <Col sm='8' md='7' lg='6' xs='10'>
+          <Col sm="1" md="2" lg="3" xs="1" />
+          <Col sm="8" md="7" lg="6" xs="10">
             <Card>
               <CardBody>
                 <Form
@@ -167,38 +200,48 @@ class Register extends Component {
                       required
                     />
                   </FormGroup>
-                  <ViaCep cep={this.state.cep} onSuccess={this.handleSuccess} lazy>
+                  <FormGroup check inline>
+                    <Label className="label">É aluno? *</Label>
+                    <Label check>
+                      <Input type="radio" value="sim" name="aluno" required />{" "}
+                      Sim
+                    </Label>
+                  </FormGroup>
+                  <FormGroup check inline>
+                    <Label check>
+                      <Input type="radio" value="nao" name="aluno" required />{" "}
+                      Não
+                    </Label>
+                  </FormGroup>
+                  <FormGroup>
+                    <Label className="label">Matrícula *</Label>
+                    <Input
+                      ref="title"
+                      type="text"
+                      name="matricula"
+                      id="matricula"
+                      className="input"
+                      mask={masks.matricula}
+                      tag={MaskedInput}
+                      required
+                    />
+                  </FormGroup>
+                  <ViaCep
+                    cep={this.state.cep}
+                    onSuccess={this.handleSuccess}
+                    lazy
+                  >
                     {({ data, loading, error, fetch }) => {
                       if (loading) {
-                        return <p>Pesquisando CEP...</p>
+                        return <p>Pesquisando CEP...</p>;
                       }
                       if (error) {
-                        return console.log('CEP inválido!');
+                        return console.log("CEP inválido!");
                       }
                       if (data) {
                         if (data.erro === true) {
-                          return <div>
-                            <FormGroup>
-                              <Label className="label">CEP *</Label>
-                              <Input
-                                ref="body"
-                                type="text"
-                                name="cep"
-                                id="cep"
-                                className="input"
-                                mask={masks.cep}
-                                tag={MaskedInput}
-                                onChange={this.handleChangeCep} value={this.state.cep}
-                                required
-                              />
-                            </FormGroup>
-                            <div style={{ marginTop: -12, fontSize: 12, color: 'red' }}>CEP Inválido</div>
-                            <button onClick={fetch}>Pesquisar</button>
-                          </div>
-                        }
-                        return <div>
-                          <Row>
-                            <Col xs="auto">
+                          return (
+                            <div>
                               <FormGroup>
                                 <Label className="label">CEP *</Label>
                                 <Input
@@ -209,126 +252,174 @@ class Register extends Component {
                                   className="input"
                                   mask={masks.cep}
                                   tag={MaskedInput}
-                                  value={data.cep}
-                                  style={{ width: '150px' }}
+                                  onChange={this.handleChangeCep}
+                                  value={this.state.cep}
                                   required
                                 />
                               </FormGroup>
-                            </Col>
-                            <Col xs="auto">
-                              <FormGroup>
-                                <Label className="label">Cidade *</Label>
-                                <Input
-                                  ref="title"
-                                  type="text"
-                                  name="localidade"
-                                  id="localidade"
-                                  className="input"
-                                  required
-                                  value={this.state.localidade}
-                                  onChange={this.changeCidade}
-                                  style={{ width: '150px' }}
-                                />
-                              </FormGroup>
-                            </Col>
-                            <Col xs="auto">
-                              <FormGroup>
-                                <Label className="label">Estado *</Label>
-                                <Input
-                                  ref="title"
-                                  type="text"
-                                  name="uf"
-                                  id="uf"
-                                  className="input"
-                                  required
-                                  value={this.state.uf}
-                                  onChange={this.changeUf}
-                                  style={{ width: '50px' }}
-                                />
-                              </FormGroup>
-                            </Col>
-                          </Row>
-                          <FormGroup>
-                            <Label className="label">Bairro *</Label>
-                            <Input
-                              ref="title"
-                              type="text"
-                              name="bairro"
-                              id="bairro"
-                              className="input"
-                              required
-                              value={this.state.bairro}
-                              onChange={this.changeBairro}
-                            />
-                          </FormGroup>
-                          <FormGroup>
-                            <Label className="label">Logradouro *</Label>
-                            <Input
-                              ref="title"
-                              type="text"
-                              name="logradouro"
-                              id="logradouro"
-                              className="input"
-                              required
-                              value={this.state.logradouro}
-                              onChange={this.changeLogradouro}
-                            />
-                          </FormGroup>
-                          <FormGroup>
-                            <Label className="label">Número *</Label>
-                            <Input
-                              ref="title"
-                              type="text"
-                              name="numero"
-                              id="numero"
-                              className="input"
-                              required
-                            />
-                          </FormGroup>
-                          <FormGroup>
-                            <Label className="label">Complemento</Label>
-                            <Input
-                              ref="title"
-                              type="text"
-                              name="complemento"
-                              id="complemento"
-                              className="input"
-                            />
-                          </FormGroup>
-                          <FormGroup>
-                            <Label>Categoria *</Label>
-                            <Input
-                              ref='title'
-                              type='select'
-                              name='categoria'
-                              id='categoria'
-                              maxLength="50"
-                              style={{ width: '300px' }}
-                              required
-                            >
-                              <option ref="1" value={1} className="optionGroup">Residencial</option>
-                              <option ref="2" value={2} className="optionGroup">Comercial</option>
-                            </Input>
-                          </FormGroup>
-                        </div>
+                              <div
+                                style={{
+                                  marginTop: -12,
+                                  fontSize: 12,
+                                  color: "red"
+                                }}
+                              >
+                                CEP Inválido
+                              </div>
+                              <button onClick={fetch}>Pesquisar</button>
+                            </div>
+                          );
+                        }
+                        return (
+                          <div>
+                            <Row>
+                              <Col xs="auto">
+                                <FormGroup>
+                                  <Label className="label">CEP *</Label>
+                                  <Input
+                                    ref="body"
+                                    type="text"
+                                    name="cep"
+                                    id="cep"
+                                    className="input"
+                                    mask={masks.cep}
+                                    tag={MaskedInput}
+                                    value={data.cep}
+                                    style={{ width: "150px" }}
+                                    required
+                                  />
+                                </FormGroup>
+                              </Col>
+                              <Col xs="auto">
+                                <FormGroup>
+                                  <Label className="label">Cidade *</Label>
+                                  <Input
+                                    ref="title"
+                                    type="text"
+                                    name="localidade"
+                                    id="localidade"
+                                    className="input"
+                                    required
+                                    value={this.state.localidade}
+                                    onChange={this.changeCidade}
+                                    style={{ width: "150px" }}
+                                  />
+                                </FormGroup>
+                              </Col>
+                              <Col xs="auto">
+                                <FormGroup>
+                                  <Label className="label">Estado *</Label>
+                                  <Input
+                                    ref="title"
+                                    type="text"
+                                    name="uf"
+                                    id="uf"
+                                    className="input"
+                                    required
+                                    value={this.state.uf}
+                                    onChange={this.changeUf}
+                                    style={{ width: "50px" }}
+                                  />
+                                </FormGroup>
+                              </Col>
+                            </Row>
+                            <FormGroup>
+                              <Label className="label">Bairro *</Label>
+                              <Input
+                                ref="title"
+                                type="text"
+                                name="bairro"
+                                id="bairro"
+                                className="input"
+                                required
+                                value={this.state.bairro}
+                                onChange={this.changeBairro}
+                              />
+                            </FormGroup>
+                            <FormGroup>
+                              <Label className="label">Logradouro *</Label>
+                              <Input
+                                ref="title"
+                                type="text"
+                                name="logradouro"
+                                id="logradouro"
+                                className="input"
+                                required
+                                value={this.state.logradouro}
+                                onChange={this.changeLogradouro}
+                              />
+                            </FormGroup>
+                            <FormGroup>
+                              <Label className="label">Número *</Label>
+                              <Input
+                                ref="title"
+                                type="text"
+                                name="numero"
+                                id="numero"
+                                className="input"
+                                required
+                              />
+                            </FormGroup>
+                            <FormGroup>
+                              <Label className="label">Complemento</Label>
+                              <Input
+                                ref="title"
+                                type="text"
+                                name="complemento"
+                                id="complemento"
+                                className="input"
+                              />
+                            </FormGroup>
+                            <FormGroup>
+                              <Label>Categoria *</Label>
+                              <Input
+                                ref="title"
+                                type="select"
+                                name="categoria"
+                                id="categoria"
+                                maxLength="50"
+                                style={{ width: "300px" }}
+                                required
+                              >
+                                <option
+                                  ref="1"
+                                  value={1}
+                                  className="optionGroup"
+                                >
+                                  Residencial
+                                </option>
+                                <option
+                                  ref="2"
+                                  value={2}
+                                  className="optionGroup"
+                                >
+                                  Comercial
+                                </option>
+                              </Input>
+                            </FormGroup>
+                          </div>
+                        );
                       }
-                      return <div>
-                        <FormGroup>
-                          <Label className="label">CEP *</Label>
-                          <Input
-                            ref="body"
-                            type="text"
-                            name="cep"
-                            id="cep"
-                            className="input"
-                            mask={masks.cep}
-                            tag={MaskedInput}
-                            onChange={this.handleChangeCep} value={this.state.cep}
-                            required
-                          />
-                        </FormGroup>
-                        <button onClick={fetch}>Pesquisar</button>
-                      </div>
+                      return (
+                        <div>
+                          <FormGroup>
+                            <Label className="label">CEP *</Label>
+                            <Input
+                              ref="body"
+                              type="text"
+                              name="cep"
+                              id="cep"
+                              className="input"
+                              mask={masks.cep}
+                              tag={MaskedInput}
+                              onChange={this.handleChangeCep}
+                              value={this.state.cep}
+                              required
+                            />
+                          </FormGroup>
+                          <button onClick={fetch}>Pesquisar</button>
+                        </div>
+                      );
                     }}
                   </ViaCep>
                   <FormGroup>
@@ -376,12 +467,24 @@ class Register extends Component {
                       className="escolaridade"
                       required
                     >
-                      <option value="Ensino Fundamental Incompleto">Ensino Fundamental Incompleto</option>
-                      <option value="Ensino Fundamental Completo">Ensino Fundamental Completo</option>
-                      <option value="Ensino Médio Incompleto">Ensino Médio Incompleto</option>
-                      <option value="Ensino Médio Completo">Ensino Médio Completo</option>
-                      <option value="Ensino Superior Incompleto">Ensino Superior Incompleto</option>
-                      <option value="Ensino Superior Completo">Ensino Superior Completo</option>
+                      <option value="Ensino Fundamental Incompleto">
+                        Ensino Fundamental Incompleto
+                      </option>
+                      <option value="Ensino Fundamental Completo">
+                        Ensino Fundamental Completo
+                      </option>
+                      <option value="Ensino Médio Incompleto">
+                        Ensino Médio Incompleto
+                      </option>
+                      <option value="Ensino Médio Completo">
+                        Ensino Médio Completo
+                      </option>
+                      <option value="Ensino Superior Incompleto">
+                        Ensino Superior Incompleto
+                      </option>
+                      <option value="Ensino Superior Completo">
+                        Ensino Superior Completo
+                      </option>
                       <option value="Mestrando(a)">Mestrando(a)</option>
                       <option value="Mestre(a)">Mestre(a)</option>
                       <option value="Doutorando(a)">Doutorando(a)</option>
@@ -391,14 +494,14 @@ class Register extends Component {
                   </FormGroup>
                   <FormGroup>
                     <Label className="label">Profissão *</Label>
-                    <br/>
+                    <br />
                     <Autocomplete
                       suggestions={occupationsTermos}
                       changeOccupation={this.changeOccupation.bind(this)}
                     />
                   </FormGroup>
                   <FormGroup>
-                  <Label className="label">Senha *</Label>
+                    <Label className="label">Senha *</Label>
                     <Input
                       ref="title"
                       name="senha"
@@ -409,7 +512,7 @@ class Register extends Component {
                     />
                   </FormGroup>
                   <FormGroup>
-                  <Label className="label">Confirme sua senha *</Label>
+                    <Label className="label">Confirme sua senha *</Label>
                     <Input
                       ref="title"
                       name="senhaConf"
@@ -420,20 +523,24 @@ class Register extends Component {
                     />
                   </FormGroup>
                   <FormGroup>
-                    { this.state.submitted ? <h4>Carregando..</h4> : <Button
-                      type="submit"
-                      onClick={this.handleSubmission}
-                      value="Submit"
-                      name="Cadastrar"
-                      className="btn"
-                      color="primary"
-                      style={{
-                        display: "block",
-                        margin: "0 auto"
-                      }}
-                    >
-                      Cadastrar
-                    </Button> }
+                    {this.state.submitted ? (
+                      <h4>Carregando..</h4>
+                    ) : (
+                      <Button
+                        type="submit"
+                        onClick={this.handleSubmission}
+                        value="Submit"
+                        name="Cadastrar"
+                        className="btn"
+                        color="primary"
+                        style={{
+                          display: "block",
+                          margin: "0 auto"
+                        }}
+                      >
+                        Cadastrar
+                      </Button>
+                    )}
                   </FormGroup>
                 </Form>
               </CardBody>
@@ -449,11 +556,11 @@ class Register extends Component {
 }
 
 Register.propTypes = {
-  occupations: PropTypes.object,
+  occupations: PropTypes.object
 };
 
 const mapStateToProps = ({ occupations }) => ({
-  occupations,
+  occupations
 });
 
 export default connect(mapStateToProps)(Register);
